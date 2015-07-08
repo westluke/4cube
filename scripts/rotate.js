@@ -1,64 +1,126 @@
-var matrix = math.matrix([[7, 1], [-2, 3]]);  // Matrix
+var matrix = math.matrix([[7, 1], [-2, 3]]);
+// console.log(math.multiply(matrix, [3, 2]))
+// @NOTE: when you multiply two matrices of the wrong dimensions, the math library will \
+// attempt to rotate the second into a column vector to match them. So be careful, it won't warn you.
 
 function getRotationMatrix_4d(axes, theta){
-    ret_matrix = math.matrix([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]);
+    // builds a rotation matrix for the rotate.._4d functions.
+    var ret_list = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]];
+    ret_list[axes[0]][axes[0]] = math.cos(theta);
+    ret_list[axes[1]][axes[1]] = math.cos(theta);
+    ret_list[axes[0]][axes[1]] = -math.sin(theta);
+    ret_list[axes[1]][axes[0]] = math.sin(theta);
 
-    ret_matrix[axes[0], axes[0]] = math.cos(theta);
-    ret_matrix[axes[1], axes[1]] = math.cos(theta);
+    return math.matrix(ret_list);
+}
 
-    ret_matrix[axes[0], axes[1]] = -math.sin(theta);
-    ret_matrix[axes[1], axes[0]] = math.cos(theta);
+// Rotation functions that produce transformation matrices
+function rotateXY_4d(theta){
+    return getRotationMatrix_4d([0, 1], theta);
+}
+function rotateYZ_4d(theta){
+    return getRotationMatrix_4d([1, 2], theta);
+}
+function rotateZX_4d(theta){
+    return getRotationMatrix_4d([2, 0], theta);
+}
+function rotateXW_4d(theta){
+    return getRotationMatrix_4d([0, 3], theta);
+}
+function rotateWY_4d(theta){
+    return getRotationMatrix_4d([3, 1], theta);
+}
+function rotateWZ_4d(theta){
+    return getRotationMatrix_4d([3, 2], theta);
+}
+function testRotations(theta){
+    for (func in [rotateXY_4d, rotateYZ_4d, rotateZX_4d, rotateXW_4d, rotateWY_4d, rotateWZ_4d]){
+        console.log(rotateXY_4d(theta))
+    }
 }
 
 
-// def rotateXY_4d(theta):
-//     return getRotationMatrix_4d((0, 1), theta)
-//
-// def rotateYZ_4d(theta):
-//     return getRotationMatrix_4d((1, 2), theta)
-//
-// def rotateZX_4d(theta):
-//     return getRotationMatrix_4d((2, 0), theta)
-//
-// def rotateXW_4d(theta):
-//     return getRotationMatrix_4d((0, 3), theta)
-//
-// def rotateWY_4d(theta):
-//     return getRotationMatrix_4d((3, 1), theta)
-//
-// def rotateWZ_4d(theta):
-//     return getRotationMatrix_4d((3, 2), theta)
-//
-// def getRotationMatrix_4d(axes, theta):
-//     ret_matrix = np.matrix("1.0 0.0 0.0 0.0; 0.0 1.0 0.0 0.0; 0.0 0.0 1.0 0.0; 0.0 0.0 0.0 1.0")
-//
-//     ret_matrix[axes[0], axes[0]] = math.cos(theta)
-//     ret_matrix[axes[1], axes[1]] = math.cos(theta)
-//
-//     ret_matrix[axes[0], axes[1]] = -math.sin(theta)
-//     ret_matrix[axes[1], axes[0]] = math.sin(theta)
-//
-//     return ret_matrix
-//
-// def transformPoints(points, transform):
-//     ret_points = []
-//
-//     for point in points:
-//         ret_points.append(transform * point)
-//
-//     return ret_points
-//
-//
-//
-//
-// #@NOTE[x] okay you need to test the adjacent points with a test group. You have too many edges in the final graph, 8 too many. \
-// #@NOTE ALSO you need to test convertToLine to make sure it has the right lines, and the right number of them. MAKE TEST CASES
-// #@NOTE ALSOOOO MAKE A SLIDERRRRR
-//
-//
-//
-//
-//
+function transformPoints(points, transform){
+    // Apply transform to every point in points
+
+    var ret_points = [];
+    for (var x = 0; x < points.length; x++){
+        ret_points.push(math.multiply(transform, points[x]));
+    }
+    return ret_points;
+}
+
+
+function makeHypercube(){
+    // generate the points of a 4d hypercube
+
+    var ret_list = [];
+    for (var x = 0; x < 2; x++){
+        for (var y = 0; y < 2; y++){
+            for (var z = 0; z < 2; z++){
+                for (var w = 0; w < 2; w++){
+                    ret_list.push([x, y, z, w]);
+                }
+            }
+        }
+    }
+    return ret_list;
+}
+
+
+function genConns(points){
+    // Given the points from the hypercube, generate a 2d array detailing connections between points.
+    // If points[a] connects to points[b], conns[a][b] == 1, else 0
+    // Generates by finding points one apart
+
+    var conns = [];
+    for (var x = 0; x < 16; x++){
+        conns.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    }
+    var diff = 0;
+    var p_a, p_b;
+
+    for (var a = 0; a < points.length; a += 1){
+        for (var b = 0; b < points.length; b += 1){
+
+            if (b > a){  //Don't check if its been done in the reverse order already.
+                p_b = points[b];
+                p_a = points[a];
+                diff = 0;
+
+                for (var i = 0; i < 4; i += 1){
+                    if (math.abs(p_a[i] - p_b[i]) > 0.1) {  //If there is a difference in that axis
+                        diff += 1;
+                    }
+                }
+                if (diff < 2) {
+                    conns[a][b] = 1;
+                }
+            }
+        }
+    }
+    return conns
+}
+
+
+function convertToLine(points, conns){
+    var ret_line = [];
+
+    for (var a = 0; x < points.length; x++){
+        for (var b = 0; x < points.length; y++){
+            if (conns[a][b] > 0.1){
+                // var new_l =
+            }
+        }
+    }
+
+}
+
+console.log(genConns(makeHypercube()));
+// genConns(makeHypercube());
+// console.log(makeHypercube());
+
+
 // def convertToLine(points, conns):
 //     #Will only make 3d coordinates. There's no way matplotlib will handle 4d.
 //
@@ -66,12 +128,6 @@ function getRotationMatrix_4d(axes, theta){
 // #    print conns
 //
 //     ret_line = []
-//
-// #    print points[8]
-// #    print points[8][3]
-// #    ##print points[8][0, 3]
-// #    print points[8][3, 0]
-// #    print points[8].item(3)
 //
 //     for i in range(len(points)):
 //         for k in range(len(points)):
@@ -86,5 +142,18 @@ function getRotationMatrix_4d(axes, theta){
 //
 //     return ret_line
 //
-// def getProjOfVectorSpace(A):
-//     return A * (A.transpose() * A).getI() * A.transpose()
+function getProjOfVectorSpace(A){
+    return math.multiply(math.multiply(A, math.inv(math.multiply(math.transpose(A), A))), math.transpose(A));
+    // return math.multiply(       math.multiply(A, math.inv(math.multiply(math.transpose(A), A))),    math.transpose(A));
+
+    // return math.multiply(A, math.inv(math.multiply(math.transpose(A), A)))
+    // return math.transpose(A);
+
+}
+
+// console.log(getProjOfVectorSpace(math.matrix(   [[1.0, 3.0, 9.0],
+//                                                  [1.0, 2.0, 4.0],
+//                                                  [1.0, 5.0, 25.0],
+//                                                  [1.0, 7.0, 49.0]])))
+
+// return A * (A.transpose() * A).getI() * A.transpose()
