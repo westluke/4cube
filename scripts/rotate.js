@@ -1,8 +1,3 @@
-var matrix = math.matrix([[7, 1], [-2, 3]]);
-// console.log(math.multiply(matrix, [3, 2]))
-// @NOTE: when you multiply two matrices of the wrong dimensions, the math library will \
-// attempt to rotate the second into a column vector to match them. So be careful, it won't warn you.
-
 function getRotationMatrix_4d(axes, theta){
     // builds a rotation matrix for the rotate.._4d functions.
     var ret_list = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]];
@@ -104,6 +99,8 @@ function genConns(points){
 
 
 function getLines(points, conns){
+    // Converts a collections of points and a matrix of connections into a set of THREE.js vectors
+
     var p_a, p_b, ret_line = [];
 
     for (var a = 0; a < points.length; a++){
@@ -122,17 +119,51 @@ console.log(new THREE.Vector4(1, 4, 2, 4).x);
 // console.log()
 
 function plot(lines, scene){
-    var add_line, geometry, mat = new THREE.LineBasicMaterial(0xff0000);
+    // Given a collection of vectors in lines and a three.js scene, this function plots the vectors \
+        // and returns the geometry and THREE.line produced.
+
+    var add_line, mat = new THREE.LineBasicMaterial({color: 0xff0000});
+    var geometry = new THREE.Geometry();
+    geometry.verticesNeedUpdate = true;
 
     for (var a = 0; a < lines.length; a++){
-        geometry = new THREE.Geometry();
         geometry.vertices.push(lines[a][0], lines[a][1]);
-        add_line = new THREE.Line(geometry, mat);
-
-        scene.add(add_line);
     }
+    add_line = new THREE.Line(geometry, mat, THREE.LinePieces);
+    // add_line.color = 0xff0000;
+    console.log(add_line.position.x, add_line.position.y, add_line.position.z)
+    scene.add(add_line);
+    return [geometry, add_line];
 }
 
+function center(geometry, mesh){
+    // Averages the extremes of the coordinates of the mesh to find the center, then corrects the mesh's position /
+        // To place the center at the origin.
+
+    var extr_x = [0, 0],
+        extr_y = [0, 0],
+        extr_z = [0, 0];
+
+    var extremes = [extr_x, extr_y, extr_z];
+    var vec, coords;
+
+    for (var i = 0; i < geometry.vertices.length; i++){
+        vec = geometry.vertices[i];
+        // console.log(vec);
+        coords = [mesh.position.x + vec.x, mesh.position.y + vec.y, mesh.position.z + vec.z];
+        for (var n = 0; n < 3; n++){
+            if (coords[n] < extremes[n][0]){
+                extremes[n][0] = coords[n];
+            }
+            if (coords[n] > extremes[n][1]){
+                extremes[n][1] = coords[n];
+            }
+        }
+    }
+    mesh.position.x -= (extr_x[0] + extr_x[1])/2;
+    mesh.position.y -= (extr_y[0] + extr_y[1])/2;
+    mesh.position.z -= (extr_z[0] + extr_z[1])/2;
+}
 
 
 //@NOTE WHOAH BIG CHANGES THREE.JS HAS 4D VECTORS
@@ -140,44 +171,7 @@ function plot(lines, scene){
 // updateable toggle toggled.
 // @NOTE to simplify it into one geometry, i could use a recursive function to keep connecting points
 
-// console.log(genConns(makeHypercube()));
-// genConns(makeHypercube());
-// console.log(makeHypercube());
-
-
-// def convertToLine(points, conns):
-//     #Will only make 3d coordinates. There's no way matplotlib will handle 4d.
-//
-//     assert len(points) == conns.shape[0]
-// #    print conns
-//
-//     ret_line = []
-//
-//     for i in range(len(points)):
-//         for k in range(len(points)):
-//             #print conns[i, k]
-//             if conns[i, k] > 0.2:
-//                 #If this is true, point k connects to point i (starts are along the top)
-//                 #ret_line.append((points[k], points[i]))
-//                 new_l = ((points[k][0, 0], points[i][0, 0]), (points[k][1, 0], points[i][1, 0]), (points[k][2, 0], points[i][2, 0]))
-// #                if new_l not in ret_line:
-//                 ret_line.append(new_l)
-// #                else: print "what?"
-//
-//     return ret_line
-//
 function getProjOfVectorSpace(A){
+    // now unnecessary, probably, as THREE.js includes vectors
     return math.multiply(math.multiply(A, math.inv(math.multiply(math.transpose(A), A))), math.transpose(A));
-    // return math.multiply(       math.multiply(A, math.inv(math.multiply(math.transpose(A), A))),    math.transpose(A));
-
-    // return math.multiply(A, math.inv(math.multiply(math.transpose(A), A)))
-    // return math.transpose(A);
-
 }
-
-// console.log(getProjOfVectorSpace(math.matrix(   [[1.0, 3.0, 9.0],
-//                                                  [1.0, 2.0, 4.0],
-//                                                  [1.0, 5.0, 25.0],
-//                                                  [1.0, 7.0, 49.0]])))
-
-// return A * (A.transpose() * A).getI() * A.transpose()
