@@ -103,20 +103,44 @@ function genConns(points){
 }
 
 
-function convertToLine(points, conns){
-    var ret_line = [];
+function getLines(points, conns){
+    var p_a, p_b, ret_line = [];
 
-    for (var a = 0; x < points.length; x++){
-        for (var b = 0; x < points.length; y++){
+    for (var a = 0; a < points.length; a++){
+        for (var b = 0; b < points.length; b++){
             if (conns[a][b] > 0.1){
-                // var new_l =
+                p_a = points[a];
+                p_b = points[b];
+                ret_line.push([new THREE.Vector4(p_a[0], p_a[1], p_a[2], p_a[3]), new THREE.Vector4(p_b[0], p_b[1], p_b[2], p_b[3])])
             }
         }
     }
-
+    return ret_line;
 }
 
-console.log(genConns(makeHypercube()));
+console.log(new THREE.Vector4(1, 4, 2, 4).x);
+// console.log()
+
+function plot(lines, scene){
+    var add_line, geometry, mat = new THREE.LineBasicMaterial(0xff0000);
+
+    for (var a = 0; a < lines.length; a++){
+        geometry = new THREE.Geometry();
+        geometry.vertices.push(lines[a][0], lines[a][1]);
+        add_line = new THREE.Line(geometry, mat);
+
+        scene.add(add_line);
+    }
+}
+
+
+
+//@NOTE WHOAH BIG CHANGES THREE.JS HAS 4D VECTORS
+//@NOTE new plan: i transform the vectors of the geometries directly whenever a change is made, They need to have the/
+// updateable toggle toggled.
+// @NOTE to simplify it into one geometry, i could use a recursive function to keep connecting points
+
+// console.log(genConns(makeHypercube()));
 // genConns(makeHypercube());
 // console.log(makeHypercube());
 

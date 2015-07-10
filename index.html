@@ -3,18 +3,28 @@
         <script type = "text/javascript" src = "scripts/jquery-2.1.4.min.js"> </script>
         <script type = "text/javascript" src = "scripts/three.min.js"> </script>
         <script type = "text/javascript" src = "scripts/math.min.js"> </script>
-        <script type = "text/javascript" src = "scripts/OrbitControls.js"> </script>
+        <!-- // <script type = "text/javascript" src = "scripts/OrbitControls.js"> </script> -->
+        <script type = "text/javascript" src = "scripts/TrackballControls.js"> </script>
 
         <!-- // <script type = "text/javascript" src = "scripts/require.js"> </script> -->
         <script type = "text/javascript" src = "scripts/rotate.js"> </script>
         <!-- // <script type = "text/javascript" src = "scripts/index.js"> </script> -->
         <link type = "text/css" rel = "stylesheet" href = "stylesheets/index.css" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,600,400' rel='stylesheet' type='text/css'>
     </head>
 
     <body>
-        <div id = "test">Test</div>
 
-        <div id = "gltest">
+        <!-- DOESNT MAKE SENSE TO ROTATE MANUALLY AND AUTO AT THE SAME TIME, SO GIVE OPTION TO STOP ROTATION, OTHERWISE NO MANUAL -->
+
+        <div id = "header">
+            <p id = "title">4Cube.io</p>
+            <div id = "settings">
+                <!-- <p>FUCK</p> -->
+            </div>
+        </div>
+
+        <div id = "container">
             <script type = "text/javascript" src = "scripts/gl.js"></script>
         </div>
     </body>
