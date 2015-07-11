@@ -62,42 +62,73 @@ function makeHypercube(){
     return ret_list;
 }
 
+POINTS = [[0, 0, 0, 0],
+[0, 0, 0, 1],
+[0, 0, 1, 1],
+[0, 0, 1, 0],
+[0, 1, 1, 0],
+[0, 1, 0, 0],
+[0, 1, 0, 1],
+[0, 1, 1, 1],
+[1, 1, 1, 1],
+[1, 0, 1, 1],
+[1, 0, 0, 1],
+[1, 0, 0, 0],
+[1, 0, 1, 0],
+[1, 1, 1, 0],
+[1, 1, 0, 0],
+[1, 1, 0, 1]];
 
-function genConns(points){
-    // Given the points from the hypercube, generate a 2d array detailing connections between points.
-    // If points[a] connects to points[b], conns[a][b] == 1, else 0
-    // Generates by finding points one apart
+function toVec(points){
+    var ret3 = [];
+    var ret4 = [];
 
-    var conns = [];
-    for (var x = 0; x < 16; x++){
-        conns.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    for (var x = 0; x < points.length; x++){
+        ret4.push( new THREE.Vector4 (points[x][0], points[x][1], points[x][2], points[x][3]));
+        ret3.push( new THREE.Vector3 (points[x][0], points[x][1], points[x][2]));
     }
-    var diff = 0;
-    var p_a, p_b;
-
-    for (var a = 0; a < points.length; a += 1){
-        for (var b = 0; b < points.length; b += 1){
-
-            if (b > a){  //Don't check if its been done in the reverse order already.
-                p_b = points[b];
-                p_a = points[a];
-                diff = 0;
-
-                for (var i = 0; i < 4; i += 1){
-                    if (math.abs(p_a[i] - p_b[i]) > 0.1) {  //If there is a difference in that axis
-                        diff += 1;
-                    }
-                }
-                if (diff < 2) {
-                    conns[a][b] = 1;
-                }
-            }
-        }
-    }
-    return conns
+    return [ret3, ret4];
 }
 
+console.log(toVec(POINTS));
 
+
+
+// function genConns(points){
+//     // Given the points from the hypercube, generate a 2d array detailing connections between points.
+//     // If points[a] connects to points[b], conns[a][b] == 1, else 0
+//     // Generates by finding points one apart
+//
+//     var conns = [];
+//     for (var x = 0; x < 16; x++){
+//         conns.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+//     }
+//     var diff = 0;
+//     var p_a, p_b;
+//
+//     for (var a = 0; a < points.length; a += 1){
+//         for (var b = 0; b < points.length; b += 1){
+//
+//             if (b > a){  //Don't check if its been done in the reverse order already.
+//                 p_b = points[b];
+//                 p_a = points[a];
+//                 diff = 0;
+//
+//                 for (var i = 0; i < 4; i += 1){
+//                     if (math.abs(p_a[i] - p_b[i]) > 0.1) {  //If there is a difference in that axis
+//                         diff += 1;
+//                     }
+//                 }
+//                 if (diff < 2) {
+//                     conns[a][b] = 1;
+//                 }
+//             }
+//         }
+//     }
+//     return conns
+// }
+//
+//
 function getLines(points, conns){
     // Converts a collections of points and a matrix of connections into a set of THREE.js vectors
 
@@ -114,26 +145,46 @@ function getLines(points, conns){
     }
     return ret_line;
 }
-
-console.log(new THREE.Vector4(1, 4, 2, 4).x);
-// console.log()
-
+//
+// function get_lines(points, conns, found = []){
+//
+// }
+//
+// console.log(new THREE.Vector4(1, 4, 2, 4).x);
+// // console.log()
+//
 function plot(lines, scene){
     // Given a collection of vectors in lines and a three.js scene, this function plots the vectors \
         // and returns the geometry and THREE.line produced.
 
-    var add_line, mat = new THREE.LineBasicMaterial({color: 0xff0000});
-    var geometry = new THREE.Geometry();
-    geometry.verticesNeedUpdate = true;
+    var ex, mat = new THREE.MeshLambertMaterial( { color: 0xb00000, wireframe: false } );
+    var pts = [];
+    var geo;
+    var line_curve;
+    var shape_pts = [new THREE.Vector2(0, 0), new THREE.Vector2(0.25, 0), new THREE.Vector2(0.125, 0.22)]
+    var shape = new THREE.Shape( shape_pts );
+
+    var extrudeSettings = {
+        steps			: 100,
+        bevelEnabled	: false,
+        extrudePath		: NONE,
+    };
+    // var geometry = new THREE.Geometry();
+    // geometry.verticesNeedUpdate = true;
 
     for (var a = 0; a < lines.length; a++){
-        geometry.vertices.push(lines[a][0], lines[a][1]);
+        line_curve = new THREE.LineCurve3(lines[a]);
+        extrudeSettings.extrudePath = line_curve;
+        geo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+        ex = new THREE.Mesh(geo, mat);
+        scene.add(ex);
     }
-    add_line = new THREE.Line(geometry, mat, THREE.LinePieces);
-    // add_line.color = 0xff0000;
-    console.log(add_line.position.x, add_line.position.y, add_line.position.z)
-    scene.add(add_line);
-    return [geometry, add_line];
+    // add_line = new THREE.Line(geometry, mat, THREE.LinePieces);
+    // add_line.color = 0x333333;
+    // console.log(mat);
+    // console.log(add_line.position.x, add_line.position.y, add_line.position.z)
+    // scene.add(add_line);
+    // return [geometry, add_line];
 }
 
 function center(geometry, mesh){
