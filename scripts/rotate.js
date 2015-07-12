@@ -85,19 +85,9 @@ function transEx(curves, geos, shape, transform){
         var geo = new THREE.ExtrudeGeometry(shape, {steps:1, extrudePath: curves[k]});
         geos[k].verticesNeedUpdate = true;
         geos[k].vertices = geo.vertices.slice(0);
-        // geos[k].computeBoundingBox();
         geos[k].verticesNeedUpdate = true;
-        // geos[k].verticesNeedUpdate = true;
-        // var geo = new THREE.ExtrudeGeometry(shape, {steps: 1, extrudePath: curves[k]})
-        // console.log(exs)
-        // exs[k].geometry = geo;
-        // exs[k] = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ color: 0xffffff, wireframe: false }));
-        // scene.add(exs[k]);
     }
 }
-
-// AFTER USING THIS, SOME CURVES DONT CONNECT THE RIGHT POINTS. ITS A PROBLEM. THERE ARE GAPS. WHERE COULD WE BE DROPPING CURVES?
-// OR FUCKING UP TRANSFORMATIONS?
 
 
 function makeHypercube(){
@@ -185,33 +175,20 @@ function getLines(points, conns){
 }
 
 function plot(lines, scene){
-    // BIG PROBLEM: THE GEOMETRIES ONLY STORE VECTOR3'S
-    //SOLUTION: STORE LINE CURVES, TRANSFORM THEM, make new geometries
+                // lines = [lines[0], lines[7], lines[13], lines[15], lines[21], lines[24], lines[25], lines[31]]
+                // lines = [lines[0], lines[7], lines[22]]
+    // lines = [];
+    // mat = new THREE.MeshLambertMaterial( { color: 0xff0000, wireframe: false} );
 
-
-    // Given a collection of vectors in lines and a three.js scene, this function plots the vectors \
-        // and returns the geometry and THREE.line produced.
-    // console.log(lines.length);
-
-    // THE LINES THAT ARE SHOWN AS POINTS IN 3D SPACE DISAPPEAR IN 4D ROTATIONS
-
-    lines = [lines[0], lines[7], lines[13], lines[15], lines[21], lines[24], lines[25], lines[31]]
-    // var newl = lines.slice(0, 13);
-    // newl.concat(lines.slice(14, 32));
-        // lines = lines.slice(0, 13).concat(lines.slice(14, 32));
-        // lines = lines.slice(0, 1);
-    // lines = newl.slice(0, 31);
-    // console.log(lines[0]);
-    // console.log(lines);
-    var ex, mat = new THREE.MeshLambertMaterial( { color: 0xff0000, wireframe: false, shading: THREE.FlatShading} );
-    var geo, line_curve;
+    mat = new THREE.MeshLambertMaterial( { color: 0xff0000, wireframe: false, skinning: true, wrapAround: true} );
+    // var geo, line_curve, ex;
     var tubes = [];
     var ot = [];
     var exs = [];
 
-    var radius = 0.04, segments = 6;
+    var radius = 0.04, segments = 4;
     var circleGeometry = new THREE.CircleGeometry( radius, segments );
-    var shape_pts = circleGeometry.vertices.slice(1, 33);
+    var shape_pts = circleGeometry.vertices.slice(1, 5);
     var shape = new THREE.Shape(shape_pts);
 
     var extrudeSettings = {
@@ -221,38 +198,27 @@ function plot(lines, scene){
     };
 
     for (var a = 0; a < lines.length; a++){
-        // how to fill in corners? spheres?
         var line_curve = new THREE.SplineCurve3(lines[a]);
-        console.log(line_curve);
+        // console.log(line_curve);
         var geo = new THREE.ExtrudeGeometry(new THREE.Shape((new THREE.CircleGeometry(radius, segments)).vertices.slice(1, 33)), {steps: 1, extrudePath: line_curve});
-
-        console.log(geo);
+        // console.log(geo);
         var ex = new THREE.Mesh(geo, new THREE.MeshLambertMaterial( { color: 0xff0000, wireframe: false, shading: THREE.FlatShading} ));
-        console.log(ex);
+        ex.frustumCulled = false;
+        // console.log(ex);
+
         tubes.push(line_curve);
         ot.push(geo);
         scene.add(ex);
+
         exs.push(ex);
     }
-    // console.log(ex);
     return [tubes, ot, shape, exs];
 }
-
-
-
-
-
-
-
-
-
-
-
 
 function center(curves, exs){
     // // Averages the extremes of the coordinates of the mesh to find the center, then corrects the mesh's position /
     //     // To place the center at the origin.
-    //
+
     var extr_x = [0, 0],
         extr_y = [0, 0],
         extr_z = [0, 0];
@@ -261,19 +227,13 @@ function center(curves, exs){
     var vec = new THREE.Vector4();
     var coords;
     var pos = new THREE.Vector3();
-    // var newObject = jQuery.extend(true, {}, oldObject);
 
     for (var i = 0; i < curves.length; i++){
         for (var k = 0; k < curves[0].points.length; k++){
-            // vec = curves[i].points[k];
             vec.copy(curves[i].points[k]);
             pos.copy(exs[i].position);
-            // console.log(exs[i].position);
-            // console.log(exs[i].position);
-            // var vec = jQuery.extend(true, {}, curves[i].points[k]);
-            // var pos = jQuery.extend(true, {}, exs[i].position);
-            // console.log(vec);
-            var coords = [pos.x + vec.x, pos.y + vec.y, pos.z + vec.z];
+
+            coords = [pos.x + vec.x, pos.y + vec.y, pos.z + vec.z];
             for (var n = 0; n < 3; n++){
                 if (coords[n] < extremes[n][0]){
                     extremes[n][0] = 0 + coords[n];
@@ -285,11 +245,11 @@ function center(curves, exs){
         }
     }
 
-            for (var x = 0; x < exs.length; x++){
-                exs[x].position.x -= (extr_x[0] + extr_x[1])/2;
-                exs[x].position.y -= (extr_y[0] + extr_y[1])/2;
-                exs[x].position.z -= (extr_z[0] + extr_z[1])/2;
-            }
+    for (var x = 0; x < exs.length; x++){
+        exs[x].position.x -= (extr_x[0] + extr_x[1])/2;
+        exs[x].position.y -= (extr_y[0] + extr_y[1])/2;
+        exs[x].position.z -= (extr_z[0] + extr_z[1])/2;
+    }
     // for (var x = 0; x < exs.length; x++){
     //     exs[x].position.x -= 1;
     //     exs[x].position.y -= 1;

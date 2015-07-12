@@ -1,0 +1,12 @@
+Shaders:
+    During rotations, none of the extrusions shade correctly.
+    The 8 extrusions that connect the cube in 3d space to the cube in 4d space are always black.
+    All other extrusions alternate their shading as if the point light suddenly jumped from one side to the other.
+
+Disappearances:
+    Once you apply any transformation to the extrusions, some of them will disappear at certain camera angles.
+    TODO: Check if it is referencing by making a new extrusion with the same shape, curve, and position as extrusion 22,
+        which is known to disappear after 100 frames of 0.01 matrix rotations on all 4d planes.
+    This could also be a material problem.
+    It is NOT camera clipping. The camera doesn't remove objects, only clips through them while leaving some visible.
+    The offending extrusions are often within the shape, far from the frustums of the camera.
