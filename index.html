@@ -10,7 +10,7 @@
         <!-- // <script type = "text/javascript" src = "scripts/require.js"> </script> -->
         <script type = "text/javascript" src = "scripts/rotate.js"> </script>
         <!-- // <script type = "text/javascript" src = "scripts/index.js"> </script> -->
-        <link type = "text/css" rel = "stylesheet" href = "stylesheets/index.css" />
+        <link type = "text/css" rel = "stylesheet" href = "stylesheets/css/index.css" />
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,600,400' rel='stylesheet' type='text/css'>
     </head>
 
@@ -20,9 +20,19 @@
 
         <div id = "header">
             <p id = "title">4Cube.io</p>
-            <div id = "settings">
-                <!-- <p>FUCK</p> -->
-            </div>
+
+            <nav>
+            <ul id = "menu">
+                <li> <p> Settings </p>  <div></div>      </li>
+                <li> <p> Points </p>    <div></div>        </li>
+                <li> <p> Animation </p> <div></div>     </li>
+                <li> <p> Manual </p>    <div></div>        </li>
+                <li> <p> Full Screen </p>    <div></div>        </li>
+            </ul>
+            </nav>
+
+            <!-- <div id = "bars3">
+            </div> -->
         </div>
 
         <div id = "main">
@@ -31,6 +41,14 @@
                     <script type = "text/javascript" src = "scripts/gl.js"></script>
                 </div>
             </div>
+
+            <div id = "settings">
+                <div id="slider">
+                	<input class="bar" type="range" id="rangeinput" value="12.28" onchange="rangevalue.value=value"/>
+                	<output id="rangevalue">12.28</output>
+                </div>
+            </div>
+
         </div>
     </body>
 <html>

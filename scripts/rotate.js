@@ -66,7 +66,8 @@ function transformPoints_DEPRECATED(points, transform){
     return ret_points;
 }
 
-function transEx(curves, geos, shape, transform){
+// var mattrans = new THREE.MeshLambertMaterial({color: 0xff0000, wrapAround: true});
+function transEx(curves, geos, exs, shape, transform){
     // console.log(tubes[0].vertices);
     // line 31 is normally a point in 3d space. after a 4d rotation, it becomes a line with a change in x in 3d space.
     // However, THREE is just taking the average of the terminal x values and putting the circle there.
@@ -79,14 +80,23 @@ function transEx(curves, geos, shape, transform){
             curves[k].needsUpdate = true;
             curves[k].points[i].applyMatrix4(transform);
             // transform.applyToVector4Array([]);
-            curves[k].needsUpdate = true;
+            // curves[k].needsUpdate = true;
         }
 
         var geo = new THREE.ExtrudeGeometry(shape, {steps:1, extrudePath: curves[k]});
-        geos[k].verticesNeedUpdate = true;
-        geos[k].vertices = geo.vertices.slice(0);
-        geos[k].verticesNeedUpdate = true;
+        // geos[k].verticesNeedUpdate = true;
+        // geos[k].vertices = geo.vertices.slice(0);
+        // geos[k].verticesNeedUpdate = true;
+
+        exs[k].geometry.dispose();
+        // exs[k].material.dispose();
+        // exs[k].geometry.clone(geo);
+        exs[k].geometry = geo.clone();
+        // exs[k].material = mattrans.clone();
+
+        geo.dispose();
     }
+    // mat.dispose();
 }
 
 
@@ -165,8 +175,8 @@ function getLines(points, conns){
     for (var a = 0; a < points.length; a++){
         for (var b = 0; b < points.length; b++){
             if (conns[a][b] > 0.1){
-                p_a = points[a];
-                p_b = points[b];
+                p_a = points[a].slice(0);
+                p_b = points[b].slice(0);
                 ret_line.push([new THREE.Vector4(p_a[0], p_a[1], p_a[2], p_a[3]), new THREE.Vector4(p_b[0], p_b[1], p_b[2], p_b[3])])
             }
         }
@@ -176,19 +186,24 @@ function getLines(points, conns){
 
 function plot(lines, scene){
                 // lines = [lines[0], lines[7], lines[13], lines[15], lines[21], lines[24], lines[25], lines[31]]
-                // lines = [lines[0], lines[7], lines[22]]
+    // lines = [lines[0]];
+    // linesn = lines.slice(0);
     // lines = [];
     // mat = new THREE.MeshLambertMaterial( { color: 0xff0000, wireframe: false} );
-
-    mat = new THREE.MeshLambertMaterial( { color: 0xff0000, wireframe: false, skinning: true, wrapAround: true} );
+    // console.log(lines);
+    // return;
+    // mat = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: false, skinning: true, wrapAround: true, _needsUpdate: true} );
+    mat =  new THREE.MeshLambertMaterial({color: 0xFF4900, needsUpdate : true, _needsUpdate : true, wrapAround: true});
+    // mat.needsUpdate = true;
+    // mat._needsUpdate = true;
     // var geo, line_curve, ex;
     var tubes = [];
     var ot = [];
     var exs = [];
 
-    var radius = 0.04, segments = 4;
+    var radius = 0.03, segments = 6
     var circleGeometry = new THREE.CircleGeometry( radius, segments );
-    var shape_pts = circleGeometry.vertices.slice(1, 5);
+    var shape_pts = circleGeometry.vertices.slice(1, 6);
     var shape = new THREE.Shape(shape_pts);
 
     var extrudeSettings = {
@@ -200,9 +215,9 @@ function plot(lines, scene){
     for (var a = 0; a < lines.length; a++){
         var line_curve = new THREE.SplineCurve3(lines[a]);
         // console.log(line_curve);
-        var geo = new THREE.ExtrudeGeometry(new THREE.Shape((new THREE.CircleGeometry(radius, segments)).vertices.slice(1, 33)), {steps: 1, extrudePath: line_curve});
+        var geo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
         // console.log(geo);
-        var ex = new THREE.Mesh(geo, new THREE.MeshLambertMaterial( { color: 0xff0000, wireframe: false, shading: THREE.FlatShading} ));
+        var ex = new THREE.Mesh(geo, mat.clone());
         ex.frustumCulled = false;
         // console.log(ex);
 
@@ -212,6 +227,11 @@ function plot(lines, scene){
 
         exs.push(ex);
     }
+    mat.dispose();
+    circleGeometry.dispose();
+    // shape.dispose();
+    lines = null;
+
     return [tubes, ot, shape, exs];
 }
 
@@ -250,6 +270,9 @@ function center(curves, exs){
         exs[x].position.y -= (extr_y[0] + extr_y[1])/2;
         exs[x].position.z -= (extr_z[0] + extr_z[1])/2;
     }
+
+    pos = null;
+    vec = null;
     // for (var x = 0; x < exs.length; x++){
     //     exs[x].position.x -= 1;
     //     exs[x].position.y -= 1;
