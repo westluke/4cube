@@ -1,6 +1,6 @@
 $bgcolor: #F6FAE7;
-// FFDCAC
 $txtcolor: #FF4900;
+$impcolor: #933600;
 
 $fntfamily: 'Open Sans', sans-serif;
 
@@ -19,6 +19,7 @@ body {
     height: 100%;
     width: 100%;
     font-family: $fntfamily;
+    // min-width: 800px;
 }
 
 html, body{
@@ -49,8 +50,11 @@ html, body{
 #framer {
     // Framer goes around container. Framer's background results in the framed-photo-style border around container
     float: left;
-    height: 100%;
-    /*width: Defined by javascript*/
+    width: 0px;
+    height: 0px;
+    // both are a certain portion of min(width, height)
+    //height: Defined by javascript;
+    // width: Defined by javascript;
     background-image:   linear-gradient(to bottom right, $txtcolor, $txtcolor 11.1%, transparent 11.1%, transparent),
                         linear-gradient(to top left, $txtcolor, $txtcolor 11.1%, transparent 11.1%, transparent);
     background-size: calc(0.826 * 100%) calc(0.826 * 100%);
@@ -110,80 +114,88 @@ html, body{
     float: right;
 }
 
-#settings {
-    box-sizing: border-box;
-    float: right;
-    height: 100%;
-    padding-top: 30px;
-    // padding-left: 60px;
-    // border: 2px solid black;
-}
+
+
+// SETTINGS
 
 @mixin fuck_sliders{
     -webkit-appearance: none !important;
     appearance: none !important;
     -webkit-user-select: none !important;
-    // -webkit-shadow: none !important;
-    // box-shadow: none !important;
-    // border: none !important;
-    // -moz-box-shadow: none !important;
-    // -webkit-box-shadow: none !important;
-    // box-shadow: none !important;
-    // border: none !important;
     outline: none !important;
-    // margin-top: 0px !important;
-    // padding: 0px !important;
-    // border: none !important;
 }
 
-#settings div .bar {
-    @include fuck_sliders;
-	// width: calc(100% - 150px);
-    width: calc(100% - 250px);
-	height: 15px;
-	// position: relative;
+$loop: zip($txtcolor #14CC46 #40C0DD #9D7C12 #9D121E #914F9D, 1 2 3 4 5 6);
 
-    background-color: $txtcolor;
-    height: 15px;
-    border-radius: 5px;
 
-    // margin-bottom: 50px;
-    float: left;
-}
+#settings {
+    box-sizing: border-box;
+    float: right;
+    height: 100%;
+    padding-top: 30px;
+    // border: 2px solid black;
 
-#settings div{
-    width: 100%;
-    margin-bottom: 10%;
-    height: 1px;
-    // float: right;
-    clear: both;
-}
+    div{
+        width: 100%;
+        // margin-bottom: 20%;
+        height: calc(13%);
+        // float: right;
+        clear: both;
 
-.bar::-webkit-slider-thumb {
-    @include fuck_sliders;
-	position: relative;
-    // float: right;
-    bottom: 2px;
-	width: 15px;
-	height: 25px;
+        p {
+            float: left;
+            font-family: $fntfamily;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: -6px;
+            color: $impcolor;
 
-    background-color: #933600;
-    border-radius: 5px;
-	cursor: pointer;
-    shadow: none;
-}
+        }
 
-#settings p{
+        .bar {
+            @include fuck_sliders;
+            width: calc(80% - 50px);
+        	height: 15px;
 
+            background-color: $txtcolor;
+            height: 15px;
+            border-radius: 5px;
+
+            float: right;
+        }
+
+        .bar::-webkit-slider-thumb {
+            @include fuck_sliders;
+        	position: relative;
+        	width: 18px;
+        	height: 30px;
+            // background-color: #14CC46;
+            // background-color: $txtcolor;
+            border: 3px solid $bgcolor;
+            border-radius: 5px;
+        	cursor: pointer;
+            shadow: none;
+        }
+    }
+
+    @each $color, $num in $loop{
+        div:nth-child(#{$num}) {
+            .bar{ background-color: $color; }
+            .bar::-webkit-slider-thumb {background-color: $color; }
+            output { color: $color; }
+        }
+    }
 }
 
 output {
     float: right;
     position: relative;
     bottom: 5px;
-    right: 5px;
-    // @include fuck_sliders;
+    // right: 5px;
+    text-align: right;
+    width: 50px;
+    // margin-left: 8px;
     font-weight: 600;
     font-size: 18px;
-    color: #933600;
+    // color: $txtcolor;
 }

@@ -2,19 +2,21 @@
     <head>
         <script type = "text/javascript" src = "scripts/jquery-2.1.4.min.js"> </script>
         <script type = "text/javascript" src = "scripts/three.min.js"> </script>
-        <script type = "text/javascript" src = "scripts/resize.js"> </script>
         <!-- // <script type = "text/javascript" src = "scripts/math.min.js"> </script> -->
         <!-- // <script type = "text/javascript" src = "scripts/OrbitControls.js"> </script> -->
         <script type = "text/javascript" src = "scripts/TrackballControls.js"> </script>
 
         <!-- // <script type = "text/javascript" src = "scripts/require.js"> </script> -->
         <script type = "text/javascript" src = "scripts/rotate.js"> </script>
+        <script type = "text/javascript" src = "scripts/resize.js"> </script>
         <!-- // <script type = "text/javascript" src = "scripts/index.js"> </script> -->
         <link type = "text/css" rel = "stylesheet" href = "stylesheets/css/index.css" />
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,600,400' rel='stylesheet' type='text/css'>
     </head>
 
     <body>
+
+        <!--IDEA: COLOR 3D CUBE, 4D CUBE, AND CONNECTIONS DIFFERENTLY-->
 
         <!-- DOESNT MAKE SENSE TO ROTATE MANUALLY AND AUTO AT THE SAME TIME, SO GIVE OPTION TO STOP ROTATION, OTHERWISE NO MANUAL -->
 
@@ -49,50 +51,48 @@
                     ALSO, HAVE THE FUNCTION REPLACE THE TEXT TO MAKE IT EASIER.-->
 
                 <div>
-                	<input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28" step = "0.05" oninput="rval1.innerHTML='XY Plane Rotation: &nbsp&nbsp<span>'+value+'</span>'; usrRotate(value);"/>
-                	<output id="rval1">
-                        XY Plane Rotation: &nbsp&nbsp<span>0.00</span>
-                    </output>
+                    <p>XY</p>
+                    <output id="rval1">0.0</output>
+                	<input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28"
+                    step = "0.05" oninput="rval1.innerHTML=value; usrRotate(value, 1);"/>
                 </div>
 
                 <div>
-                    <input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28" step = "0.05" oninput="rval2.innerHTML='XY Plane Rotation: &nbsp&nbsp<span>'+value+'</span>'; usrRotate(value);"/>
-                    <output id="rval2">
-                        XY Plane Rotation: &nbsp&nbsp<span>0.00</span>
-                    </output>
+                    <p>YZ</p>
+                    <output id="rval2">0.0</output>
+                	<input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28"
+                    step = "0.05" oninput="rval2.innerHTML=value; usrRotate(value, 2);"/>
                 </div>
 
                 <div>
-                    <input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28" step = "0.05" oninput="rval3.innerHTML='XY Plane Rotation: &nbsp&nbsp<span>'+value+'</span>'; usrRotate(value);"/>
-                    <output id="rval3">
-                        XY Plane Rotation: &nbsp&nbsp<span>0.00</span>
-                    </output>
+                    <p>ZX</p>
+                    <output id="rval3">0.0</output>
+                	<input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28"
+                    step = "0.05" oninput="rval3.innerHTML=value; usrRotate(value, 3);"/>
                 </div>
 
                 <div>
-                    <input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28" step = "0.05" oninput="rval4.innerHTML='XY Plane Rotation: &nbsp&nbsp<span>'+value+'</span>'; usrRotate(value);"/>
-                    <output id="rval4">
-                        XY Plane Rotation: &nbsp&nbsp<span>0.00</span>
-                    </output>
+                    <p>XW</p>
+                    <output id="rval4">0.0</output>
+                	<input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28"
+                    step = "0.05" oninput="rval4.innerHTML=value; usrRotate(value, 4);"/>
                 </div>
 
                 <div>
-                    <input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28" step = "0.05" oninput="rval5.innerHTML='XY Plane Rotation: &nbsp&nbsp<span>'+value+'</span>'; usrRotate(value);"/>
-                    <output id="rval5">
-                        XY Plane Rotation: &nbsp&nbsp<span>0.00</span>
-                    </output>
+                    <p>WY</p>
+                    <output id="rval5">0.0</output>
+                	<input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28"
+                    step = "0.05" oninput="rval5.innerHTML=value; usrRotate(value, 5);"/>
                 </div>
 
                 <div>
-                    <input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28" step = "0.05" oninput="rval6.innerHTML='XY Plane Rotation: &nbsp&nbsp<span>'+value+'</span>'; usrRotate(value);"/>
-                    <output id="rval6">
-                        XY Plane Rotation: &nbsp&nbsp<span>0.00</span>
-                    </output>
+                    <p>WZ</p>
+                    <output id="rval6">0.0</output>
+                	<input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28"
+                    step = "0.05" oninput="rval6.innerHTML=value; usrRotate(value, 6);"/>
                 </div>
-                    <!-- <p>Apply</p> -->
+                <p id = "tip">Move the sliders to rotate the figure on their respective planes.</p>
 
-
-                <!-- </div> -->
             </div>
 
         </div>

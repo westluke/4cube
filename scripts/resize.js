@@ -1,13 +1,8 @@
-window.onload = function(){
+// $(window).load(function(){
 
-    var framer = $("#framer");
-    framer.width(framer.height());
+setTimeout(function(){}, 900);
 
-    renderer.setSize( $("#container").width(), $("#container").height());
-    var settings = $("#settings");
-    var main = $("#main");
-    settings.width(main.width() - framer.width() - 90);
-
+var framer = $("#framer");
     framer.mouseenter(function (){
         loopFlag = true;
         animate();
@@ -16,31 +11,35 @@ window.onload = function(){
     framer.mouseleave(function () {
             loopFlag = false;
     });
-    // console.log($(".bar").val());
-
-
-// RENDERER STUFF FROM GL.JS, ORGANIZE BETTER
-
-
-
 
     window.onresize = function() {
-        framer.width(framer.height());
-        // console.log("resize");
-        settings.width(main.width() - framer.width() - 20);
+        var mwidth = $("#main").width();
+        var mheight = $("#main").height();
+        var settings = $("#settings");
+        var main = $("#main");
+
+        var size = mwidth*0.2 > mheight ? mwidth : mheight;
+        console.log(size);
         renderer.setSize( $("#container").width(), $("#container").height() );
         settings.width(main.width() - framer.width() - 90);
+        framer.width(size);
+        framer.height(size);
     }
-}
+    window.onresize();
+// });
 
-// function assignVal(domElement){
-//     domElement.innerHTML = 'XY Plane Rotation: &nbsp&nbsp<span>'+value+'</span>';
-// }
+
 var rotations = [0, 0, 0, 0, 0, 0];
+var rotfuncs = [rotateXY_4d, rotateYZ_4d, rotateZX_4d, rotateXW_4d, rotateWY_4d, rotateWZ_4d]
 
-function usrRotate(value){
-    console.log(value);
-    transEx(curves, geos, exs, sh, rotateWZ_4d(rotations[0] - value));
-    rotations[0] = value;
+function usrRotate(value, ind){
+    $(".bar").mouseup(function(){
+        $(".bar").val(0);
+    });
+
+    ind--;
+    transEx(curves, geos, exs, sh, rotfuncs[ind](value - rotations[ind]));
+    rotations[ind] = value;
+    center(curves, exs);
     renderer.render(scene, camera);
 }

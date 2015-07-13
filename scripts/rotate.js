@@ -56,31 +56,16 @@ function testRotations(theta){
 }
 
 
-function transformPoints_DEPRECATED(points, transform){
-    // Apply transform to every point in points
-
-    var ret_points = [];
-    for (var x = 0; x < points.length; x++){
-        ret_points.push(math.multiply(transform, points[x]));
-    }
-    return ret_points;
-}
-
-// var mattrans = new THREE.MeshLambertMaterial({color: 0xff0000, wrapAround: true});
 function transEx(curves, geos, exs, shape, transform){
     // console.log(tubes[0].vertices);
     // line 31 is normally a point in 3d space. after a 4d rotation, it becomes a line with a change in x in 3d space.
     // However, THREE is just taking the average of the terminal x values and putting the circle there.
     // Maybe if a geometry has already been initalized as a point, it doesn't want to do anythuing more?
 
-   // var newc = new THREE.SplineCurve3([new THREE.Vector4(0.169, 1, 0, -0.985), new THREE.Vector4(-0.815, 1.55, 1, 0)]);
-
     for (var k = 0; k < curves.length; k++){
         for (var i = 0; i < curves[0].points.length; i++){
             curves[k].needsUpdate = true;
             curves[k].points[i].applyMatrix4(transform);
-            // transform.applyToVector4Array([]);
-            // curves[k].needsUpdate = true;
         }
 
         var geo = new THREE.ExtrudeGeometry(shape, {steps:1, extrudePath: curves[k]});
@@ -115,20 +100,6 @@ function makeHypercube(){
     }
     return ret_list;
 }
-
-// function toVec(points){
-//     var ret3 = [];
-//     var ret4 = [];
-//
-//     for (var x = 0; x < points.length; x++){
-//         ret4.push( new THREE.Vector4 (points[x][0], points[x][1], points[x][2], points[x][3]));
-//         ret3.push( new THREE.Vector3 (points[x][0], points[x][1], points[x][2]));
-//     }
-//     return [ret3, ret4];
-// }
-//
-// // console.log(toVec(POINTS));
-
 
 
 function genConns(points){

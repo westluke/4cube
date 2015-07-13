@@ -10,10 +10,9 @@ var cnt = 0;
 var composer;
 
 var loopFlag = false;
-// var initFlag = true;
-// monitorControls();
 
-
+var dumb1 = rotateXW_4d(0.001);
+var dumb2 = rotateXW_4d(-0.001);;
 
 
 
@@ -29,11 +28,7 @@ var loopFlag = false;
 
 
 init();
-renderer.render(scene, camera);
-center(curves, exs);
-animate();
-// cnt_init;
-// initFlag = false;
+initialRender();
 
 function init(){
     scene = new THREE.Scene();
@@ -42,10 +37,7 @@ function init(){
     renderer.setPixelRatio( window.devicePixelRatio );
     container = document.getElementById( 'container' );
     container.appendChild( renderer.domElement );
-    // renderer.setScissor(-1000, -1000, 2000, 2000)
-    // renderer.setViewport(-1000, -1000, 2000, 2000)
 
-    // camera = new THREE.OrthographicCamera( -1.1, 1.1, 1.1, -1.1, 0.001, 10 );
     camera = new THREE.PerspectiveCamera( 60, 1, 0.001, 8);
     camera.position.set( 0, 0, 2 );
 	controls = new THREE.TrackballControls( camera, renderer.domElement );
@@ -57,24 +49,6 @@ function init(){
 	light.position.copy( camera.position );
 	scene.add( light );
 
-
-
-    // composer = new THREE.EffectComposer( renderer );
-    // composer.addPass( new THREE.RenderPass( scene, camera ) );
-    // // Then blur the whole buffer with two passes using the included blur shaders located in three.js/examples/shaders/
-    //
-    // var hblur = new THREE.ShaderPass( THREE.HorizontalBlurShader );
-    // composer.addPass( hblur );
-    //
-    // var vblur = new THREE.ShaderPass( THREE.VerticalBlurShader );
-    // // set this shader pass to render to screen so we can see the effects
-    // vblur.renderToScreen = true;
-    // composer.addPass( vblur );
-
-
-
-
-
     var line = getLines(POINTS, genConns(POINTS));
     var ret_list = plot(line, scene);
 
@@ -82,49 +56,41 @@ function init(){
     geos = ret_list[1].slice(0);
     exs = ret_list[3].slice(0);
     sh = ret_list[2];
-    // console.log(curves);
-    // console.log(geos);
-    // console.log(exs);
-
-    // var ax = new THREE.AxisHelper(10);
-    // scene.add(ax);
 
     controls.addEventListener( 'change', render);
-    // renderer.render(scene, camera);
-    // center(curves, exs);
-    // animate();
+    center(curves, exs);
+
 }
 
 function animate(){
     setTimeout( function() {
         if (loopFlag){
-            // console.log(cnt, loopFlag);
-            requestAnimationFrame( animate );
-        }
-        else if (cnt<2){
-            cnt ++;
-            requestAnimationFrame(animate);
+            requestAnimationFrame(animate); }
+    }, 1);
+    controls.update();
+    transEx(curves, geos, exs, sh, xw);
+    transEx(curves, geos, exs, sh, wy);
+    transEx(curves, geos, exs, sh, wz);
+    center(curves, exs);
+    renderer.render(scene, camera);
+}
 
-        }
-        // requestAnimationFrame(animate);
-    }, 15);
-
-    // if (loopFlag || initFlag){
-
-        controls.update();
-        transEx(curves, geos, exs, sh, xw);
-        transEx(curves, geos, exs, sh, wy);
-        transEx(curves, geos, exs, sh, wz);
-        center(curves, exs);
+function initialRender(){
+    if (!loopFlag){
+        console.log("FUCK");
         // controls.update();
+
+        transEx(curves, geos, exs, sh, dumb1);
+        transEx(curves, geos, exs, sh, dumb2);
+        // center(curves, exs);
         renderer.render(scene, camera);
-        // composer.render(scene, camera);
-    // }
+        // render();
+        requestAnimationFrame(initialRender);
+    }
 }
 
 function monitorControls(){
-    // requestAnimationFrame(monitorControls);
-    // controls.update();
+    controls.update();
 }
 
 function render() {
