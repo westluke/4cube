@@ -193,7 +193,7 @@ function plot(lines, scene){
     // console.log(lines);
     // return;
     // mat = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: false, skinning: true, wrapAround: true, _needsUpdate: true} );
-    mat =  new THREE.MeshLambertMaterial({color: 0xFF4900, needsUpdate : true, _needsUpdate : true, wrapAround: true});
+    mat =  new THREE.MeshLambertMaterial({color: 0xFF4900});
     // mat.needsUpdate = true;
     // mat._needsUpdate = true;
     // var geo, line_curve, ex;
@@ -201,9 +201,15 @@ function plot(lines, scene){
     var ot = [];
     var exs = [];
 
-    var radius = 0.03, segments = 6
+
+
+// FUCKING TALK TO KEVIN OR NOAH ABOUT LEXHACK. ITS BEEN ONE WEEK, YOU SHOULD EMAIL SOMEONE. MAYBE THEY HAVE ALREADY, AND THEY'LL ONLY PUT IT UP WHEN THEY GET A REPLLLYYYY
+
+
+
+    var radius = 0.03, segments = 4
     var circleGeometry = new THREE.CircleGeometry( radius, segments );
-    var shape_pts = circleGeometry.vertices.slice(1, 6);
+    var shape_pts = circleGeometry.vertices.slice(1, 5);
     var shape = new THREE.Shape(shape_pts);
 
     var extrudeSettings = {

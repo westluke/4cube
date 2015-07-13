@@ -28,6 +28,7 @@
                 <li> <p> Animation </p> <div></div>     </li>
                 <li> <p> Manual </p>    <div></div>        </li>
                 <li> <p> Full Screen </p>    <div></div>        </li>
+                <li> <p> About </p>    <div></div>        </li>
             </ul>
             </nav>
 
@@ -43,10 +44,55 @@
             </div>
 
             <div id = "settings">
-                <div id="slider">
-                	<input class="bar" type="range" id="rangeinput" value="12.28" onchange="rangevalue.value=value"/>
-                	<output id="rangevalue">12.28</output>
+                <!-- <div id="slider"> -->
+                <!--THIS COULD BE A LOT LESS UGLY IF YOU GET RID OF THE INITIAL TEXT AND THEN RUN INITIAL CALLS TO THE JAVASCRIPT FUNCTIONS
+                    ALSO, HAVE THE FUNCTION REPLACE THE TEXT TO MAKE IT EASIER.-->
+
+                <div>
+                	<input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28" step = "0.05" oninput="rval1.innerHTML='XY Plane Rotation: &nbsp&nbsp<span>'+value+'</span>'; usrRotate(value);"/>
+                	<output id="rval1">
+                        XY Plane Rotation: &nbsp&nbsp<span>0.00</span>
+                    </output>
                 </div>
+
+                <div>
+                    <input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28" step = "0.05" oninput="rval2.innerHTML='XY Plane Rotation: &nbsp&nbsp<span>'+value+'</span>'; usrRotate(value);"/>
+                    <output id="rval2">
+                        XY Plane Rotation: &nbsp&nbsp<span>0.00</span>
+                    </output>
+                </div>
+
+                <div>
+                    <input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28" step = "0.05" oninput="rval3.innerHTML='XY Plane Rotation: &nbsp&nbsp<span>'+value+'</span>'; usrRotate(value);"/>
+                    <output id="rval3">
+                        XY Plane Rotation: &nbsp&nbsp<span>0.00</span>
+                    </output>
+                </div>
+
+                <div>
+                    <input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28" step = "0.05" oninput="rval4.innerHTML='XY Plane Rotation: &nbsp&nbsp<span>'+value+'</span>'; usrRotate(value);"/>
+                    <output id="rval4">
+                        XY Plane Rotation: &nbsp&nbsp<span>0.00</span>
+                    </output>
+                </div>
+
+                <div>
+                    <input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28" step = "0.05" oninput="rval5.innerHTML='XY Plane Rotation: &nbsp&nbsp<span>'+value+'</span>'; usrRotate(value);"/>
+                    <output id="rval5">
+                        XY Plane Rotation: &nbsp&nbsp<span>0.00</span>
+                    </output>
+                </div>
+
+                <div>
+                    <input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28" step = "0.05" oninput="rval6.innerHTML='XY Plane Rotation: &nbsp&nbsp<span>'+value+'</span>'; usrRotate(value);"/>
+                    <output id="rval6">
+                        XY Plane Rotation: &nbsp&nbsp<span>0.00</span>
+                    </output>
+                </div>
+                    <!-- <p>Apply</p> -->
+
+
+                <!-- </div> -->
             </div>
 
         </div>

@@ -8,6 +8,9 @@ var wy = rotateWY_4d(0.02);
 var wz = rotateWZ_4d(0.02);
 var cnt = 0;
 var composer;
+
+var loopFlag = false;
+// var initFlag = true;
 // monitorControls();
 
 
@@ -26,6 +29,11 @@ var composer;
 
 
 init();
+renderer.render(scene, camera);
+center(curves, exs);
+animate();
+// cnt_init;
+// initFlag = false;
 
 function init(){
     scene = new THREE.Scene();
@@ -82,29 +90,36 @@ function init(){
     // scene.add(ax);
 
     controls.addEventListener( 'change', render);
-    animate();
-    // center(curves, exs);
     // renderer.render(scene, camera);
+    // center(curves, exs);
+    // animate();
 }
 
 function animate(){
     setTimeout( function() {
-        // cnt ++;
-        if (cnt < 100 ){requestAnimationFrame( animate );}
-        else{
-            // console.log(exs);
-            // monitorControls();
+        if (loopFlag){
+            // console.log(cnt, loopFlag);
+            requestAnimationFrame( animate );
         }
+        else if (cnt<2){
+            cnt ++;
+            requestAnimationFrame(animate);
 
-    }, 25);
-    controls.update();
-    transEx(curves, geos, exs, sh, xw);
-    transEx(curves, geos, exs, sh, wy);
-    transEx(curves, geos, exs, sh, wz);
-    // controls.update();
-    renderer.render(scene, camera);
-    // composer.render(scene, camera);
-    center(curves, exs);
+        }
+        // requestAnimationFrame(animate);
+    }, 15);
+
+    // if (loopFlag || initFlag){
+
+        controls.update();
+        transEx(curves, geos, exs, sh, xw);
+        transEx(curves, geos, exs, sh, wy);
+        transEx(curves, geos, exs, sh, wz);
+        center(curves, exs);
+        // controls.update();
+        renderer.render(scene, camera);
+        // composer.render(scene, camera);
+    // }
 }
 
 function monitorControls(){

@@ -18,6 +18,7 @@ html {
 body {
     height: 100%;
     width: 100%;
+    font-family: $fntfamily;
 }
 
 html, body{
@@ -46,6 +47,7 @@ html, body{
 }
 
 #framer {
+    // Framer goes around container. Framer's background results in the framed-photo-style border around container
     float: left;
     height: 100%;
     /*width: Defined by javascript*/
@@ -53,22 +55,15 @@ html, body{
                         linear-gradient(to top left, $txtcolor, $txtcolor 11.1%, transparent 11.1%, transparent);
     background-size: calc(0.826 * 100%) calc(0.826 * 100%);
     background-position: top left, bottom right;
-    /*border: 3px solid red;*/
 }
 
 #container {
-    height: calc(100% - 6px);
-    width: calc(100% - 6px);
-    left: 3;
-    top: 3;
-    /*overflow: visible;*/
+    height: calc(100% - 8px);
+    width: calc(100% - 8px);
+    left: 4;
+    top: 4;
     position: relative;
     background-color: $bgcolor;
-    /*background-color: transparent;*/
-    /*border: 3px solid blue;*/
-    /*-webkit-transition-property: all;
-    -webkit-transition-duration: 2s;
-    -webkit-transition-timing-function: linear;*/
 }
 
 #menu li{
@@ -79,37 +74,33 @@ html, body{
     font-weight: 600;
     margin-top: 20px;
     margin-left: 24px;
-}
 
-#menu li div{
-    position: relative;
-    height: 7px;
-    border-radius: 7px;
-    top: 10px;
-    background-color: transparent;
-    cursor: default;
+    div{
+        position: relative;
+        height: 7px;
+        border-radius: 7px;
+        top: 10px;
+        background-color: transparent;
+        cursor: default;
 
-    -webkit-transition: top 0.05s, background-color 0.05s;
-    -webkit-transition-timing-function: linear;
-}
+        -webkit-transition: top 0.03s, background-color 0.03s;
+        -webkit-transition-timing-function: linear;
+    }
 
-#menu li p{
-    cursor: pointer;
-}
+    p { cursor: pointer; }
 
-#menu li p:hover + div {
-    top: 3px;
-    background-color: $txtcolor;
-}
+    p:hover{ color: #FA7641; }
 
-#menu li p:hover{
-    color: #FA7641;
+    p:hover + div {
+        top: 3px;
+        background-color: $txtcolor;
+    }
 }
 
 #bars3 {
     /*a scaled settings size of 7 wide, 6 tall looks very attractive*/
     /* Exactly equal spacings and fillings for bars*/
-
+    // Only for mobile version
     top: 7px;
     height: 42px;
     width: 40px;
@@ -123,71 +114,76 @@ html, body{
     box-sizing: border-box;
     float: right;
     height: 100%;
-    width: 1%;
-    border: 2px solid black;
+    padding-top: 30px;
+    // padding-left: 60px;
+    // border: 2px solid black;
 }
 
 @mixin fuck_sliders{
     -webkit-appearance: none !important;
     appearance: none !important;
     -webkit-user-select: none !important;
-    -webkit-shadow: none !important;
-    box-shadow: none !important;
-    border: none !important;
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: none !important;
+    // -webkit-shadow: none !important;
+    // box-shadow: none !important;
+    // border: none !important;
+    // -moz-box-shadow: none !important;
+    // -webkit-box-shadow: none !important;
+    // box-shadow: none !important;
+    // border: none !important;
     outline: none !important;
+    // margin-top: 0px !important;
+    // padding: 0px !important;
+    // border: none !important;
 }
 
-#slider {
+#settings div .bar {
     @include fuck_sliders;
+	// width: calc(100% - 150px);
+    width: calc(100% - 250px);
+	height: 15px;
+	// position: relative;
 
-	width: calc(100% - 50px);
-	height: 20px;
-	position: relative;
-	background: $txtcolor;
+    background-color: $txtcolor;
+    height: 15px;
+    border-radius: 5px;
+
+    // margin-bottom: 50px;
+    float: left;
 }
 
-#slider .bar {
+#settings div{
+    width: 100%;
+    margin-bottom: 10%;
+    height: 1px;
+    // float: right;
+    clear: both;
+}
 
+.bar::-webkit-slider-thumb {
     @include fuck_sliders;
-	width: 388px;
-	height: 5px;
-	background: #333;
 	position: relative;
-	top: -4px;
-	left: 4px;
-}
+    // float: right;
+    bottom: 2px;
+	width: 15px;
+	height: 25px;
 
-#slider .bar:focus{
-        @include fuck_sliders;
-}
-
-output{
-    @include fuck_sliders;
-}
-
-input[type="range"] {
-	-webkit-appearance: none;
-	background-color: black;
-	height: 2px;
-    shadow: none;
-        @include fuck_sliders;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-
-        @include fuck_sliders;
-	position: relative;
-	top: 0px;
-	z-index: 1;
-	width: 11px;
-	height: 11px;
+    background-color: #933600;
+    border-radius: 5px;
 	cursor: pointer;
     shadow: none;
+}
 
+#settings p{
 
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ebf1f6), color-stop(50%,#abd3ee), color-stop(51%,#89c3eb), color-stop(100%,#d5ebfb));
+}
+
+output {
+    float: right;
+    position: relative;
+    bottom: 5px;
+    right: 5px;
+    // @include fuck_sliders;
+    font-weight: 600;
+    font-size: 18px;
+    color: #933600;
 }
