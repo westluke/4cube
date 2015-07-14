@@ -7,6 +7,7 @@ $(window).load(function(){
     var framer = $("#framer");
     var settings = $("#settings");
     var main = $("#main");
+    var container = $("#container");
 
     // Only animate if the mouse is in the canvas. Keeps everything running smoothly
     framer.mouseenter(function (){
@@ -19,16 +20,18 @@ $(window).load(function(){
 
     window.onresize = function() {
         // be careful to make everything scale in the right order
-        console.log("resize");
-        var mwidth = $("#main").width();
-        var mheight = $("#main").height();
+        // console.log("resize");
+        var mwidth = main.width();
+        var mheight = main.height();
         // usually the height is fairly low, so the framer should scale off of that.
         // Other times, the width is the limiting factor, with settings in the way.
         var size = (mwidth*0.5 < mheight) ? mwidth*0.5 : mheight;
         framer.width(size);
         framer.height(size);
         settings.width(mwidth - framer.width() - 60);
-        renderer.setSize( $("#container").width(), $("#container").height() );
+
+        var cwidth = container.width(), cheight = container.height();
+        renderer.setSize( cwidth, cheight);
     }
     window.onresize();
 
@@ -43,7 +46,7 @@ $(window).load(function(){
             //Wait for that transition to finish
             //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
             if (!(unfinished.indexOf(name) + 1)){
-                console.log(name, unfinished);
+                // console.log(name, unfinished);
                 $(this).load("modules/" + name + ".html");
             } else {
                 $(this).load("modules/soon.html");

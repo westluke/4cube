@@ -93,7 +93,7 @@ html, body{
         top: 10px;
         background-color: transparent;
         cursor: default;
-        -webkit-transition: top 0.08s, background-color 0.08s;
+        -webkit-transition: top 0.05s, background-color 0.05s;
         -webkit-transition-timing-function: linear;
     }
 
@@ -130,7 +130,7 @@ html, body{
     height: 100%;
     padding-top: 30px;
     opacity: 1;
-    -webkit-transition: opacity 0.15s;
+    -webkit-transition: opacity 0.1s;
     -webkit-transition-timing-function: linear;
 }
 

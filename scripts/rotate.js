@@ -149,9 +149,9 @@ function plot(lines, scene){
     var ot = [];
     var exs = [];
 
-    var radius = 0.03, segments = 9
+    var radius = 0.04, segments = 8;
     var circleGeometry = new THREE.CircleGeometry( radius, segments );
-    var shape_pts = circleGeometry.vertices.slice(1, 10);
+    var shape_pts = circleGeometry.vertices.slice(1, 9);
     var shape = new THREE.Shape(shape_pts);
 
     var extrudeSettings = {

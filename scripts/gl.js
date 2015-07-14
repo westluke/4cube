@@ -1,5 +1,5 @@
 var loopFlag = false;
-var animate, initialRender, monitorControls, rotateFigure, newRotation;
+var animate, initialRender, monitorControls, rotateFigure, newRotation, reset;
 var renderer;
 var rotations = [0, 0, 0, 0, 0, 0], ani_rotations = ['0', '0', '0', '1', '1', '1'];
 var rotfuncs = [rotateXY_4d, rotateYZ_4d, rotateZX_4d, rotateXW_4d, rotateWY_4d, rotateWZ_4d]
@@ -104,12 +104,28 @@ function init(){
     }
 
     newRotation = function(transforms){
-        console.log(transforms);
+        // console.log(transforms);
         combo.identity();
-        console.log(combo);
+        // console.log(combo);
         for (var ind = 0; ind < transforms.length; ind++){
             combo = combo.multiply(transforms[ind]);
         }
-
     }
+
+    // reset = function(){
+    //     console.log(scene.children);
+    //     // for( var i = 0; i < scene.children.length; i++) {
+    //     //     scene.remove(scene.children[i]);
+    //     // }
+    //     // line = getLines(POINTS, genConns(POINTS));
+    //     // ret_list = plot(line, scene);
+    //     //
+    //     // // I have the fear of referencing
+    //     // curves = ret_list[0].slice(0);
+    //     // geos = ret_list[1].slice(0);
+    //     // exs = ret_list[3].slice(0);
+    //     // sh = ret_list[2];
+    //     // rotations = [0, 0, 0, 0, 0, 0];
+    //     // ani_rotations = [0, 0, 0, 0, 0, 0];
+    // }
 }
