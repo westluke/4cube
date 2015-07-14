@@ -45,14 +45,13 @@ $(window).load(function(){
         settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
             //Wait for that transition to finish
             //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
-            if (!(unfinished.indexOf(name) + 1)){
-                // console.log(name, unfinished);
-                $(this).load("modules/" + name + ".html");
-            } else {
-                $(this).load("modules/soon.html");
+            if ((unfinished.indexOf(name) + 1)){
+                name = "soon";
             }
-            $(this).css({opacity: 1});
-            $(this).unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
+            settings.load("modules/" + name + ".html", function(){
+                settings.css({opacity: 1});
+                settings.unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
+            });
         });
     });
 
