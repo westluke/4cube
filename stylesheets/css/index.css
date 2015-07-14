@@ -3,14 +3,16 @@
   padding: 0; }
 
 html {
-  padding: 20px 7% 10px 7%; }
+  padding: 20px 80px 10px 80px;
+  min-width: 650px;
+  min-height: 530px; }
 
 body {
   height: 100%;
   width: 100%;
   font-family: "Open Sans", sans-serif;
   min-width: 650px;
-  min-height: 450px; }
+  min-height: 530px; }
 
 html, body {
   background-color: #F6FAE7; }
@@ -67,15 +69,15 @@ html, body {
     top: 10px;
     background-color: transparent;
     cursor: default;
-    -webkit-transition: top 0.03s, background-color 0.03s;
+    -webkit-transition: top 0.08s, background-color 0.08s;
     -webkit-transition-timing-function: linear; }
   #menu li p {
     cursor: pointer; }
   #menu li p:hover {
     color: #FA7641; }
   #menu li p:hover + div {
-    top: 3px;
-    background-color: #FF4900; }
+    top: 3px !important;
+    background-color: #FF4900 !important; }
 
 #bars3 {
   /*a scaled settings size of 7 wide, 6 tall looks very attractive*/
@@ -180,7 +182,7 @@ html, body {
 
 #animation p {
   color: #933600;
-  font-size: 18px; }
+  font-size: 16px; }
 #animation div {
   width: 100%;
   height: calc(13%);
@@ -197,7 +199,7 @@ html, body {
     appearance: none !important;
     -webkit-user-select: none !important;
     outline: none !important;
-    width: calc(80% - 50px);
+    width: calc(80% - 45px);
     height: 15px;
     background-color: #FF4900;
     height: 15px;
@@ -219,45 +221,73 @@ html, body {
   background-color: #FF4900; }
 #animation div:nth-child(1) .bar::-webkit-slider-thumb {
   background-color: #FF4900; }
-#animation div:nth-child(1) output {
-  color: #FF4900; }
+#animation div:nth-child(1) .bar-io {
+  color: #FF4900;
+  border-color: #FF4900; }
 #animation div:nth-child(2) .bar {
   background-color: #14CC46; }
 #animation div:nth-child(2) .bar::-webkit-slider-thumb {
   background-color: #14CC46; }
-#animation div:nth-child(2) output {
-  color: #14CC46; }
+#animation div:nth-child(2) .bar-io {
+  color: #14CC46;
+  border-color: #14CC46; }
 #animation div:nth-child(3) .bar {
   background-color: #40C0DD; }
 #animation div:nth-child(3) .bar::-webkit-slider-thumb {
   background-color: #40C0DD; }
-#animation div:nth-child(3) output {
-  color: #40C0DD; }
+#animation div:nth-child(3) .bar-io {
+  color: #40C0DD;
+  border-color: #40C0DD; }
 #animation div:nth-child(4) .bar {
   background-color: #9D7C12; }
 #animation div:nth-child(4) .bar::-webkit-slider-thumb {
   background-color: #9D7C12; }
-#animation div:nth-child(4) output {
-  color: #9D7C12; }
+#animation div:nth-child(4) .bar-io {
+  color: #9D7C12;
+  border-color: #9D7C12; }
 #animation div:nth-child(5) .bar {
   background-color: #9D121E; }
 #animation div:nth-child(5) .bar::-webkit-slider-thumb {
   background-color: #9D121E; }
-#animation div:nth-child(5) output {
-  color: #9D121E; }
+#animation div:nth-child(5) .bar-io {
+  color: #9D121E;
+  border-color: #9D121E; }
 #animation div:nth-child(6) .bar {
   background-color: #914F9D; }
 #animation div:nth-child(6) .bar::-webkit-slider-thumb {
   background-color: #914F9D; }
-#animation div:nth-child(6) output {
-  color: #914F9D; }
-#animation output {
+#animation div:nth-child(6) .bar-io {
+  color: #914F9D;
+  border-color: #914F9D; }
+#animation .bar-io {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  -webkit-user-select: none !important;
+  outline: none !important;
+  background-color: #F6FAE7;
+  border: 2px dashed;
   float: right;
   position: relative;
   bottom: 5px;
   text-align: right;
-  width: 50px;
+  height: 30px;
+  width: 45px;
+  margin-left: 10px;
+  padding-right: 5px;
   font-weight: 600;
   font-size: 18px; }
+
+#about h2 {
+  color: #FF4900;
+  margin-top: 30px; }
+#about p {
+  color: #933600;
+  font-size: 16px;
+  font-weight: 600; }
+
+#soon h1 {
+  color: #FF4900;
+  margin-left: 20%;
+  margin-top: 20%; }
 
 /*# sourceMappingURL=index.css.map */

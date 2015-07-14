@@ -2,8 +2,9 @@ $(window).load(function(){
     init();
     initialRender();
 
-    // keeps track of which nav item was clicked last
-    var current = false;
+    var current = false;    // keeps track of which nav item was clicked last
+
+    var unfinished = ["full", "points", "options"];
 
     var framer = $("#framer");
     var settings = $("#settings");
@@ -36,21 +37,23 @@ $(window).load(function(){
     window.onresize();
 
     $("#menu li p").click(function(){
-        //Get the name of the file to load based on the button clicked
-        var name = this.innerHTML.toLowerCase().split(" ")[0];
+        var name = this.innerHTML.toLowerCase().split(" ")[0];  //Get the name of the file to load based on the button clicked
 
-        //Disable the visual guide on the last item clicked
-        if (current){ current.nextAll().css({top: "10px", backgroundColor: "transparent"}); }
-        // Enable it on this item
-        $(this).nextAll().css({top: "3px", backgroundColor: "#FF4900"});
+        if (current){ current.nextAll().css({top: "10px", backgroundColor: "transparent"}); }   //Disable the visual guide on the last item clicked
+        $(this).nextAll().css({top: "3px", backgroundColor: "#FF4900"});                        // Enable it on this item
         current = $(this);
 
-        // Fade out the current settings div
-        settings.css({opacity: 0});
-        //Wait for that transition to finish
+        settings.css({opacity: 0});     // Fade out the current settings div
         settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
+            //Wait for that transition to finish
             //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
-            $(this).load("modules/" + name + ".html");
+            if (unfinished.indexOf(name)){
+                console.log(name, unfinished);
+                $(this).load("modules/" + name + ".html");
+            } else {
+                $(this).load("modules/soon.html");
+            }
+
             $(this).css({opacity: 1});
             $(this).unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
         });
@@ -60,15 +63,23 @@ $(window).load(function(){
 
 function usrRotate(value, ind){
     $(".bar").mouseup(function(){
+        // Reset the slider back to 0 (rotations aren't commutative)
         $(".bar").val(0);
         rotations[ind] = 0;
     });
 
-    // If the slider is currently at zero, we just want the new value, not the difference of anything
     ind--;
-    // rotval = zeroflag ? value : value - rotations[ind];
     rotval = value - rotations[ind];
     rotateFigure(rotval, rotfuncs[ind]);
     rotations[ind] = value;
-    // zeroflag = false;
+}
+
+function updateAni(value, ind){
+    // keep the value, not the matrix, so that I can keep the animations page consistent when they come back.
+    ani_rotations[ind] = value;
+    var rots = [];
+    for (var x = 0; x < 6; x++){
+        rots.push(rotfuncs[x](ani_rotations[x] * 0.001))
+    }
+    newRotation(rots);
 }

@@ -13,14 +13,19 @@ $fntfamily: 'Open Sans', sans-serif;
     padding: 0;
 }
 
-html { padding: 20px 7% 10px 7%; }
+html {
+    padding: 20px 80px 10px 80px;
+    min-width: 650px;
+    min-height: 530px;
+
+}
 
 body {
     height: 100%;
     width: 100%;
     font-family: $fntfamily;
     min-width: 650px;
-    min-height: 450px;
+    min-height: 530px;
 }
 
 html, body{
@@ -88,7 +93,7 @@ html, body{
         top: 10px;
         background-color: transparent;
         cursor: default;
-        -webkit-transition: top 0.03s, background-color 0.03s;
+        -webkit-transition: top 0.08s, background-color 0.08s;
         -webkit-transition-timing-function: linear;
     }
 
@@ -98,8 +103,9 @@ html, body{
 
     p:hover + div {
         // The div fades in a few pixels under the name, then rises to underline it
-        top: 3px;
-        background-color: $txtcolor;
+        // I need the important or the js will overrule it once its changed and the js css is embedded
+        top: 3px !important;
+        background-color: $txtcolor !important;
     }
 }
 
@@ -201,11 +207,11 @@ html, body{
     }
 }
 
-// ANIMATION
+// ANIMATION (MAKE THIS BETTER, SASSTEAL THE CODE FROM MANUAL)
 #animation {
     p {
         color: $impcolor;
-        font-size: 18px;
+        font-size: 16px;
     }
 
 
@@ -225,7 +231,7 @@ html, body{
 
         .bar {
             @include fuck_sliders;
-            width: calc(80% - 50px);
+            width: calc(80% - 45px);
             height: 15px;
             background-color: $txtcolor;
             height: 15px;
@@ -250,17 +256,50 @@ html, body{
         div:nth-child(#{$num}) {
             .bar{ background-color: $color; }
             .bar::-webkit-slider-thumb {background-color: $color; }
-            output { color: $color; }
+            .bar-io { color: $color; border-color: $color}
         }
     }
 
-    output {
+    .bar-io {
+        @include fuck_sliders;
+        background-color: $bgcolor;
+        // color: $txtcolor;
+
+        border: 2px dashed;
         float: right;
         position: relative;
+
         bottom: 5px;
         text-align: right;
-        width: 50px;
+        height: 30px;
+        width: 45px;
+        margin-left: 10px;
+        padding-right: 5px;
         font-weight: 600;
         font-size: 18px;
+    }
+}
+
+// ABOUT
+#about {
+    h2 {
+        color: $txtcolor;
+        margin-top: 30px;
+    }
+
+    p {
+    // background-color: red;
+        color: $impcolor;
+        font-size: 16px;
+        font-weight: 600;
+    }
+}
+
+// SOON
+#soon {
+    h1 {
+        color: $txtcolor;
+        margin-left: 20%;
+        margin-top: 20%;
     }
 }

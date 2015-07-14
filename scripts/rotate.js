@@ -149,12 +149,6 @@ function plot(lines, scene){
     var ot = [];
     var exs = [];
 
-
-
-// FUCKING TALK TO KEVIN OR NOAH ABOUT LEXHACK. ITS BEEN ONE WEEK, YOU SHOULD EMAIL SOMEONE. MAYBE THEY HAVE ALREADY, AND THEY'LL ONLY PUT IT UP WHEN THEY GET A REPLLLYYYY
-
-
-
     var radius = 0.03, segments = 9
     var circleGeometry = new THREE.CircleGeometry( radius, segments );
     var shape_pts = circleGeometry.vertices.slice(1, 10);
@@ -225,9 +219,4 @@ function center(curves, exs){
     coords = null;
     extremes = null;
     extr_y = null, extr_x = null, extr_z = null;
-    // for (var x = 0; x < exs.length; x++){
-    //     exs[x].position.x -= 1;
-    //     exs[x].position.y -= 1;
-    //     exs[x].position.z -= 1;
-    // }
 }

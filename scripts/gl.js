@@ -1,7 +1,7 @@
 var loopFlag = false;
 var animate, initialRender, monitorControls, rotateFigure, newRotation;
 var renderer;
-var rotations = [0, 0, 0, 0, 0, 0];
+var rotations = [0, 0, 0, 0, 0, 0], ani_rotations = [0, 0, 0, 0, 0, 0];
 var rotfuncs = [rotateXY_4d, rotateYZ_4d, rotateZX_4d, rotateXW_4d, rotateWY_4d, rotateWZ_4d]
 
 
@@ -10,6 +10,9 @@ var rotfuncs = [rotateXY_4d, rotateYZ_4d, rotateZX_4d, rotateXW_4d, rotateWY_4d,
 // IF I CAN TAKE AN ORDER(N) INCREASE IN THE INITIALIZATION, I MIGHT SPEED UP THE ROTATIONS A LOT.
 // I CAN TRY INITIALIZING EACH EXTRUSION TO SOME DEFAULT LINE, THEN UPDATING THEM TO POINTS, THEN UPDATING ONLY THE VERTICES OF THE GEOMETRIES.
 
+
+// QUESTION: WHY DONT THE VARIABLES IN INIT GET TRASHED? OBVIOUSLY ANIMATE AND INIT CAN KEEP USING THEM. WHY?
+// PROBABLY BECAUSE THE FUNCTIONS THAT USE THEM ARE GLOBAL, EVEN IF THEY AREN'T
 
 
 function init(){
