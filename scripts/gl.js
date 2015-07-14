@@ -112,20 +112,4 @@ function init(){
         }
     }
 
-    // reset = function(){
-    //     console.log(scene.children);
-    //     // for( var i = 0; i < scene.children.length; i++) {
-    //     //     scene.remove(scene.children[i]);
-    //     // }
-    //     // line = getLines(POINTS, genConns(POINTS));
-    //     // ret_list = plot(line, scene);
-    //     //
-    //     // // I have the fear of referencing
-    //     // curves = ret_list[0].slice(0);
-    //     // geos = ret_list[1].slice(0);
-    //     // exs = ret_list[3].slice(0);
-    //     // sh = ret_list[2];
-    //     // rotations = [0, 0, 0, 0, 0, 0];
-    //     // ani_rotations = [0, 0, 0, 0, 0, 0];
-    // }
 }
