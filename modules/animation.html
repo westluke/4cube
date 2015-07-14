@@ -1,11 +1,23 @@
+<script>
+    // console.log("hi");
+    for (var i = 1; i < 7; i++){
+        console.log(ani_rotations);
+        $("#animation div:nth-child(" + i + ") .bar").val(ani_rotations[i - 1]);
+        $("#animation div:nth-child(" + i + ") .bar-io").val(ani_rotations[i - 1]);
+    }
+
+</script>
+
 <div id = "animation">
 
     <!-- 9999999999999999999999999999999999999999999999999999 -->
 
+
+
     <div>
         <p>XY</p>
         <input class = "bar-io" id = "rval1" type = "text" oninput = "updateAni(value, 1);"/>
-        <input class="bar" type="range" value="0" max = "100" min = "0"
+        <input class="bar" type="range" value = "0" max = "100" min = "0"
         step = "1" oninput="rval1.value=value; updateAni(value, 1);"/>
     </div>
 

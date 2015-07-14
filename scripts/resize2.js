@@ -3,9 +3,7 @@ $(window).load(function(){
     initialRender();
 
     var current = false;    // keeps track of which nav item was clicked last
-
     var unfinished = ["full", "points", "options"];
-
     var framer = $("#framer");
     var settings = $("#settings");
     var main = $("#main");
@@ -15,7 +13,6 @@ $(window).load(function(){
         loopFlag = true;
         animate();
     });
-
     framer.mouseleave(function () {
             loopFlag = false;
     });
@@ -25,7 +22,6 @@ $(window).load(function(){
         console.log("resize");
         var mwidth = $("#main").width();
         var mheight = $("#main").height();
-
         // usually the height is fairly low, so the framer should scale off of that.
         // Other times, the width is the limiting factor, with settings in the way.
         var size = (mwidth*0.5 < mheight) ? mwidth*0.5 : mheight;
@@ -38,7 +34,6 @@ $(window).load(function(){
 
     $("#menu li p").click(function(){
         var name = this.innerHTML.toLowerCase().split(" ")[0];  //Get the name of the file to load based on the button clicked
-
         if (current){ current.nextAll().css({top: "10px", backgroundColor: "transparent"}); }   //Disable the visual guide on the last item clicked
         $(this).nextAll().css({top: "3px", backgroundColor: "#FF4900"});                        // Enable it on this item
         current = $(this);
@@ -47,18 +42,18 @@ $(window).load(function(){
         settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
             //Wait for that transition to finish
             //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
-            if (unfinished.indexOf(name)){
+            if (!(unfinished.indexOf(name) + 1)){
                 console.log(name, unfinished);
                 $(this).load("modules/" + name + ".html");
             } else {
                 $(this).load("modules/soon.html");
             }
-
             $(this).css({opacity: 1});
             $(this).unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
         });
     });
 
+    $("#menu li:nth-child(3) p").click();
 });
 
 function usrRotate(value, ind){
@@ -76,6 +71,7 @@ function usrRotate(value, ind){
 
 function updateAni(value, ind){
     // keep the value, not the matrix, so that I can keep the animations page consistent when they come back.
+    ind--;
     ani_rotations[ind] = value;
     var rots = [];
     for (var x = 0; x < 6; x++){

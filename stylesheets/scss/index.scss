@@ -234,7 +234,6 @@ html, body{
             width: calc(80% - 45px);
             height: 15px;
             background-color: $txtcolor;
-            height: 15px;
             border-radius: 5px;
             float: right;
         }
@@ -253,6 +252,7 @@ html, body{
 
     //Loops through and assigns each bar and output its correct color
     @each $color, $num in $loop{
+        //have to have the +1 because there's a script tag there
         div:nth-child(#{$num}) {
             .bar{ background-color: $color; }
             .bar::-webkit-slider-thumb {background-color: $color; }

@@ -202,7 +202,6 @@ html, body {
     width: calc(80% - 45px);
     height: 15px;
     background-color: #FF4900;
-    height: 15px;
     border-radius: 5px;
     float: right; }
   #animation div .bar::-webkit-slider-thumb {
