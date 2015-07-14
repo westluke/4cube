@@ -1,0 +1,53 @@
+<div id = "animation">
+    <div>
+        <p>XY</p>
+        <output id="rval1">0</output>
+        <input class="bar" type="range" value="0" max = "100" min = "0"
+        step = "1" oninput="rval1.innerHTML=value; usrRotate(value, 1);"/>
+    </div>
+
+    <div>
+        <p>YZ</p>
+        <output id="rval2">0</output>
+        <input class="bar" type="range" value="0" max = "100" min = "-0"
+        step = "1" oninput="rval2.innerHTML=value; usrRotate(value, 2);"/>
+    </div>
+
+    <div>
+        <p>ZX</p>
+        <output id="rval3">0</output>
+        <input class="bar" type="range" value="0" max = "100" min = "-0"
+        step = "1" oninput="rval3.innerHTML=value; usrRotate(value, 3);"/>
+    </div>
+
+    <div>
+        <p>XW</p>
+        <output id="rval4">0</output>
+        <input class="bar" type="range" value="0" max = "100" min = "-0"
+        step = "1" oninput="rval4.innerHTML=value; usrRotate(value, 4);"/>
+    </div>
+
+    <div>
+        <p>WY</p>
+        <output id="rval5">0</output>
+        <input class="bar" type="range" value="0" max = "100" min = "-0"
+        step = "1" oninput="rval5.innerHTML=value; usrRotate(value, 5);"/>
+    </div>
+
+    <div>
+        <p>WZ</p>
+        <output id="rval6">0</output>
+        <input class="bar" type="range" value="0" max = "100" min = "-0"
+        step = "1" oninput="rval6.innerHTML=value; usrRotate(value, 6);"/>
+    </div>
+
+    <button type = "submit">Apply</button>
+    <p id = "tip">Choose speeds of rotation on each plane. (Note: at higher speeds, the animation may become slightly inaccurate.)</p>
+</div>
+
+<!-- HOW DO I LET THEM PICK THE ORDER OF ROTATIONS NICELY? I DONT NEEEEEEDDDD TOOOOOOO IT DOESN'T MATTER HERE, THE SIZES ARE SMALL ENOUGH -->
+<!-- JUST ALL 6 PLANES, COLOR CODED AGAIN, WITH INPUT BOXES FOR THE SPEEDS, BETWEEN 1 AND 100 (01 AND 0.1) -->
+<!-- ORRRRR JUST USE SLIDERS AGAIN WITH SMALLER STEPS! REALLY EASY, REALLY SIMILAR TO MANUAL! -->
+<!-- USE A REPEATING BACKGROUND IN THE DIV TO SHOW THE STEPS 1-100 -->
+
+<!-- IDeAAAAA the outputs are actually updating inputs. they have a clear border, an indication of difference, maybe they're blinking or something, but you can update them. -->

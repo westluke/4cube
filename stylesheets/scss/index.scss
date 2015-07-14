@@ -1,26 +1,26 @@
 $bgcolor: #F6FAE7;
 $txtcolor: #FF4900;
 $impcolor: #933600;
+$loop: zip($txtcolor #14CC46 #40C0DD #9D7C12 #9D121E #914F9D, 1 2 3 4 5 6);
 
 $fntfamily: 'Open Sans', sans-serif;
 
 // REMEMBER FONT POSSIBILITY: PT SANS (HAML)
 
+// BASE DESKTOP SITE
 *{
     margin: 0;
     padding: 0;
 }
 
-html {
-    padding: 20px 7% 10px 7%;
-}
+html { padding: 20px 7% 10px 7%; }
 
 body {
     height: 100%;
     width: 100%;
     font-family: $fntfamily;
-    min-width: 600px;
-    min-height: 600px;
+    min-width: 650px;
+    min-height: 450px;
 }
 
 html, body{
@@ -41,7 +41,6 @@ html, body{
 }
 
 #main {
-    margin-top: 20px;
     height: calc(100% - 30px - 100px - 10px);
     /*window height - margin-top - margin-bottom - header height - padding*/
     width: 100%;
@@ -49,13 +48,12 @@ html, body{
 }
 
 #framer {
+    z-index: 10;
     // Framer goes around container. Framer's background results in the framed-photo-style border around container
     float: left;
     width: 0px;
     height: 0px;
-    // both are a certain portion of min(width, height)
-    //height: Defined by javascript;
-    // width: Defined by javascript;
+    // width, height are defined in js based on main.width, main.height
     background-image:   linear-gradient(to bottom right, $txtcolor, $txtcolor 11.1%, transparent 11.1%, transparent),
                         linear-gradient(to top left, $txtcolor, $txtcolor 11.1%, transparent 11.1%, transparent);
     background-size: calc(0.826 * 100%) calc(0.826 * 100%);
@@ -63,12 +61,14 @@ html, body{
 }
 
 #container {
+    z-index: 1;
     height: calc(100% - 8px);
     width: calc(100% - 8px);
     left: 4;
     top: 4;
     position: relative;
     background-color: $bgcolor;
+    cursor: pointer;
 }
 
 #menu li{
@@ -79,6 +79,7 @@ html, body{
     font-weight: 600;
     margin-top: 20px;
     margin-left: 24px;
+    list-style: none;
 
     div{
         position: relative;
@@ -87,7 +88,6 @@ html, body{
         top: 10px;
         background-color: transparent;
         cursor: default;
-
         -webkit-transition: top 0.03s, background-color 0.03s;
         -webkit-transition-timing-function: linear;
     }
@@ -97,6 +97,7 @@ html, body{
     p:hover{ color: #FA7641; }
 
     p:hover + div {
+        // The div fades in a few pixels under the name, then rises to underline it
         top: 3px;
         background-color: $txtcolor;
     }
@@ -117,36 +118,36 @@ html, body{
 
 
 
-// SETTINGS
+// BASE SETTINGS
+#settings {
+    float: right;
+    height: 100%;
+    padding-top: 30px;
+    opacity: 1;
+    -webkit-transition: opacity 0.15s;
+    -webkit-transition-timing-function: linear;
+}
 
+
+// MANUAL
 @mixin fuck_sliders{
+    // Sliders are fucking annoying sometimes
     -webkit-appearance: none !important;
     appearance: none !important;
     -webkit-user-select: none !important;
     outline: none !important;
 }
 
-$loop: zip($txtcolor #14CC46 #40C0DD #9D7C12 #9D121E #914F9D, 1 2 3 4 5 6);
-
-
-#settings {
-    box-sizing: border-box;
-    float: right;
-    height: 100%;
-    padding-top: 30px;
-    // border: 2px solid black;
-
+#manual {
     p {
         color: $impcolor;
         font-size: 18px;
-
     }
+
 
     div{
         width: 100%;
-        // margin-bottom: 20%;
         height: calc(13%);
-        // float: right;
         clear: both;
 
         p {
@@ -156,18 +157,15 @@ $loop: zip($txtcolor #14CC46 #40C0DD #9D7C12 #9D121E #914F9D, 1 2 3 4 5 6);
             font-weight: bold;
             margin-top: -6px;
             color: $impcolor;
-
         }
 
         .bar {
             @include fuck_sliders;
             width: calc(80% - 50px);
         	height: 15px;
-
             background-color: $txtcolor;
             height: 15px;
             border-radius: 5px;
-
             float: right;
         }
 
@@ -176,8 +174,6 @@ $loop: zip($txtcolor #14CC46 #40C0DD #9D7C12 #9D121E #914F9D, 1 2 3 4 5 6);
         	position: relative;
         	width: 18px;
         	height: 30px;
-            // background-color: #14CC46;
-            // background-color: $txtcolor;
             border: 3px solid $bgcolor;
             border-radius: 5px;
         	cursor: pointer;
@@ -185,6 +181,7 @@ $loop: zip($txtcolor #14CC46 #40C0DD #9D7C12 #9D121E #914F9D, 1 2 3 4 5 6);
         }
     }
 
+    //Loops through and assigns each bar and output its correct color
     @each $color, $num in $loop{
         div:nth-child(#{$num}) {
             .bar{ background-color: $color; }
@@ -192,17 +189,78 @@ $loop: zip($txtcolor #14CC46 #40C0DD #9D7C12 #9D121E #914F9D, 1 2 3 4 5 6);
             output { color: $color; }
         }
     }
+
+    output {
+        float: right;
+        position: relative;
+        bottom: 5px;
+        text-align: right;
+        width: 50px;
+        font-weight: 600;
+        font-size: 18px;
+    }
 }
 
-output {
-    float: right;
-    position: relative;
-    bottom: 5px;
-    // right: 5px;
-    text-align: right;
-    width: 50px;
-    // margin-left: 8px;
-    font-weight: 600;
-    font-size: 18px;
-    // color: $txtcolor;
+// ANIMATION
+#animation {
+    p {
+        color: $impcolor;
+        font-size: 18px;
+    }
+
+
+    div{
+        width: 100%;
+        height: calc(13%);
+        clear: both;
+
+        p {
+            float: left;
+            font-family: $fntfamily;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: -6px;
+            color: $impcolor;
+        }
+
+        .bar {
+            @include fuck_sliders;
+            width: calc(80% - 50px);
+            height: 15px;
+            background-color: $txtcolor;
+            height: 15px;
+            border-radius: 5px;
+            float: right;
+        }
+
+        .bar::-webkit-slider-thumb {
+            @include fuck_sliders;
+            position: relative;
+            width: 18px;
+            height: 30px;
+            border: 3px solid $bgcolor;
+            border-radius: 5px;
+            cursor: pointer;
+            shadow: none;
+        }
+    }
+
+    //Loops through and assigns each bar and output its correct color
+    @each $color, $num in $loop{
+        div:nth-child(#{$num}) {
+            .bar{ background-color: $color; }
+            .bar::-webkit-slider-thumb {background-color: $color; }
+            output { color: $color; }
+        }
+    }
+
+    output {
+        float: right;
+        position: relative;
+        bottom: 5px;
+        text-align: right;
+        width: 50px;
+        font-weight: 600;
+        font-size: 18px;
+    }
 }

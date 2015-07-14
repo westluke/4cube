@@ -1,0 +1,22 @@
+Bases:
+    Desktop:
+        Title, framer to left of settings div, listed menu options across top
+    Mobile:
+        title, settings icon that expands to menu, framer above settings div
+
+Modules (max two per page)
+    Settings:
+        html and css modules that are loaded with jquery into the settings div
+
+Shared JS:
+    all pre-existing modules
+    gl.js, rotate.js, resize.js
+
+need to move rotation functions into separate file, specific to manual control
+BUT ROTATION ANIMATIONS PERSIST this is important, how do we do that?
+could have resize.js be the main hub, execute other js files dynamically
+
+If I choose a multiple-page design, im looking at cookies, php, all that server-side stuff to retain information
+about the user and the animations
+
+and I really want to try this design.

@@ -16,23 +16,29 @@
     </head>
 
     <body>
+        <!--  PAGE ORGANIZATION IDEA: when you cliCK ON ANOTHER LINK, THE CURRENT SETTINGS PAGE FADES TO $TXTCOLOR, DURING WHICH THE NEW
+            DIV IS LOADED SOMEHOW (AJAX? PHP? FROM DATABASE OR LIBRARY?) AND THE ORANGE FADES TO REVEAL-->
+
+            <!-- ACCOMPLISH FADE BY SURROUNDING SETTINGS DIV WITH FADE DIV -->
+
         <!-- // <script type = "text/javascript" src = "scripts/resize.js"> </script> -->
 
         <!--IDEA: COLOR 3D CUBE, 4D CUBE, AND CONNECTIONS DIFFERENTLY-->
 
         <!-- DOESNT MAKE SENSE TO ROTATE MANUALLY AND AUTO AT THE SAME TIME, SO GIVE OPTION TO STOP ROTATION, OTHERWISE NO MANUAL -->
 
+
         <div id = "header">
             <p id = "title">4Cube.io</p>
 
             <nav>
             <ul id = "menu">
-                <li> <p> Settings </p>  <div></div>      </li>
-                <li> <p> Points </p>    <div></div>        </li>
-                <li> <p> Animation </p> <div></div>     </li>
-                <li> <p> Manual </p>    <div></div>        </li>
-                <li> <p> Full Screen </p>    <div></div>        </li>
-                <li> <p> About </p>    <div></div>        </li>
+                <li> <p>Options</p>  <div></div>      </li>
+                <li> <p>Points</p>    <div></div>        </li>
+                <li> <p>Animation</p> <div></div>     </li>
+                <li> <p>Manual</p>    <div></div>        </li>
+                <li> <p>Full Screen</p>    <div></div>        </li>
+                <li> <p>About</p>    <div></div>        </li>
             </ul>
             </nav>
 
@@ -48,56 +54,14 @@
                 </div>
             </div>
 
-            <div id = "settings">
-                <!-- <div id="slider"> -->
-                <!--THIS COULD BE A LOT LESS UGLY IF YOU GET RID OF THE INITIAL TEXT AND THEN RUN INITIAL CALLS TO THE JAVASCRIPT FUNCTIONS
-                    ALSO, HAVE THE FUNCTION REPLACE THE TEXT TO MAKE IT EASIER.-->
+            <!-- <div id = "fader"> -->
+                <div id = "settings">
+                    <!-- <div id="slider"> -->
+                    <!--THIS COULD BE A LOT LESS UGLY IF YOU GET RID OF THE INITIAL TEXT AND THEN RUN INITIAL CALLS TO THE JAVASCRIPT FUNCTIONS
+                        ALSO, HAVE THE FUNCTION REPLACE THE TEXT TO MAKE IT EASIER.-->
 
-                <div>
-                    <p>XY</p>
-                    <output id="rval1">0.0</output>
-                	<input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28"
-                    step = "0.05" oninput="rval1.innerHTML=value; usrRotate(value, 1);"/>
                 </div>
-
-                <div>
-                    <p>YZ</p>
-                    <output id="rval2">0.0</output>
-                	<input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28"
-                    step = "0.05" oninput="rval2.innerHTML=value; usrRotate(value, 2);"/>
-                </div>
-
-                <div>
-                    <p>ZX</p>
-                    <output id="rval3">0.0</output>
-                	<input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28"
-                    step = "0.05" oninput="rval3.innerHTML=value; usrRotate(value, 3);"/>
-                </div>
-
-                <div>
-                    <p>XW</p>
-                    <output id="rval4">0.0</output>
-                	<input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28"
-                    step = "0.05" oninput="rval4.innerHTML=value; usrRotate(value, 4);"/>
-                </div>
-
-                <div>
-                    <p>WY</p>
-                    <output id="rval5">0.0</output>
-                	<input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28"
-                    step = "0.05" oninput="rval5.innerHTML=value; usrRotate(value, 5);"/>
-                </div>
-
-                <div>
-                    <p>WZ</p>
-                    <output id="rval6">0.0</output>
-                	<input class="bar" type="range" value="0.00" max = "6.28" min = "-6.28"
-                    step = "0.05" oninput="rval6.innerHTML=value; usrRotate(value, 6);"/>
-                </div>
-                <p id = "tip">Move the sliders to rotate the figure on their respective planes.</p>
-
-            </div>
-
+            <!-- </div> -->
         </div>
         <!-- // <script type = "text/javascript" src = "scripts/resize.js"> </script> -->
         <!-- // <script type = "text/javascript" src = "scripts/resize2.js"> </script> -->

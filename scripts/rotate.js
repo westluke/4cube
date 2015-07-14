@@ -1,4 +1,5 @@
-POINTS = [[0, 0, 0, 0],
+POINTS =
+[[0, 0, 0, 0],
 [0, 0, 0, 1],
 [0, 0, 1, 1],
 [0, 0, 1, 0],
@@ -14,9 +15,6 @@ POINTS = [[0, 0, 0, 0],
 [1, 1, 1, 0],
 [1, 1, 0, 0],
 [1, 1, 0, 1]];
-
-// CUBE DISPLAY MUST SCALE. COULD SCALE BY MIN(WIDTH, HEIGHT), ACCOUNTING FOR MARGINS, I FEEL LIKE NO SCROLLING COULD BE GOOD.
-// OR MAYBE THEY SHOULD SCROLL TO THE SETTINGS? IT COULD BE AN OPTION?
 
 
 function getRotationMatrix_4d(axes, theta){
@@ -57,10 +55,7 @@ function testRotations(theta){
 
 
 function transEx(curves, geos, exs, shape, transform){
-    // console.log(tubes[0].vertices);
-    // line 31 is normally a point in 3d space. after a 4d rotation, it becomes a line with a change in x in 3d space.
-    // However, THREE is just taking the average of the terminal x values and putting the circle there.
-    // Maybe if a geometry has already been initalized as a point, it doesn't want to do anythuing more?
+    // I might be able to speed this up by just initializing the extrusions to something other than a point, and then taking them back.
 
     for (var k = 0; k < curves.length; k++){
         for (var i = 0; i < curves[0].points.length; i++){
@@ -69,19 +64,10 @@ function transEx(curves, geos, exs, shape, transform){
         }
 
         var geo = new THREE.ExtrudeGeometry(shape, {steps:1, extrudePath: curves[k]});
-        // geos[k].verticesNeedUpdate = true;
-        // geos[k].vertices = geo.vertices.slice(0);
-        // geos[k].verticesNeedUpdate = true;
-
         exs[k].geometry.dispose();
-        // exs[k].material.dispose();
-        // exs[k].geometry.clone(geo);
         exs[k].geometry = geo.clone();
-        // exs[k].material = mattrans.clone();
-
         geo.dispose();
     }
-    // mat.dispose();
 }
 
 
@@ -156,18 +142,9 @@ function getLines(points, conns){
 }
 
 function plot(lines, scene){
-                // lines = [lines[0], lines[7], lines[13], lines[15], lines[21], lines[24], lines[25], lines[31]]
-    // lines = [lines[0]];
-    // linesn = lines.slice(0);
-    // lines = [];
-    // mat = new THREE.MeshLambertMaterial( { color: 0xff0000, wireframe: false} );
-    // console.log(lines);
-    // return;
-    // mat = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: false, skinning: true, wrapAround: true, _needsUpdate: true} );
+    // given a bunch of lines and a scene, this function will add a bunch of extrusions from the lines to the scene.
+
     mat =  new THREE.MeshLambertMaterial({color: 0xFF4900});
-    // mat.needsUpdate = true;
-    // mat._needsUpdate = true;
-    // var geo, line_curve, ex;
     var tubes = [];
     var ot = [];
     var exs = [];
@@ -178,9 +155,9 @@ function plot(lines, scene){
 
 
 
-    var radius = 0.03, segments = 4
+    var radius = 0.03, segments = 9
     var circleGeometry = new THREE.CircleGeometry( radius, segments );
-    var shape_pts = circleGeometry.vertices.slice(1, 5);
+    var shape_pts = circleGeometry.vertices.slice(1, 10);
     var shape = new THREE.Shape(shape_pts);
 
     var extrudeSettings = {
@@ -191,22 +168,17 @@ function plot(lines, scene){
 
     for (var a = 0; a < lines.length; a++){
         var line_curve = new THREE.SplineCurve3(lines[a]);
-        // console.log(line_curve);
         var geo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-        // console.log(geo);
+        //dont want to reference the mat directly
         var ex = new THREE.Mesh(geo, mat.clone());
-        ex.frustumCulled = false;
-        // console.log(ex);
-
+        ex.frustumCulled = false; //without this, the camera destroys extrusions unpredictably. super annoying
         tubes.push(line_curve);
         ot.push(geo);
         scene.add(ex);
-
         exs.push(ex);
     }
     mat.dispose();
     circleGeometry.dispose();
-    // shape.dispose();
     lines = null;
 
     return [tubes, ot, shape, exs];
