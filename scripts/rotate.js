@@ -250,6 +250,9 @@ function center(curves, exs){
 
     pos = null;
     vec = null;
+    coords = null;
+    extremes = null;
+    extr_y = null, extr_x = null, extr_z = null;
     // for (var x = 0; x < exs.length; x++){
     //     exs[x].position.x -= 1;
     //     exs[x].position.y -= 1;

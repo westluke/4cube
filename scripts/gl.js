@@ -1,18 +1,17 @@
-var container;
 var camera, controls, scene, renderer;
-var geo, geos, line, tubes, curves, sh;
+var geos, line, tubes, curves, sh;
 var light;
 
 var xw = rotateXW_4d(0.02);
 var wy = rotateWY_4d(0.02);
 var wz = rotateWZ_4d(0.02);
-var cnt = 0;
-var composer;
+var combo = xw.multiply(wy).multiply(wz);
+// always combo them. its so much faster
 
 var loopFlag = false;
 
 var dumb1 = rotateXW_4d(0.001);
-var dumb2 = rotateXW_4d(-0.001);;
+var dumb2 = rotateXW_4d(-0.001);
 
 
 
@@ -21,22 +20,24 @@ var dumb2 = rotateXW_4d(-0.001);;
 // IF I CAN TAKE AN ORDER(N) INCREASE IN THE INITIALIZATION, I MIGHT SPEED UP THE ROTATIONS A LOT.
 // I CAN TRY INITIALIZING EACH EXTRUSION TO SOME DEFAULT LINE, THEN UPDATING THEM TO POINTS, THEN UPDATING ONLY THE VERTICES OF THE GEOMETRIES.
 //
-//
+// PUT ALL YOUR JS FUNCTION CALL SHIT INTO A WINDOW.ONLOAD. THAT WAS ANNOYING TO FIX.
+// ALL THE SHIT IS OUT OF ORDER. THIS FILE EXECUTES BEFORE THE DOCUMENT IS READY, AND THAT FUCKS UP RESIZE.JS BADLY
+// DEFINITIONS N SHIT GO AT THE BEGINNING. THAT INCLUDES MOST OF THE SHIT IN THIS FILE AND ROTATE.JS, AND ALL THE LIBRARIES
+// AFTER THOSE DECLARATIONS AND DEFINITIONS, WE DEFINE WINDOW.LOAD, WITH INIT AND ANIMATE AND ALL THAT SHIT
 
 
 
 
 
-init();
-initialRender();
 
 function init(){
     scene = new THREE.Scene();
 
     renderer = new THREE.WebGLRenderer({alpha: true});
     renderer.setPixelRatio( window.devicePixelRatio );
-    container = document.getElementById( 'container' );
-    container.appendChild( renderer.domElement );
+    // CHANGED
+
+    document.getElementById( 'container' ).appendChild( renderer.domElement );
 
     camera = new THREE.PerspectiveCamera( 60, 1, 0.001, 8);
     camera.position.set( 0, 0, 2 );
@@ -59,42 +60,43 @@ function init(){
 
     controls.addEventListener( 'change', render);
     center(curves, exs);
+    // renderer.render(scene, camera);
 
 }
 
 function animate(){
-    setTimeout( function() {
+    // setTimeout( function() {
         if (loopFlag){
             requestAnimationFrame(animate); }
-    }, 1);
+    // }, 10);
     controls.update();
-    transEx(curves, geos, exs, sh, xw);
-    transEx(curves, geos, exs, sh, wy);
-    transEx(curves, geos, exs, sh, wz);
+    transEx(curves, geos, exs, sh, combo);
     center(curves, exs);
     renderer.render(scene, camera);
 }
 
 function initialRender(){
     if (!loopFlag){
-        console.log("FUCK");
-        // controls.update();
+        setTimeout(function(){
+            // console.log("InitRender");
+            // controls.update();
 
-        transEx(curves, geos, exs, sh, dumb1);
-        transEx(curves, geos, exs, sh, dumb2);
-        // center(curves, exs);
-        renderer.render(scene, camera);
-        // render();
-        requestAnimationFrame(initialRender);
+            transEx(curves, geos, exs, sh, dumb1);
+            transEx(curves, geos, exs, sh, dumb2);
+            // center(curves, exs);
+            renderer.render(scene, camera);
+            // render();
+            requestAnimationFrame(initialRender);
+        }, 100)
     }
 }
 
-function monitorControls(){
-    controls.update();
-}
+// function monitorControls(){
+//     controls.update();
+// }
 
 function render() {
-    light.position.copy( camera.position );
+    // light.position.copy( camera.position );
     // renderer.render(scene, camera);
     // console.log(camera.position);
     // console.log(exs[1].position.sub(camera.position));

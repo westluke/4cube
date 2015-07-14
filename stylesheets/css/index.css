@@ -8,7 +8,9 @@ html {
 body {
   height: 100%;
   width: 100%;
-  font-family: "Open Sans", sans-serif; }
+  font-family: "Open Sans", sans-serif;
+  min-width: 600px;
+  min-height: 600px; }
 
 html, body {
   background-color: #F6FAE7; }
@@ -88,6 +90,9 @@ html, body {
   float: right;
   height: 100%;
   padding-top: 30px; }
+  #settings p {
+    color: #933600;
+    font-size: 18px; }
   #settings div {
     width: 100%;
     height: calc(13%);
