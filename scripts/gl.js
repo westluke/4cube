@@ -1,7 +1,7 @@
 var loopFlag = false;
 var animate, initialRender, monitorControls, rotateFigure, newRotation;
 var renderer;
-var rotations = [0, 0, 0, 0, 0, 0], ani_rotations = ['0', '0', '0', '0', '0', '0'];
+var rotations = [0, 0, 0, 0, 0, 0], ani_rotations = ['0', '0', '0', '1', '1', '1'];
 var rotfuncs = [rotateXY_4d, rotateYZ_4d, rotateZX_4d, rotateXW_4d, rotateWY_4d, rotateWZ_4d]
 
 

@@ -1,3 +1,52 @@
+<div id = "animation">
+
+    <!-- 9999999999999999999999999999999999999999999999999999 -->
+    <div>
+        <p>XY</p>
+        <input class = "bar-io" id = "rval1" type = "text" oninput = "if ((value%1===0) && value){range1.value = value;}else{range1.value = 0;} updateAni(value, 1);"/>
+        <input class="bar" id = "range1" type="range" default = "0" max = "100" min = "0"
+        step = "1" oninput="rval1.value=value; updateAni(value, 1)"/>
+    </div>
+
+    <div>
+        <p>YZ</p>
+        <input class = "bar-io" id = "rval2" type = "text" oninput = "if ((value%1===0) && value){range2.value = value;}else{range2.value = 0;} updateAni(value, 2);"/>
+        <input class="bar" id = "range2" type="range" value="0" max = "100" min = "-0"
+        step = "1" oninput="rval2.value=value; updateAni(value, 2);"/>
+    </div>
+
+    <div>
+        <p>ZX</p>
+        <input class = "bar-io" id = "rval3" type = "text" oninput = "if ((value%1===0) && value){range3.value = value;}else{range3.value = 0;} updateAni(value, 3);"/>
+        <input class="bar" id = "range3" type="range" value="0" max = "100" min = "-0"
+        step = "1" oninput="rval3.value=value; updateAni(value, 3);"/>
+    </div>
+
+    <div>
+        <p>XW</p>
+        <input class = "bar-io" id = "rval4" type = "text" oninput = "if ((value%1===0) && value){range4.value = value;}else{range4.value = 0;} updateAni(value, 4);"/>
+        <input class="bar" id = "range4" type="range" value="0" max = "100" min = "-0"
+        step = "1" oninput="rval4.value=value; updateAni(value, 4);"/>
+    </div>
+
+    <div>
+        <p>WY</p>
+        <input class = "bar-io" id = "rval5" type = "text" oninput = "if ((value%1===0) && value){range5.value = value;}else{range5.value = 0;} updateAni(value, 5);"/>
+        <input class="bar" id = "range5" type="range" value="0" max = "100" min = "-0"
+        step = "1" oninput="rval5.value=value; updateAni(value, 5);"/>
+    </div>
+
+    <div>
+        <p>WZ</p>
+        <input class = "bar-io" id = "rval6" type = "text" oninput = "if ((value%1===0) && value){range6.value = value;}else{range6.value = 0;} updateAni(value, 6);"/>
+        <input class="bar" id = "range6" type="range" value="0" max = "100" min = "-0"
+        step = "1" oninput="rval6.value=value; updateAni(value, 6);"/>
+    </div>
+
+    <!-- <button type = "submit">Apply</button> -->
+    <p id = "tip">Choose speeds of rotation on each plane. (Note: at higher speeds, the animation may become slightly inaccurate.)</p>
+</div>
+
 <script>
     // console.log("hi");
     for (var i = 1; i < 7; i++){
@@ -8,57 +57,6 @@
 
 </script>
 
-<div id = "animation">
-
-    <!-- 9999999999999999999999999999999999999999999999999999 -->
-
-
-
-    <div>
-        <p>XY</p>
-        <input class = "bar-io" id = "rval1" type = "text" oninput = "updateAni(value, 1);"/>
-        <input class="bar" type="range" value = "0" max = "100" min = "0"
-        step = "1" oninput="rval1.value=value; updateAni(value, 1);"/>
-    </div>
-
-    <div>
-        <p>YZ</p>
-        <input class = "bar-io" id = "rval2" type = "text" oninput = "updateAni(value, 2);"/>
-        <input class="bar" type="range" value="0" max = "100" min = "-0"
-        step = "1" oninput="rval2.value=value; updateAni(value, 2);"/>
-    </div>
-
-    <div>
-        <p>ZX</p>
-        <input class = "bar-io" id = "rval3" type = "text" oninput = "updateAni(value, 3);"/>
-        <input class="bar" type="range" value="0" max = "100" min = "-0"
-        step = "1" oninput="rval3.value=value; updateAni(value, 3);"/>
-    </div>
-
-    <div>
-        <p>XW</p>
-        <input class = "bar-io" id = "rval4" type = "text" oninput = "updateAni(value, 4);"/>
-        <input class="bar" type="range" value="0" max = "100" min = "-0"
-        step = "1" oninput="rval4.value=value; updateAni(value, 4);"/>
-    </div>
-
-    <div>
-        <p>WY</p>
-        <input class = "bar-io" id = "rval5" type = "text" oninput = "updateAni(value, 5);"/>
-        <input class="bar" type="range" value="0" max = "100" min = "-0"
-        step = "1" oninput="rval5.value=value; updateAni(value, 5);"/>
-    </div>
-
-    <div>
-        <p>WZ</p>
-        <input class = "bar-io" id = "rval6" type = "text" oninput = "updateAni(value, 2);"/>
-        <input class="bar" type="range" value="0" max = "100" min = "-0"
-        step = "1" oninput="rval6.value=value; updateAni(value, 6);"/>
-    </div>
-
-    <!-- <button type = "submit">Apply</button> -->
-    <p id = "tip">Choose speeds of rotation on each plane. (Note: at higher speeds, the animation may become slightly inaccurate.)</p>
-</div>
 
 <!-- HOW DO I LET THEM PICK THE ORDER OF ROTATIONS NICELY? I DONT NEEEEEEDDDD TOOOOOOO IT DOESN'T MATTER HERE, THE SIZES ARE SMALL ENOUGH -->
 <!-- JUST ALL 6 PLANES, COLOR CODED AGAIN, WITH INPUT BOXES FOR THE SPEEDS, BETWEEN 1 AND 100 (0.001 AND 0.1) -->
