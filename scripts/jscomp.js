@@ -375,13 +375,22 @@ $(window).load(function(){
     window.onresize();
 
     $("#menu li p").click(function(){
+        var doneflag = false;
         var name = this.innerHTML.toLowerCase().split(" ")[0];  //Get the name of the file to load based on the button clicked
         if (current){ current.nextAll().css({top: "10px", backgroundColor: "transparent"}); }   //Disable the visual guide on the last item clicked
         $(this).nextAll().css({top: "3px", backgroundColor: "#FF4900"});                        // Enable it on this item
         current = $(this);
 
         settings.css({opacity: 0});     // Fade out the current settings div
-        settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
+        console.log(name);
+        // 'transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd'
+
+        // you might be wondering, dear reader, why I need two nearly identical sections of ugly code.
+        // thats because transitionend is an asshole and safari is a piece of shit
+
+        settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function(){
+            doneflag = true;
+            console.log('fuck');
             //Wait for that transition to finish
             //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
             if ((unfinished.indexOf(name) + 1)){
@@ -392,6 +401,21 @@ $(window).load(function(){
                 settings.unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
             });
         });
+
+        if (!doneflag){
+            $(window).off('focus').on('focus', function () {
+                console.log('fuck');
+                //Wait for that transition to finish
+                //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
+                if ((unfinished.indexOf(name) + 1)){
+                    name = "soon";
+                }
+                settings.load("modules/" + name + ".html", function(){
+                    settings.css({opacity: 1});
+                    settings.unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
+                });
+            });
+        }
     });
 
     $("#menu li:nth-child(3) p").click();
