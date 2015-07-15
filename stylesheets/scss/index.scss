@@ -90,6 +90,22 @@ html, body{
         font-size: 12px;
         font-weight: 600;
     }
+
+    button {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        height: 25px;
+        width: 40px;
+        font-family: $fntfamily;
+        background-color: $bgcolor;
+        color: $txtcolor;
+        border: 3px solid $txtcolor;
+        border-radius: 3px;
+        cursor: pointer;
+        font-weight: 600;
+        outline: none;
+    }
 }
 
 #menu li{

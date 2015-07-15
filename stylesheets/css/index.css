@@ -59,6 +59,20 @@ html, body {
     color: #FF4900;
     font-size: 12px;
     font-weight: 600; }
+  #container button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    height: 25px;
+    width: 40px;
+    font-family: "Open Sans", sans-serif;
+    background-color: #F6FAE7;
+    color: #FF4900;
+    border: 3px solid #FF4900;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: 600;
+    outline: none; }
 
 #menu li {
   float: right;

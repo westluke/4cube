@@ -223,10 +223,11 @@ function center(curves, exs){
 
 
 var loopFlag = false;
-var animate, initialRender, monitorControls, rotateFigure, newRotation;
+var animate, initialRender, monitorControls, rotateFigure, newRotation, reset, newExs;
 var renderer;
 var rotations = [0, 0, 0, 0, 0, 0], ani_rotations = ['0', '0', '0', '1', '1', '1'];
 var rotfuncs = [rotateXY_4d, rotateYZ_4d, rotateZX_4d, rotateXW_4d, rotateWY_4d, rotateWZ_4d]
+// var curves, geos, exs;
 
 
 // TO SPEED UP: THE REASON THE POINTS WEREN'T SHADING WAS (I THINK) BECAUSE THEY WERE INTIALIZED AS POINTS.
@@ -241,7 +242,7 @@ var rotfuncs = [rotateXY_4d, rotateYZ_4d, rotateZX_4d, rotateXW_4d, rotateWY_4d,
 
 function init(){
     var camera, controls, scene;
-    var geos, line, tubes, curves, sh;
+    var geos, line, exs, curves, sh;
     var light;
     var dumb1 = rotateXW_4d(0.001);
     var dumb2 = rotateXW_4d(-0.001);
@@ -256,8 +257,6 @@ function init(){
 
     var combo = xw.multiply(wy).multiply(wz);
     // always combo them. its so much faster
-
-
 
     scene = new THREE.Scene();
 
@@ -278,7 +277,7 @@ function init(){
 	light.position.copy( camera.position );
 	scene.add( light );
 
-    var line = getLines(POINTS, genConns(POINTS));
+    line = getLines(POINTS, genConns(POINTS));
     var ret_list = plot(line, scene);
 
     // I have the fear of referencing
@@ -328,14 +327,64 @@ function init(){
     }
 
     newRotation = function(transforms){
-        // console.log(transforms);
         combo.identity();
-        // console.log(combo);
         for (var ind = 0; ind < transforms.length; ind++){
             combo = combo.multiply(transforms[ind]);
         }
     }
+
+    newExs = function(newlines) {
+        // NOTE: don't forget that when you do transex, youre actually applying the transformation
+        //  to the vectors within the splines, which are also within line.
+        // console.log(exs);
+
+        for (var x = 0; x < curves.length; x++){
+            loopFlag = false;
+            scene.remove(exs[x]);
+            curves[x] = null;
+            exs[x] = null;
+            // console.log(exs[x]);
+            geos[x].dispose();
+        }
+        curves = null;
+        exs = null;
+        geos = null;
+        curves = [1, 2, 3];
+
+        var ret = plot(newlines, scene);
+        curves = ret[0].slice(0);
+        geos = ret[1].slice(0);
+        sh = ret[2];
+        exs = ret[3].slice(0);
+
+        center(curves, exs);
+        renderer.render(scene, camera);
+        loopFlag= false;
+        initialRender();
+        // for (obj in window){
+        //     console.log(obj instanceof Array);
+        //     console.log(obj, typeof(window[obj]), "\n");
+        // }
+    }
+
+    reset = function(){
+        newExs(getLines(POINTS, genConns(POINTS)));
+        // camera.position.set(0, 0, 2);
+        // camera.lookAt(new THREE.Vector3(0, 0, 0));
+        controls.reset();
+        light.position.copy(camera.position);
+    }
 }
+
+
+
+
+
+
+
+
+
+
 
 $(window).load(function(){
     init();
