@@ -1,0 +1,1 @@
+make the js and css transitions more efficient (ahem, resize.js same function twice for nav)
