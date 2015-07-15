@@ -448,7 +448,7 @@ $(window).load(function(){
 
         settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function(){
             doneflag = true;
-            console.log("transitionend fired")
+            // console.log("transitionend fired")
             // console.log('fuck');
             //Wait for that transition to finish
             //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
