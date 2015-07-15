@@ -27,6 +27,9 @@ html, body {
   float: left; }
 
 #header {
+  opacity: 1;
+  display: block;
+  -webkit-transition: opacity 0.1s, display 0.1s;
   height: 100px;
   width: 100%; }
 
@@ -37,8 +40,8 @@ html, body {
 
 #framer {
   float: left;
-  position: relative;
-  top: 30px;
+  position: absolute;
+  top: 130px;
   width: 0px;
   height: 0px;
   background-image: linear-gradient(to bottom right, #FF4900, #FF4900 11.1%, transparent 11.1%, transparent), linear-gradient(to top left, #FF4900, #FF4900 11.1%, transparent 11.1%, transparent);
@@ -79,7 +82,7 @@ html, body {
 #menu li {
   float: right;
   color: #FF4900;
-  font-size: 18px;
+  font-size: 17px;
   font-family: "Open Sans", sans-serif;
   font-weight: 600;
   margin-top: 20px;
@@ -288,5 +291,21 @@ html, body {
     outline: none;
     cursor: pointer;
     margin-top: 10px; }
+
+#full button {
+  right: 20px;
+  top: calc(50% - 15px);
+  position: absolute;
+  font-size: 18px;
+  height: 30px;
+  width: 85px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  border-radius: 3px;
+  border: 3px solid #FF4900;
+  background-color: #F6FAE7;
+  color: #FF4900;
+  outline: none;
+  cursor: pointer; }
 
 /*# sourceMappingURL=index.css.map */

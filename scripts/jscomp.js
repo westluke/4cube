@@ -223,7 +223,7 @@ function center(curves, exs){
 
 
 var loopFlag = false;
-var animate, initialRender, rotateFigure, newRotation, reset, newExs, addPoint;
+var animate, initialRender, rotateFigure, newRotation, reset, newExs, addPoint, baseResize;
 var stored = "";
 var renderer, current = false; //current is to keep track of which nav item was clicked last.
 var rotations = [0, 0, 0, 0, 0, 0], ani_rotations = ['0', '0', '0', '1', '1', '1'];
@@ -401,7 +401,7 @@ $(window).load(function(){
     init();
     initialRender();
 
-    var unfinished = ["full", "options"];
+    var unfinished = [ "options"];
     var framer = $("#framer");
     var settings = $("#settings");
     var main = $("#main");
@@ -416,7 +416,8 @@ $(window).load(function(){
             loopFlag = false;
     });
 
-    window.onresize = function() {
+    // I don't want to have to redefine the entirety of this function in full.html
+    baseResize = function() {
         // be careful to make everything scale in the right order
         // console.log("resize");
         var mwidth = main.width();
@@ -430,7 +431,10 @@ $(window).load(function(){
 
         var cwidth = container.width(), cheight = container.height();
         renderer.setSize( cwidth, cheight);
+
+        // console.log(mheight);
     }
+    window.onresize = baseResize;
     window.onresize();
 
     $("#menu li p").click(function(){

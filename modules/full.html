@@ -1,0 +1,29 @@
+<script>
+    $("#header").css({opacity: 0, display: "none"});
+    // $("#settings").css({opacity: 0, display: "none"});
+    $("#framer").css({top: 20, left: 20});
+    // // $("#framer").css({position: absolute;})
+    // // $("#framer").height($(window).height());
+    // // $("#framer").width($(window).height());
+    window.onresize = function(){
+        wheight = $(window).height();
+        wwidth = $(window).width();
+        var size = wheight + 125 > wwidth ? wwidth - 40 - 125: wheight - 40;
+        $("#framer").height(size);
+        $("#framer").width(size);
+        renderer.setSize( $("#container").width(), $("#container").height());
+    }
+    window.onresize();
+
+</script>
+
+<div id = "full">
+    <button onclick = "
+        window.onresize = baseResize;
+
+        $('#header').css({opacity: 1, display: 'block'});
+        $('#framer').css({top: 130, left: 80});
+        window.onresize();
+        $('#menu li:nth-child(4) p ').click();
+    ">Return</button>
+</div>
