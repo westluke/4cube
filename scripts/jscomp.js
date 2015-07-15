@@ -382,7 +382,7 @@ $(window).load(function(){
         current = $(this);
 
         settings.css({opacity: 0});     // Fade out the current settings div
-        console.log(name);
+        // console.log(name);
         // 'transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd'
 
         // you might be wondering, dear reader, why I need two nearly identical sections of ugly code.
@@ -390,7 +390,7 @@ $(window).load(function(){
 
         settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function(){
             doneflag = true;
-            console.log('fuck');
+            // console.log('fuck');
             //Wait for that transition to finish
             //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
             if ((unfinished.indexOf(name) + 1)){
@@ -404,7 +404,7 @@ $(window).load(function(){
 
         if (!doneflag){
             $(window).off('focus').on('focus', function () {
-                console.log('fuck');
+                // console.log('fuck');
                 //Wait for that transition to finish
                 //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
                 if ((unfinished.indexOf(name) + 1)){
@@ -444,3 +444,59 @@ function updateAni(value, ind){
     }
     newRotation(rots);
 }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// I NEED RESET FOR CUSTOM POINTS
+// GO THROUGH EVERY OBJECT IN CURVES, EXS, GEOS, AND DESTROY IT
+// THEN GENERATE NEW ONES WITH PLOT(LINES)
+// ALSO PLOT SHOULD ACCEPT A SHAPE, A COLOR, AND WHETHER OR NOT TO WIREFRAME
+// // I NEED RESET FOR CUSTOM POINTS
+// GO THROUGH EVERY OBJECT IN CURVES, EXS, GEOS, AND DESTROY IT
+// THEN GENERATE NEW ONES WITH PLOT(LINES)
+// ALSO PLOT SHOULD ACCEPT A SHAPE, A COLOR, AND WHETHER OR NOT TO WIREFRAME
+// // I NEED RESET FOR CUSTOM POINTS
+// GO THROUGH EVERY OBJECT IN CURVES, EXS, GEOS, AND DESTROY IT
+// THEN GENERATE NEW ONES WITH PLOT(LINES)
+// ALSO PLOT SHOULD ACCEPT A SHAPE, A COLOR, AND WHETHER OR NOT TO WIREFRAME
+// // I NEED RESET FOR CUSTOM POINTS
+// GO THROUGH EVERY OBJECT IN CURVES, EXS, GEOS, AND DESTROY IT
+// THEN GENERATE NEW ONES WITH PLOT(LINES)
+// ALSO PLOT SHOULD ACCEPT A SHAPE, A COLOR, AND WHETHER OR NOT TO WIREFRAME
+// // I NEED RESET FOR CUSTOM POINTS
+// GO THROUGH EVERY OBJECT IN CURVES, EXS, GEOS, AND DESTROY IT
+// THEN GENERATE NEW ONES WITH PLOT(LINES)
+// ALSO PLOT SHOULD ACCEPT A SHAPE, A COLOR, AND WHETHER OR NOT TO WIREFRAME
+// // I NEED RESET FOR CUSTOM POINTS
+// GO THROUGH EVERY OBJECT IN CURVES, EXS, GEOS, AND DESTROY IT
+// THEN GENERATE NEW ONES WITH PLOT(LINES)
+// ALSO PLOT SHOULD ACCEPT A SHAPE, A COLOR, AND WHETHER OR NOT TO WIREFRAME
+//
+//
+//
+//
+//
+//
+//
+//
