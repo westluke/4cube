@@ -12,6 +12,7 @@
         $("#framer").height(size);
         $("#framer").width(size);
         renderer.setSize( $("#container").width(), $("#container").height());
+        renderer.render(scene, camera);
     }
     window.onresize();
 

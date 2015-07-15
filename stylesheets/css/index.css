@@ -129,7 +129,8 @@ html, body {
   width: 100%; }
   #manual p, #animation p {
     color: #933600;
-    font-size: 18px; }
+    font-size: 18px;
+    font-weight: 600; }
   #manual div, #animation div {
     width: 100%;
     height: calc(13%);
