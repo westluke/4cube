@@ -142,7 +142,7 @@ function getLines(points, conns){
 }
 
 function plot(lines, scene, options){
-    console.log(lines, scene, options);
+    // console.log(lines, scene, options);
     // given a bunch of lines and a scene, this function will add a bunch of extrusions from the lines to the scene.
 
     mat =  new THREE.MeshLambertMaterial({color: options["color"], wireframe: options["wireframe"]});
@@ -160,6 +160,7 @@ function plot(lines, scene, options){
         bevelEnabled	: false,
         extrudePath		: line_curve
     };
+
 
     for (var a = 0; a < lines.length; a++){
         var line_curve = new THREE.SplineCurve3(lines[a]);
@@ -379,6 +380,7 @@ function init(){
 
         rotations = [0, 0, 0, 0, 0, 0];
         ani_rotations = [0, 0, 0, 0, 0, 0];
+        options = {color: 0xff4900, wireframe: false, radius: 0.04, vertices: 8};
         newRotation([]);
         $(current).click();
         NEW_LINES = [];
@@ -399,12 +401,15 @@ function init(){
             options.vertices = vertices * 1;
             console.log(options);
 
-            if (NEW_LINES.length){
-                newExs(NEW_LINES);
-                return
-            }
+            if ((options.radius > 0) && (options.vertices > 2)){
 
-            newExs(getLines(POINTS, genConns(POINTS)));
+                if (NEW_LINES.length){
+                    newExs(NEW_LINES);
+                    return
+                }
+
+                newExs(getLines(POINTS, genConns(POINTS)));
+            }
         }
     }
 }
@@ -536,59 +541,3 @@ function addPoint(value1, value2){
     stored += "<p>" + coords1 + " --> " + coords2 + "</p>";
     $("#stored_points").html(stored);
 }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// I NEED RESET FOR CUSTOM POINTS
-// GO THROUGH EVERY OBJECT IN CURVES, EXS, GEOS, AND DESTROY IT
-// THEN GENERATE NEW ONES WITH PLOT(LINES)
-// ALSO PLOT SHOULD ACCEPT A SHAPE, A COLOR, AND WHETHER OR NOT TO WIREFRAME
-// // I NEED RESET FOR CUSTOM POINTS
-// GO THROUGH EVERY OBJECT IN CURVES, EXS, GEOS, AND DESTROY IT
-// THEN GENERATE NEW ONES WITH PLOT(LINES)
-// ALSO PLOT SHOULD ACCEPT A SHAPE, A COLOR, AND WHETHER OR NOT TO WIREFRAME
-// // I NEED RESET FOR CUSTOM POINTS
-// GO THROUGH EVERY OBJECT IN CURVES, EXS, GEOS, AND DESTROY IT
-// THEN GENERATE NEW ONES WITH PLOT(LINES)
-// ALSO PLOT SHOULD ACCEPT A SHAPE, A COLOR, AND WHETHER OR NOT TO WIREFRAME
-// // I NEED RESET FOR CUSTOM POINTS
-// GO THROUGH EVERY OBJECT IN CURVES, EXS, GEOS, AND DESTROY IT
-// THEN GENERATE NEW ONES WITH PLOT(LINES)
-// ALSO PLOT SHOULD ACCEPT A SHAPE, A COLOR, AND WHETHER OR NOT TO WIREFRAME
-// // I NEED RESET FOR CUSTOM POINTS
-// GO THROUGH EVERY OBJECT IN CURVES, EXS, GEOS, AND DESTROY IT
-// THEN GENERATE NEW ONES WITH PLOT(LINES)
-// ALSO PLOT SHOULD ACCEPT A SHAPE, A COLOR, AND WHETHER OR NOT TO WIREFRAME
-// // I NEED RESET FOR CUSTOM POINTS
-// GO THROUGH EVERY OBJECT IN CURVES, EXS, GEOS, AND DESTROY IT
-// THEN GENERATE NEW ONES WITH PLOT(LINES)
-// ALSO PLOT SHOULD ACCEPT A SHAPE, A COLOR, AND WHETHER OR NOT TO WIREFRAME
-//
-//
-//
-//
-//
-//
-//
-//

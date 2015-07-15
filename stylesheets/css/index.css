@@ -308,4 +308,56 @@ html, body {
   outline: none;
   cursor: pointer; }
 
+#options {
+  top: -30px;
+  position: relative; }
+  #options .option_text {
+    margin-top: 20px;
+    display: block;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    -webkit-user-select: none !important;
+    outline: none !important;
+    background-color: #F6FAE7;
+    border: 3px dashed;
+    border-color: #933600;
+    color: #FF4900;
+    position: relative;
+    padding-left: 8px;
+    height: 30px;
+    width: 150px;
+    font-weight: 600;
+    font-size: 18px; }
+  #options #yes {
+    position: relative;
+    top: 20px; }
+  #options label {
+    position: relative;
+    top: 20px;
+    color: #933600;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: "Open Sans", sans-serif; }
+  #options button {
+    display: block;
+    position: relative;
+    top: 40px;
+    font-size: 18px;
+    height: 35px;
+    padding-bottom: 3px;
+    width: 85px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    border-radius: 3px;
+    border: 3px solid #FF4900;
+    background-color: #F6FAE7;
+    color: #FF4900;
+    outline: none;
+    cursor: pointer; }
+  #options p {
+    margin-top: 60px;
+    color: #933600;
+    font-size: 17px;
+    font-weight: 600; }
+
 /*# sourceMappingURL=index.css.map */

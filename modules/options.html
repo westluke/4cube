@@ -1,11 +1,18 @@
 <div id = "options">
+    <label for="color">Color</label>
     <input class = "option_text" id = "color" type = "text" value = "0xff4900"/>
+
+    <label for="vertices">Vertices</label>
     <input class = "option_text" id = "vertices" type = "text" value = "8"/>
+
+<label for="width">Width</label>
     <input class = "option_text" id = "width" type = "text" value = "0.04"/>
 
         <input id="yes" type="checkbox" name="wireframe">
         <label for="yes">Wireframe</label>
     <button onclick = "changeOptions(color.value, yes.checked, width.value, vertices.value)">Apply</button>
+
+    <p id = "tip">For personalized fanciness. Note: color should be in hexadecimal form, vertices must be greater than 2, and width must be positive.</p>
 </div>
 
 <script>
