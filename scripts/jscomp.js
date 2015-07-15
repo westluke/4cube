@@ -224,7 +224,7 @@ function center(curves, exs){
 
 var loopFlag = false;
 var animate, initialRender, monitorControls, rotateFigure, newRotation, reset, newExs;
-var renderer;
+var renderer, current = false; // keeps track of which nav item was clicked last (im sorry this is global this should be ooped)
 var rotations = [0, 0, 0, 0, 0, 0], ani_rotations = ['0', '0', '0', '1', '1', '1'];
 var rotfuncs = [rotateXY_4d, rotateYZ_4d, rotateZX_4d, rotateXW_4d, rotateWY_4d, rotateWZ_4d]
 // var curves, geos, exs;
@@ -337,9 +337,10 @@ function init(){
         // NOTE: don't forget that when you do transex, youre actually applying the transformation
         //  to the vectors within the splines, which are also within line.
         // console.log(exs);
+        loopFlag= false;
+        setTimeout(function(){},500)
 
         for (var x = 0; x < curves.length; x++){
-            loopFlag = false;
             scene.remove(exs[x]);
             curves[x] = null;
             exs[x] = null;
@@ -357,10 +358,11 @@ function init(){
         sh = ret[2];
         exs = ret[3].slice(0);
 
+        renderer.render(scene, camera);
         center(curves, exs);
         renderer.render(scene, camera);
-        loopFlag= false;
-        initialRender();
+        initialRender()
+        // initialRender();
         // for (obj in window){
         //     console.log(obj instanceof Array);
         //     console.log(obj, typeof(window[obj]), "\n");
@@ -368,11 +370,13 @@ function init(){
     }
 
     reset = function(){
-        newExs(getLines(POINTS, genConns(POINTS)));
-        // camera.position.set(0, 0, 2);
-        // camera.lookAt(new THREE.Vector3(0, 0, 0));
+        rotations = [0, 0, 0, 0, 0, 0];
+        ani_rotations = [0, 0, 0, 0, 0, 0];
+        newRotation([]);
+        current.click();
         controls.reset();
         light.position.copy(camera.position);
+        newExs(getLines(POINTS, genConns(POINTS)));
     }
 }
 
@@ -390,7 +394,7 @@ $(window).load(function(){
     init();
     initialRender();
 
-    var current = false;    // keeps track of which nav item was clicked last
+    // var current = false;
     var unfinished = ["full", "points", "options"];
     var framer = $("#framer");
     var settings = $("#settings");
