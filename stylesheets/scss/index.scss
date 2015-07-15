@@ -74,6 +74,15 @@ html, body{
     position: relative;
     background-color: $bgcolor;
     cursor: pointer;
+
+    p {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        color: $txtcolor;
+        font-size: 12px;
+        font-weight: 600;
+    }
 }
 
 #menu li{
@@ -167,7 +176,7 @@ html, body{
 
         .bar {
             @include fuck_sliders;
-            width: calc(80% - 50px);
+            width: calc(80% - 65px);
         	height: 15px;
             background-color: $txtcolor;
             height: 15px;
@@ -192,16 +201,35 @@ html, body{
         div:nth-child(#{$num}) {
             .bar{ background-color: $color; }
             .bar::-webkit-slider-thumb {background-color: $color; }
-            output { color: $color; }
+            .bar-io { color: $color; }
         }
     }
 
-    output {
+    // output {
+    //     float: right;
+    //     position: relative;
+    //     bottom: 5px;
+    //     text-align: right;
+    //     width: 50px;
+    //     font-weight: 600;
+    //     font-size: 18px;
+    // }
+
+    .bar-io {
+        @include fuck_sliders;
+        background-color: $bgcolor;
+        // color: $txtcolor;
+
+        border: 2px dashed;
         float: right;
         position: relative;
+
         bottom: 5px;
         text-align: right;
-        width: 50px;
+        height: 30px;
+        width: 65px;
+        margin-left: 10px;
+        padding-right: 5px;
         font-weight: 600;
         font-size: 18px;
     }
