@@ -225,7 +225,7 @@ function center(curves, exs){
 var loopFlag = false;
 var animate, initialRender, monitorControls, rotateFigure, newRotation, reset, newExs, addPoint;
 var stored = "";
-var renderer, current = false;
+var renderer, current = false; //current is to keep track of which nav item was clicked last.
 var rotations = [0, 0, 0, 0, 0, 0], ani_rotations = ['0', '0', '0', '1', '1', '1'];
 var rotfuncs = [rotateXY_4d, rotateYZ_4d, rotateZX_4d, rotateXW_4d, rotateWY_4d, rotateWZ_4d]
 var NEW_LINES = [];
@@ -253,9 +253,6 @@ function init(){
     var xw = rotateXW_4d(0.001);
     var wy = rotateWY_4d(0.001);
     var wz = rotateWZ_4d(0.001);
-    var xy = rotateXY_4d(0);
-    var yz = rotateYZ_4d(0);
-    var zx = rotateZX_4d(0);
 
     var combo = xw.multiply(wy).multiply(wz);
     // always combo them. its so much faster
@@ -275,6 +272,9 @@ function init(){
 	controls.maxDistance = 6;
     controls.noZoom = false;
 
+    // var ax = new THREE.AxisHelper(5);
+    // scene.add(ax);
+
 	light = new THREE.PointLight( 0xffffff);
 	light.position.copy( camera.position );
 	scene.add( light );
@@ -292,12 +292,14 @@ function init(){
     center(curves, exs);
 
     rotateFigure = function(theta, f){
+        // for the manual control. rotates by theta given rotation function f
         transEx(curves, geos, exs, sh, f(theta));
         center(curves, exs);
         renderer.render(scene, camera);
     }
 
     animate = function(){
+        // constantly applies the current rotation matrix
         if (loopFlag){
             // When the mouse isn't in the canvas, this function deactivates.
             requestAnimationFrame(animate); }
@@ -320,15 +322,13 @@ function init(){
         }
     }
 
-    monitorControls = function(){
-        controls.update();
-    }
-
     function render() {
+        // just for camera movement
         light.position.copy( camera.position );
     }
 
     newRotation = function(transforms){
+        // change combo so that animate will rotate in a new direction
         combo.identity();
         for (var ind = 0; ind < transforms.length; ind++){
             combo = combo.multiply(transforms[ind]);
@@ -338,7 +338,12 @@ function init(){
     newExs = function(newlines) {
         // NOTE: don't forget that when you do transex, youre actually applying the transformation
         //  to the vectors within the splines, which are also within line.
-        // console.log(exs);
+        // nullifies the previous graphed objects and makes new ones based on newlines.
+        var clonedlines = [];
+        for (var ind = 0; ind < newlines.length; ind++){
+            clonedlines.push([newlines[ind][0].clone(), newlines[ind][1].clone()]);
+        }
+
         loopFlag= false;
         setTimeout(function(){},500)
 
@@ -346,7 +351,6 @@ function init(){
             scene.remove(exs[x]);
             curves[x] = null;
             exs[x] = null;
-            // console.log(exs[x]);
             geos[x].dispose();
         }
         curves = null;
@@ -354,7 +358,7 @@ function init(){
         geos = null;
         curves = [1, 2, 3];
 
-        var ret = plot(newlines, scene);
+        var ret = plot(clonedlines.slice(0), scene);
         curves = ret[0].slice(0);
         geos = ret[1].slice(0);
         sh = ret[2];
@@ -364,14 +368,11 @@ function init(){
         center(curves, exs);
         renderer.render(scene, camera);
         initialRender()
-        // initialRender();
-        // for (obj in window){
-        //     console.log(obj instanceof Array);
-        //     console.log(obj, typeof(window[obj]), "\n");
-        // }
     }
 
     reset = function(){
+        // resets animation values, rotation values, graphed objects, stored points, and camera position
+
         rotations = [0, 0, 0, 0, 0, 0];
         ani_rotations = [0, 0, 0, 0, 0, 0];
         newRotation([]);
@@ -379,11 +380,7 @@ function init(){
         NEW_LINES = [];
         stored = '';
         $('#stored_points').html('');
-        console.log("worked?");
 
-
-        // camera.position.set(0, 0, 2);
-        // camera.lookAt(new THREE.Vector3(0, 0, 0));
         controls.reset();
         light.position.copy(camera.position);
         newExs(getLines(POINTS, genConns(POINTS)));
@@ -404,7 +401,6 @@ $(window).load(function(){
     init();
     initialRender();
 
-    // var current = false;    // keeps track of which nav item was clicked last
     var unfinished = ["full", "options"];
     var framer = $("#framer");
     var settings = $("#settings");
@@ -448,8 +444,6 @@ $(window).load(function(){
 
         settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function(){
             doneflag = true;
-            // console.log("transitionend fired")
-            // console.log('fuck');
             //Wait for that transition to finish
             //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
             if ((unfinished.indexOf(name) + 1)){
@@ -492,23 +486,18 @@ function updateAni(value, ind){
 }
 
 function addPoint(value1, value2){
-    var coords1 = value1.replace(/ /g,'').split(",").filter(function(a){return a});
-    var coords2 = value2.replace(/ /g, '').split(",").filter(function(a){return a});
+    // add a point to the internal variable and the div display
+
+    var coords1 = value1.replace(/ /g,',').split(",").filter(function(a){return a});
+    var coords2 = value2.replace(/ /g, ',').split(",").filter(function(a){return a});
     if ((coords1.length != 4) || (coords2.length != 4)){console.log('fail'); return;}
 
-    // console.log(coords1, coords2);
-
-    // console.log(value);
-    // var coords = split(",").filter(function(a){return a});
-    // console.log(coords);
     for (var i = 0; i < 2; i++){
         var coords = [coords1, coords2][i];
 
         for (ind in coords){
             coords[ind]*=1;
-            // console.log(coords[ind]);
             if (isNaN(coords[ind])){
-                // console.log('fail');
                 return;
             }
         }
