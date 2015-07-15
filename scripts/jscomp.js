@@ -223,10 +223,12 @@ function center(curves, exs){
 
 
 var loopFlag = false;
-var animate, initialRender, monitorControls, rotateFigure, newRotation, reset, newExs;
-var renderer, current = false; // keeps track of which nav item was clicked last (im sorry this is global this should be ooped)
+var animate, initialRender, monitorControls, rotateFigure, newRotation, reset, newExs, addPoint;
+var stored = "";
+var renderer, current = false;
 var rotations = [0, 0, 0, 0, 0, 0], ani_rotations = ['0', '0', '0', '1', '1', '1'];
 var rotfuncs = [rotateXY_4d, rotateYZ_4d, rotateZX_4d, rotateXW_4d, rotateWY_4d, rotateWZ_4d]
+var NEW_LINES = [];
 // var curves, geos, exs;
 
 
@@ -373,7 +375,15 @@ function init(){
         rotations = [0, 0, 0, 0, 0, 0];
         ani_rotations = [0, 0, 0, 0, 0, 0];
         newRotation([]);
-        current.click();
+        $(current).click();
+        NEW_LINES = [];
+        stored = '';
+        $('#stored_points').html('');
+        console.log("worked?");
+
+
+        // camera.position.set(0, 0, 2);
+        // camera.lookAt(new THREE.Vector3(0, 0, 0));
         controls.reset();
         light.position.copy(camera.position);
         newExs(getLines(POINTS, genConns(POINTS)));
@@ -394,8 +404,8 @@ $(window).load(function(){
     init();
     initialRender();
 
-    // var current = false;
-    var unfinished = ["full", "points", "options"];
+    // var current = false;    // keeps track of which nav item was clicked last
+    var unfinished = ["full", "options"];
     var framer = $("#framer");
     var settings = $("#settings");
     var main = $("#main");
@@ -435,14 +445,10 @@ $(window).load(function(){
         current = $(this);
 
         settings.css({opacity: 0});     // Fade out the current settings div
-        // console.log(name);
-        // 'transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd'
-
-        // you might be wondering, dear reader, why I need two nearly identical sections of ugly code.
-        // thats because transitionend is an asshole and safari is a piece of shit
 
         settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function(){
             doneflag = true;
+            console.log("transitionend fired")
             // console.log('fuck');
             //Wait for that transition to finish
             //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
@@ -454,24 +460,11 @@ $(window).load(function(){
                 settings.unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
             });
         });
-
-        if (!doneflag){
-            $(window).off('focus').on('focus', function () {
-                // console.log('fuck');
-                //Wait for that transition to finish
-                //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
-                if ((unfinished.indexOf(name) + 1)){
-                    name = "soon";
-                }
-                settings.load("modules/" + name + ".html", function(){
-                    settings.css({opacity: 1});
-                    settings.unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
-                });
-            });
-        }
     });
 
-    $("#menu li:nth-child(3) p").click();
+    settings.load("modules/manual.html");
+    $("#menu li:nth-child(4) div").css({top: "3px", backgroundColor: "#FF4900"});
+    current = $("#menu li:nth-child(4) p");
 });
 
 function usrRotate(value, ind){
@@ -496,6 +489,37 @@ function updateAni(value, ind){
         rots.push(rotfuncs[x](ani_rotations[x] * 0.001))
     }
     newRotation(rots);
+}
+
+function addPoint(value1, value2){
+    var coords1 = value1.replace(/ /g,'').split(",").filter(function(a){return a});
+    var coords2 = value2.replace(/ /g, '').split(",").filter(function(a){return a});
+    if ((coords1.length != 4) || (coords2.length != 4)){console.log('fail'); return;}
+
+    // console.log(coords1, coords2);
+
+    // console.log(value);
+    // var coords = split(",").filter(function(a){return a});
+    // console.log(coords);
+    for (var i = 0; i < 2; i++){
+        var coords = [coords1, coords2][i];
+
+        for (ind in coords){
+            coords[ind]*=1;
+            // console.log(coords[ind]);
+            if (isNaN(coords[ind])){
+                // console.log('fail');
+                return;
+            }
+        }
+    }
+
+    NEW_LINES.push([new THREE.Vector4(coords1[0], coords1[1], coords1[2], coords1[3]), new THREE.Vector4(coords2[0], coords2[1], coords2[2], coords2[3])]);
+    // console.log(NEW_LINES);
+
+
+    stored += "<p>" + coords1 + " --> " + coords2 + "</p>";
+    $("#stored_points").html(stored);
 }
 //
 //

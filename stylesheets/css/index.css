@@ -38,6 +38,7 @@ html, body {
 #framer {
   float: left;
   position: relative;
+  top: 30px;
   width: 0px;
   height: 0px;
   background-image: linear-gradient(to bottom right, #FF4900, #FF4900 11.1%, transparent 11.1%, transparent), linear-gradient(to top left, #FF4900, #FF4900 11.1%, transparent 11.1%, transparent);
@@ -65,6 +66,7 @@ html, body {
     right: 10px;
     height: 25px;
     width: 40px;
+    font-size: 11px;
     font-family: "Open Sans", sans-serif;
     background-color: #F6FAE7;
     color: #FF4900;
@@ -213,6 +215,9 @@ html, body {
     font-weight: 600;
     font-size: 18px; }
 
+#animation p {
+  font-size: 16px; }
+
 #about h2 {
   color: #FF4900;
   margin-top: 30px; }
@@ -225,5 +230,63 @@ html, body {
   color: #FF4900;
   margin-left: 20%;
   margin-top: 20%; }
+
+#points {
+  height: 100%;
+  width: 100%; }
+  #points #stored_points {
+    width: calc(100% - 160px);
+    float: right;
+    height: 100%; }
+    #points #stored_points p {
+      margin: 0;
+      font-size: 16px;
+      color: #FF4900;
+      width: 150px !important; }
+  #points #edge_input {
+    vertical-align: top;
+    height: 100%;
+    width: 130px;
+    float: left; }
+    #points #edge_input #point_input {
+      margin-bottom: 20px;
+      width: 100%;
+      vertical-align: top;
+      position: relative; }
+      #points #edge_input #point_input p {
+        margin-top: 0px; }
+    #points #edge_input input {
+      border: 3px dashed;
+      color: #FF4900;
+      font-family: "Open Sans", sans-serif;
+      font-weight: 600;
+      padding: 0px 10px;
+      background-color: #F6FAE7;
+      border-color: #933600;
+      outline: none;
+      height: 30px;
+      width: 100px;
+      font-size: 16px;
+      margin-top: 10px;
+      display: block; }
+  #points p {
+    margin-top: 40px;
+    color: #933600;
+    font-size: 13px;
+    font-weight: 600;
+    width: 130px; }
+  #points button {
+    font-size: 11px;
+    height: 25px;
+    padding: 0px 5px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    border-radius: 3px;
+    border: 3px solid #FF4900;
+    background-color: #F6FAE7;
+    color: #FF4900;
+    outline: none;
+    cursor: pointer;
+    margin-top: 10px; }
 
 /*# sourceMappingURL=index.css.map */

@@ -1,0 +1,25 @@
+<div id = "points">
+    <div id = "edge_input">
+        <div id = "point_input">
+            <p>Point</p>
+            <input class = "bar-io" id = "rval1" type = "text" value = "" oninput = ""/>
+        </div>
+
+        <div id = "point_input">
+            <p>Point</p>
+            <input class = "bar-io" id = "rval2" type = "text" value = "" oninput = ""/>
+        </div>
+
+        <button onclick = "addPoint(rval1.value, rval2.value);">Add Edge</button>
+        <button onclick = "newExs(NEW_LINES);">Plot All</button>
+        <!-- <button onclick = "NEW_LINES = []; $('#stored_points').html('');">Clear</button> -->
+        <p id = "tip">Enter comma separated values. Spaces will not be counted.</p>
+    </div>
+
+    <div id = "stored_points">
+    </div>
+
+    <script>
+            $("#stored_points").html(stored);
+    </script>
+</div>
