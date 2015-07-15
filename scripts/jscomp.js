@@ -223,7 +223,7 @@ function center(curves, exs){
 
 
 var loopFlag = false;
-var animate, initialRender, monitorControls, rotateFigure, newRotation, reset, newExs, addPoint;
+var animate, initialRender, rotateFigure, newRotation, reset, newExs, addPoint;
 var stored = "";
 var renderer, current = false; //current is to keep track of which nav item was clicked last.
 var rotations = [0, 0, 0, 0, 0, 0], ani_rotations = ['0', '0', '0', '1', '1', '1'];
