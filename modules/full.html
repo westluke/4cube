@@ -1,5 +1,6 @@
 <script>
     $("#header").css({opacity: 0, display: "none"});
+    renderer.render(scene, camera);
     // $("#settings").css({opacity: 0, display: "none"});
     $("#framer").css({top: 20, left: 20});
     // // $("#framer").css({position: absolute;})
@@ -12,7 +13,6 @@
         $("#framer").height(size);
         $("#framer").width(size);
         renderer.setSize( $("#container").width(), $("#container").height());
-        renderer.render(scene, camera);
     }
     window.onresize();
 

@@ -225,6 +225,7 @@ function center(curves, exs){
 
 
 var loopFlag = false;
+var scene, camera;
 var animate, initialRender, rotateFigure, newRotation, reset, newExs, addPoint, baseResize, changeOptions;
 var stored = "";
 var options;
@@ -246,7 +247,7 @@ var NEW_LINES = [];
 
 function init(){
     options = {color: 0xff4900, wireframe: false, radius: 0.04, vertices: 8};
-    var camera, controls, scene;
+    var controls;
     var geos, line, exs, curves, sh;
     var line;
     var light;
@@ -269,11 +270,11 @@ function init(){
     document.getElementById( 'container' ).appendChild( renderer.domElement );
 
     // Very low near plane allows you to get right next to the extrusions without clipping
-    camera = new THREE.PerspectiveCamera( 60, 1, 0.001, 500);
+    camera = new THREE.PerspectiveCamera( 60, 1, 0.001, 8);
     camera.position.set( 0, 0, 2 );
 	controls = new THREE.TrackballControls( camera, renderer.domElement );
-	controls.minDistance = 0.5;
-	controls.maxDistance = 249;
+	controls.minDistance = 1.5;
+	controls.maxDistance = 6;
     controls.noZoom = false;
 
     // var ax = new THREE.AxisHelper(5);
