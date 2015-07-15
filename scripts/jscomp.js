@@ -141,17 +141,18 @@ function getLines(points, conns){
     return ret_line;
 }
 
-function plot(lines, scene){
+function plot(lines, scene, options){
+    console.log(lines, scene, options);
     // given a bunch of lines and a scene, this function will add a bunch of extrusions from the lines to the scene.
 
-    mat =  new THREE.MeshLambertMaterial({color: 0xFF4900});
+    mat =  new THREE.MeshLambertMaterial({color: options["color"], wireframe: options["wireframe"]});
     var tubes = [];
     var ot = [];
     var exs = [];
 
-    var radius = 0.04, segments = 8;
+    var radius = options["radius"], segments = options["vertices"];
     var circleGeometry = new THREE.CircleGeometry( radius, segments );
-    var shape_pts = circleGeometry.vertices.slice(1, 9);
+    var shape_pts = circleGeometry.vertices.slice(1, segments + 1);
     var shape = new THREE.Shape(shape_pts);
 
     var extrudeSettings = {
@@ -223,14 +224,14 @@ function center(curves, exs){
 
 
 var loopFlag = false;
-var animate, initialRender, rotateFigure, newRotation, reset, newExs, addPoint, baseResize;
+var animate, initialRender, rotateFigure, newRotation, reset, newExs, addPoint, baseResize, changeOptions;
 var stored = "";
+var options;
 var renderer, current = false; //current is to keep track of which nav item was clicked last.
 var rotations = [0, 0, 0, 0, 0, 0], ani_rotations = ['0', '0', '0', '1', '1', '1'];
 var rotfuncs = [rotateXY_4d, rotateYZ_4d, rotateZX_4d, rotateXW_4d, rotateWY_4d, rotateWZ_4d]
 var NEW_LINES = [];
-// var curves, geos, exs;
-
+// Remember: you can only add lines to NEW_LINES, the only way to remove them is to reset.
 
 // TO SPEED UP: THE REASON THE POINTS WEREN'T SHADING WAS (I THINK) BECAUSE THEY WERE INTIALIZED AS POINTS.
 // MY CURRENT SOLUTION OF UPDATING THE ENTIRE GEOMETRY WITH EACH ROTATION WORKS, BUT IT MIGHT BE OVERKILL.
@@ -243,8 +244,10 @@ var NEW_LINES = [];
 
 
 function init(){
+    options = {color: 0xff4900, wireframe: false, radius: 0.04, vertices: 8};
     var camera, controls, scene;
     var geos, line, exs, curves, sh;
+    var line;
     var light;
     var dumb1 = rotateXW_4d(0.001);
     var dumb2 = rotateXW_4d(-0.001);
@@ -280,7 +283,7 @@ function init(){
 	scene.add( light );
 
     line = getLines(POINTS, genConns(POINTS));
-    var ret_list = plot(line, scene);
+    var ret_list = plot(line, scene, options);
 
     // I have the fear of referencing
     curves = ret_list[0].slice(0);
@@ -353,12 +356,13 @@ function init(){
             exs[x] = null;
             geos[x].dispose();
         }
+
         curves = null;
         exs = null;
         geos = null;
         curves = [1, 2, 3];
 
-        var ret = plot(clonedlines.slice(0), scene);
+        var ret = plot(clonedlines.slice(0), scene, options);
         curves = ret[0].slice(0);
         geos = ret[1].slice(0);
         sh = ret[2];
@@ -385,6 +389,24 @@ function init(){
         light.position.copy(camera.position);
         newExs(getLines(POINTS, genConns(POINTS)));
     }
+
+    changeOptions = function(color, wireframe, width, vertices){
+        if (!isNaN(color) && !isNaN(width) && !isNaN(vertices) && color && width && vertices){
+
+            options.color = parseInt(color);
+            options.wireframe = wireframe;
+            options.radius = width * 1;
+            options.vertices = vertices * 1;
+            console.log(options);
+
+            if (NEW_LINES.length){
+                newExs(NEW_LINES);
+                return
+            }
+
+            newExs(getLines(POINTS, genConns(POINTS)));
+        }
+    }
 }
 
 
@@ -401,7 +423,7 @@ $(window).load(function(){
     init();
     initialRender();
 
-    var unfinished = [ "options"];
+    var unfinished = [];
     var framer = $("#framer");
     var settings = $("#settings");
     var main = $("#main");

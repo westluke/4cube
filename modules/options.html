@@ -1,0 +1,16 @@
+<div id = "options">
+    <input class = "option_text" id = "color" type = "text" value = "0xff4900"/>
+    <input class = "option_text" id = "vertices" type = "text" value = "8"/>
+    <input class = "option_text" id = "width" type = "text" value = "0.04"/>
+
+        <input id="yes" type="checkbox" name="wireframe">
+        <label for="yes">Wireframe</label>
+    <button onclick = "changeOptions(color.value, yes.checked, width.value, vertices.value)">Apply</button>
+</div>
+
+<script>
+    $("#color").val("0x" + options.color.toString(16));
+    $("#vertices").val(options.vertices);
+    $("#width").val(options.radius);
+    $("#yes").prop('checked', options.wireframe);
+</script>
