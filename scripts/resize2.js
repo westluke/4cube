@@ -26,6 +26,7 @@ $(window).load(function(){
         // usually the height is fairly low, so the framer should scale off of that.
         // Other times, the width is the limiting factor, with settings in the way.
         var size = (mwidth*0.5 < mheight) ? mwidth*0.5 : mheight;
+
         framer.width(size);
         framer.height(size);
         settings.width(mwidth - framer.width() - 60);

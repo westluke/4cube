@@ -14,20 +14,25 @@ $fntfamily: 'Open Sans', sans-serif;
 }
 
 html {
+    height: calc(100% - 40px);
+    width: calc(100% - 160px);
     padding: 20px 80px 10px 80px;
-    min-width: 650px;
-    min-height: 530px;
-
+    // box-sizing: border-box;
+    // height: 100%;
+    // width: 100%;
+    // min-width: 650px;
+    // min-height: 530px;
 }
 
 body {
     height: 100%;
     width: 100%;
     font-family: $fntfamily;
-    min-width: 650px;
-    min-height: 530px;
+    // min-width: 650px;
+    // min-height: 530px;
+    // position: relative;
 }
-
+//
 html, body{
     background-color: $bgcolor;
 }
@@ -47,15 +52,18 @@ html, body{
 
 #main {
     height: calc(100% - 30px - 100px - 10px);
+    // height: 100%;
     /*window height - margin-top - margin-bottom - header height - padding*/
+    // width: calc(100% - 160px);
+    // position: absolute;
     width: 100%;
-    position: relative;
+    // box-sizing: border-box;
 }
 
 #framer {
-    z-index: 10;
     // Framer goes around container. Framer's background results in the framed-photo-style border around container
     float: left;
+    position: relative;
     width: 0px;
     height: 0px;
     // width, height are defined in js based on main.width, main.height
@@ -66,12 +74,11 @@ html, body{
 }
 
 #container {
-    z-index: 1;
     height: calc(100% - 8px);
     width: calc(100% - 8px);
-    left: 4;
-    top: 4;
     position: relative;
+    left: 4px;
+    top: 4px;
     background-color: $bgcolor;
     cursor: pointer;
 
@@ -154,6 +161,9 @@ html, body{
 }
 
 #manual {
+    height: 100%;
+    width: 100%;
+
     p {
         color: $impcolor;
         font-size: 18px;
@@ -237,6 +247,9 @@ html, body{
 
 // ANIMATION (MAKE THIS BETTER, SASSTEAL THE CODE FROM MANUAL)
 #animation {
+    height: 100%;
+    width: 100%;
+
     p {
         color: $impcolor;
         font-size: 16px;
