@@ -197,7 +197,7 @@ html, body{
 
     p {
         color: $impcolor;
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 600;
     }
 
@@ -206,6 +206,28 @@ html, body{
         width: 100%;
         height: calc(13%);
         clear: both;
+
+        button {
+            @include fuck_sliders;
+            position: relative;
+            bottom: 5px;
+            right: 10px;
+            float: right;
+            font-size: 11px;
+            height: 25px;
+            // padding-bottom: 3px;
+            width: 40px;
+            // padding-left: 5px 5px 5px 5px;
+            // padding: 0px 5px;
+            font-family: $fntfamily;
+            font-weight: 600;
+            border-radius: 3px;
+            border: 3px solid;
+            background-color: $bgcolor;
+            // color: $txtcolor;
+            outline: none;
+            cursor: pointer;
+        }
 
         p {
             float: left;
@@ -218,7 +240,7 @@ html, body{
 
         .bar {
             @include fuck_sliders;
-            width: calc(80% - 65px);
+            width: calc(80% - 115px);
         	height: 15px;
             background-color: $txtcolor;
             height: 15px;
@@ -272,6 +294,7 @@ html, body{
             .bar{ background-color: $color; }
             .bar::-webkit-slider-thumb {background-color: $color; }
             .bar::-moz-range-thumb {background-color: $color; }
+            button { color: $color}
             .bar-io { color: $color; }
         }
     }
@@ -409,9 +432,13 @@ html, body{
 
 // FULL
 #full {
+    // height: 100%;
+    // width: 100%;
+    // position: relative;
+
     button {
-        right: 20px;
-        top: calc(50% - 15px);
+        right: 30px;
+        top: calc(50% - 30px);
         position: absolute;
         font-size: 18px;
         height: 30px;
@@ -430,6 +457,7 @@ html, body{
     }
 }
 
+// options
 #options {
     top: -30px;
     position: relative;

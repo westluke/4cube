@@ -134,12 +134,33 @@ html, body {
   width: 100%; }
   #manual p, #animation p {
     color: #933600;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600; }
   #manual div, #animation div {
     width: 100%;
     height: calc(13%);
     clear: both; }
+    #manual div button, #animation div button {
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
+      -webkit-user-select: none !important;
+      -moz-user-select: none !important;
+      outline: none !important;
+      position: relative;
+      bottom: 5px;
+      right: 10px;
+      float: right;
+      font-size: 11px;
+      height: 25px;
+      width: 40px;
+      font-family: "Open Sans", sans-serif;
+      font-weight: 600;
+      border-radius: 3px;
+      border: 3px solid;
+      background-color: #F6FAE7;
+      outline: none;
+      cursor: pointer; }
     #manual div p, #animation div p {
       float: left;
       font-family: "Open Sans", sans-serif;
@@ -154,7 +175,7 @@ html, body {
       -webkit-user-select: none !important;
       -moz-user-select: none !important;
       outline: none !important;
-      width: calc(80% - 65px);
+      width: calc(80% - 115px);
       height: 15px;
       background-color: #FF4900;
       height: 15px;
@@ -214,6 +235,8 @@ html, body {
     background-color: #FF4900; }
   #manual div:nth-child(1) .bar::-moz-range-thumb, #animation div:nth-child(1) .bar::-moz-range-thumb {
     background-color: #FF4900; }
+  #manual div:nth-child(1) button, #animation div:nth-child(1) button {
+    color: #FF4900; }
   #manual div:nth-child(1) .bar-io, #animation div:nth-child(1) .bar-io {
     color: #FF4900; }
   #manual div:nth-child(2) .bar, #animation div:nth-child(2) .bar {
@@ -222,6 +245,8 @@ html, body {
     background-color: #14CC46; }
   #manual div:nth-child(2) .bar::-moz-range-thumb, #animation div:nth-child(2) .bar::-moz-range-thumb {
     background-color: #14CC46; }
+  #manual div:nth-child(2) button, #animation div:nth-child(2) button {
+    color: #14CC46; }
   #manual div:nth-child(2) .bar-io, #animation div:nth-child(2) .bar-io {
     color: #14CC46; }
   #manual div:nth-child(3) .bar, #animation div:nth-child(3) .bar {
@@ -230,6 +255,8 @@ html, body {
     background-color: #40C0DD; }
   #manual div:nth-child(3) .bar::-moz-range-thumb, #animation div:nth-child(3) .bar::-moz-range-thumb {
     background-color: #40C0DD; }
+  #manual div:nth-child(3) button, #animation div:nth-child(3) button {
+    color: #40C0DD; }
   #manual div:nth-child(3) .bar-io, #animation div:nth-child(3) .bar-io {
     color: #40C0DD; }
   #manual div:nth-child(4) .bar, #animation div:nth-child(4) .bar {
@@ -238,6 +265,8 @@ html, body {
     background-color: #9D7C12; }
   #manual div:nth-child(4) .bar::-moz-range-thumb, #animation div:nth-child(4) .bar::-moz-range-thumb {
     background-color: #9D7C12; }
+  #manual div:nth-child(4) button, #animation div:nth-child(4) button {
+    color: #9D7C12; }
   #manual div:nth-child(4) .bar-io, #animation div:nth-child(4) .bar-io {
     color: #9D7C12; }
   #manual div:nth-child(5) .bar, #animation div:nth-child(5) .bar {
@@ -246,6 +275,8 @@ html, body {
     background-color: #9D121E; }
   #manual div:nth-child(5) .bar::-moz-range-thumb, #animation div:nth-child(5) .bar::-moz-range-thumb {
     background-color: #9D121E; }
+  #manual div:nth-child(5) button, #animation div:nth-child(5) button {
+    color: #9D121E; }
   #manual div:nth-child(5) .bar-io, #animation div:nth-child(5) .bar-io {
     color: #9D121E; }
   #manual div:nth-child(6) .bar, #animation div:nth-child(6) .bar {
@@ -254,6 +285,8 @@ html, body {
     background-color: #914F9D; }
   #manual div:nth-child(6) .bar::-moz-range-thumb, #animation div:nth-child(6) .bar::-moz-range-thumb {
     background-color: #914F9D; }
+  #manual div:nth-child(6) button, #animation div:nth-child(6) button {
+    color: #914F9D; }
   #manual div:nth-child(6) .bar-io, #animation div:nth-child(6) .bar-io {
     color: #914F9D; }
   #manual .bar-io, #animation .bar-io {
@@ -351,8 +384,8 @@ html, body {
     margin-top: 10px; }
 
 #full button {
-  right: 20px;
-  top: calc(50% - 15px);
+  right: 30px;
+  top: calc(50% - 30px);
   position: absolute;
   font-size: 18px;
   height: 30px;

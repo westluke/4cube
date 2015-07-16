@@ -501,7 +501,7 @@ $(window).load(function(){
 });
 
 function usrRotate(value, ind){
-    console.log("usrRotate", value);
+    // console.log("usrRotate", value);
     // console.log("executed");
     // $(".bar").mouseup(function(){
     //     console.log("mouseup", value);
@@ -511,15 +511,13 @@ function usrRotate(value, ind){
     //     console.log("val", $(".bar").val(), $(".bar").prop("value"));
     //     rotations[ind] = 0;
     // });
-    if (nojump){
-        nojump = false;
-        $(".bar").val(0);
-        return;
-    }
-    ind--;
-    var rotval = value - rotations[ind];
-    rotateFigure(rotval, rotfuncs[ind]);
-    rotations[ind] = value;
+    // if (nojump){
+    //     nojump = false;
+    //     $(".bar").val(0);
+    //     return;
+    // }
+    rotateFigure(value, rotfuncs[ind - 1]);
+    // rotations[ind] = value;
     // center(curves[exs]);
 }
 
