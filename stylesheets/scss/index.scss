@@ -49,6 +49,7 @@ html, body{
     opacity: 1;
     display:block;
     -webkit-transition: opacity 0.1s, display 0.1s;
+    -moz-transition: opacity 0.1s, display 0.1s;
     height: 100px;
     width: 100%;
 }
@@ -132,6 +133,8 @@ html, body{
         cursor: default;
         -webkit-transition: top 0.05s, background-color 0.05s;
         -webkit-transition-timing-function: linear;
+        -moz-transition: top 0.05s, background-color 0.05s;
+        -moz-transition-timing-function: linear;
     }
 
     p { cursor: pointer; }
@@ -172,6 +175,8 @@ html, body{
     opacity: 1;
     -webkit-transition: opacity 0.1s;
     -webkit-transition-timing-function: linear;
+    -moz-transition: opacity 0.1s;
+    -moz-transition-timing-function: linear;
 }
 
 
@@ -179,8 +184,10 @@ html, body{
 @mixin fuck_sliders{
     // Sliders are fucking annoying sometimes
     -webkit-appearance: none !important;
+    -moz-appearance: none !important;
     appearance: none !important;
     -webkit-user-select: none !important;
+    -moz-user-select: none !important;
     outline: none !important;
 }
 
@@ -216,18 +223,46 @@ html, body{
             background-color: $txtcolor;
             height: 15px;
             border-radius: 5px;
+            -moz-border-radius: 5px;
             float: right;
         }
 
-        .bar::-webkit-slider-thumb {
+        // .bar::-webkit-slider-thumb,
+        .bar::-moz-range-thumb {
             @include fuck_sliders;
+            -moz-appearance: none;
         	position: relative;
+            // background-color: red;
         	width: 18px;
         	height: 30px;
             border: 3px solid $bgcolor;
             border-radius: 5px;
         	cursor: pointer;
             shadow: none;
+        }
+
+        .bar::-webkit-slider-thumb {
+            @include fuck_sliders;
+            -moz-appearance: none;
+        	position: relative;
+            // background-color: red;
+        	width: 18px;
+        	height: 30px;
+            border: 3px solid $bgcolor;
+            border-radius: 5px;
+        	cursor: pointer;
+            shadow: none;
+        }
+
+        .bar::-moz-focus-outer {
+            @include fuck_sliders;
+            border: none;
+        }
+
+        .bar::-moz-range-track{
+            @include fuck_sliders;
+            -moz-appearance: none !important;
+            height: 0px;
         }
     }
 
@@ -236,6 +271,7 @@ html, body{
         div:nth-child(#{$num}) {
             .bar{ background-color: $color; }
             .bar::-webkit-slider-thumb {background-color: $color; }
+            .bar::-moz-range-thumb {background-color: $color; }
             .bar-io { color: $color; }
         }
     }

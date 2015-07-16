@@ -224,11 +224,12 @@ function center(curves, exs){
 }
 
 
-var loopFlag = false;
+var loopFlag = false;   //animate only runs when this is true, initialRender only when false
 var scene, camera;
 var animate, initialRender, rotateFigure, newRotation, reset, newExs, addPoint, baseResize, changeOptions;
-var stored = "";
-var options;
+var nojump = false;         //prevents firefox from being an asshole and double triggering oninput
+var stored = "";    //points stored in div of points section
+var options;        //parameters to plot
 var renderer, current = false; //current is to keep track of which nav item was clicked last.
 var rotations = [0, 0, 0, 0, 0, 0], ani_rotations = ['0', '0', '0', '1', '1', '1'];
 var rotfuncs = [rotateXY_4d, rotateYZ_4d, rotateZX_4d, rotateXW_4d, rotateWY_4d, rotateWZ_4d]
@@ -299,8 +300,12 @@ function init(){
     rotateFigure = function(theta, f){
         // for the manual control. rotates by theta given rotation function f
         transEx(curves, geos, exs, sh, f(theta));
+        // console.log(theta);
         center(curves, exs);
         renderer.render(scene, camera);
+        center(curves, exs);
+        // loopFlag = false;
+        // initialRender();
     }
 
     animate = function(){
@@ -474,7 +479,9 @@ $(window).load(function(){
 
         settings.css({opacity: 0});     // Fade out the current settings div
 
+        // console.log("transitionbegin");
         settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function(){
+            // console.log("transitionend");
             doneflag = true;
             //Wait for that transition to finish
             //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
@@ -494,16 +501,26 @@ $(window).load(function(){
 });
 
 function usrRotate(value, ind){
-    $(".bar").mouseup(function(){
-        // Reset the slider back to 0 (rotations aren't commutative)
+    console.log("usrRotate", value);
+    // console.log("executed");
+    // $(".bar").mouseup(function(){
+    //     console.log("mouseup", value);
+    //     // Reset the slider back to 0 (rotations aren't commutative)
+    //     $(".bar").val(0);
+    //     // $(".bar").prop("value", 0);
+    //     console.log("val", $(".bar").val(), $(".bar").prop("value"));
+    //     rotations[ind] = 0;
+    // });
+    if (nojump){
+        nojump = false;
         $(".bar").val(0);
-        rotations[ind] = 0;
-    });
-
+        return;
+    }
     ind--;
     var rotval = value - rotations[ind];
     rotateFigure(rotval, rotfuncs[ind]);
     rotations[ind] = value;
+    // center(curves[exs]);
 }
 
 function updateAni(value, ind){

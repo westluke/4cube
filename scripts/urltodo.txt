@@ -1,0 +1,12 @@
+Register apex domain name
+
+make www subdomain through domain registrar
+
+make cname file in repo with subdomain
+make cname record with dns provider with subdomain
+make a record with dns provider for apex domain pointing to 192.30.252.153
+192.30.252.154
+
+OR set up an aname or alias record to westluke.github.io
+
+github should do the redirection automatically

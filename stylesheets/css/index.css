@@ -30,6 +30,7 @@ html, body {
   opacity: 1;
   display: block;
   -webkit-transition: opacity 0.1s, display 0.1s;
+  -moz-transition: opacity 0.1s, display 0.1s;
   height: 100px;
   width: 100%; }
 
@@ -96,7 +97,9 @@ html, body {
     background-color: transparent;
     cursor: default;
     -webkit-transition: top 0.05s, background-color 0.05s;
-    -webkit-transition-timing-function: linear; }
+    -webkit-transition-timing-function: linear;
+    -moz-transition: top 0.05s, background-color 0.05s;
+    -moz-transition-timing-function: linear; }
   #menu li p {
     cursor: pointer; }
   #menu li p:hover {
@@ -122,7 +125,9 @@ html, body {
   padding-top: 30px;
   opacity: 1;
   -webkit-transition: opacity 0.1s;
-  -webkit-transition-timing-function: linear; }
+  -webkit-transition-timing-function: linear;
+  -moz-transition: opacity 0.1s;
+  -moz-transition-timing-function: linear; }
 
 #manual, #animation {
   height: 100%;
@@ -144,20 +149,26 @@ html, body {
       color: #933600; }
     #manual div .bar, #animation div .bar {
       -webkit-appearance: none !important;
+      -moz-appearance: none !important;
       appearance: none !important;
       -webkit-user-select: none !important;
+      -moz-user-select: none !important;
       outline: none !important;
       width: calc(80% - 65px);
       height: 15px;
       background-color: #FF4900;
       height: 15px;
       border-radius: 5px;
+      -moz-border-radius: 5px;
       float: right; }
-    #manual div .bar::-webkit-slider-thumb, #animation div .bar::-webkit-slider-thumb {
+    #manual div .bar::-moz-range-thumb, #animation div .bar::-moz-range-thumb {
       -webkit-appearance: none !important;
+      -moz-appearance: none !important;
       appearance: none !important;
       -webkit-user-select: none !important;
+      -moz-user-select: none !important;
       outline: none !important;
+      -moz-appearance: none;
       position: relative;
       width: 18px;
       height: 30px;
@@ -165,9 +176,43 @@ html, body {
       border-radius: 5px;
       cursor: pointer;
       shadow: none; }
+    #manual div .bar::-webkit-slider-thumb, #animation div .bar::-webkit-slider-thumb {
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
+      -webkit-user-select: none !important;
+      -moz-user-select: none !important;
+      outline: none !important;
+      -moz-appearance: none;
+      position: relative;
+      width: 18px;
+      height: 30px;
+      border: 3px solid #F6FAE7;
+      border-radius: 5px;
+      cursor: pointer;
+      shadow: none; }
+    #manual div .bar::-moz-focus-outer, #animation div .bar::-moz-focus-outer {
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
+      -webkit-user-select: none !important;
+      -moz-user-select: none !important;
+      outline: none !important;
+      border: none; }
+    #manual div .bar::-moz-range-track, #animation div .bar::-moz-range-track {
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
+      -webkit-user-select: none !important;
+      -moz-user-select: none !important;
+      outline: none !important;
+      -moz-appearance: none !important;
+      height: 0px; }
   #manual div:nth-child(1) .bar, #animation div:nth-child(1) .bar {
     background-color: #FF4900; }
   #manual div:nth-child(1) .bar::-webkit-slider-thumb, #animation div:nth-child(1) .bar::-webkit-slider-thumb {
+    background-color: #FF4900; }
+  #manual div:nth-child(1) .bar::-moz-range-thumb, #animation div:nth-child(1) .bar::-moz-range-thumb {
     background-color: #FF4900; }
   #manual div:nth-child(1) .bar-io, #animation div:nth-child(1) .bar-io {
     color: #FF4900; }
@@ -175,11 +220,15 @@ html, body {
     background-color: #14CC46; }
   #manual div:nth-child(2) .bar::-webkit-slider-thumb, #animation div:nth-child(2) .bar::-webkit-slider-thumb {
     background-color: #14CC46; }
+  #manual div:nth-child(2) .bar::-moz-range-thumb, #animation div:nth-child(2) .bar::-moz-range-thumb {
+    background-color: #14CC46; }
   #manual div:nth-child(2) .bar-io, #animation div:nth-child(2) .bar-io {
     color: #14CC46; }
   #manual div:nth-child(3) .bar, #animation div:nth-child(3) .bar {
     background-color: #40C0DD; }
   #manual div:nth-child(3) .bar::-webkit-slider-thumb, #animation div:nth-child(3) .bar::-webkit-slider-thumb {
+    background-color: #40C0DD; }
+  #manual div:nth-child(3) .bar::-moz-range-thumb, #animation div:nth-child(3) .bar::-moz-range-thumb {
     background-color: #40C0DD; }
   #manual div:nth-child(3) .bar-io, #animation div:nth-child(3) .bar-io {
     color: #40C0DD; }
@@ -187,11 +236,15 @@ html, body {
     background-color: #9D7C12; }
   #manual div:nth-child(4) .bar::-webkit-slider-thumb, #animation div:nth-child(4) .bar::-webkit-slider-thumb {
     background-color: #9D7C12; }
+  #manual div:nth-child(4) .bar::-moz-range-thumb, #animation div:nth-child(4) .bar::-moz-range-thumb {
+    background-color: #9D7C12; }
   #manual div:nth-child(4) .bar-io, #animation div:nth-child(4) .bar-io {
     color: #9D7C12; }
   #manual div:nth-child(5) .bar, #animation div:nth-child(5) .bar {
     background-color: #9D121E; }
   #manual div:nth-child(5) .bar::-webkit-slider-thumb, #animation div:nth-child(5) .bar::-webkit-slider-thumb {
+    background-color: #9D121E; }
+  #manual div:nth-child(5) .bar::-moz-range-thumb, #animation div:nth-child(5) .bar::-moz-range-thumb {
     background-color: #9D121E; }
   #manual div:nth-child(5) .bar-io, #animation div:nth-child(5) .bar-io {
     color: #9D121E; }
@@ -199,12 +252,16 @@ html, body {
     background-color: #914F9D; }
   #manual div:nth-child(6) .bar::-webkit-slider-thumb, #animation div:nth-child(6) .bar::-webkit-slider-thumb {
     background-color: #914F9D; }
+  #manual div:nth-child(6) .bar::-moz-range-thumb, #animation div:nth-child(6) .bar::-moz-range-thumb {
+    background-color: #914F9D; }
   #manual div:nth-child(6) .bar-io, #animation div:nth-child(6) .bar-io {
     color: #914F9D; }
   #manual .bar-io, #animation .bar-io {
     -webkit-appearance: none !important;
+    -moz-appearance: none !important;
     appearance: none !important;
     -webkit-user-select: none !important;
+    -moz-user-select: none !important;
     outline: none !important;
     background-color: #F6FAE7;
     border: 2px dashed;
@@ -316,8 +373,10 @@ html, body {
     margin-top: 20px;
     display: block;
     -webkit-appearance: none !important;
+    -moz-appearance: none !important;
     appearance: none !important;
     -webkit-user-select: none !important;
+    -moz-user-select: none !important;
     outline: none !important;
     background-color: #F6FAE7;
     border: 3px dashed;
