@@ -405,7 +405,7 @@ function init(){
             options.wireframe = wireframe;
             options.radius = width * 1;
             options.vertices = vertices * 1;
-            console.log(options);
+            // console.log(options);
 
             if ((options.radius > 0) && (options.vertices > 2)){
 
@@ -537,7 +537,7 @@ function addPoint(value1, value2){
 
     var coords1 = value1.replace(/ /g,',').split(",").filter(function(a){return a});
     var coords2 = value2.replace(/ /g, ',').split(",").filter(function(a){return a});
-    if ((coords1.length != 4) || (coords2.length != 4)){console.log('fail'); return;}
+    if ((coords1.length != 4) || (coords2.length != 4)){ return;}
 
     for (var i = 0; i < 2; i++){
         var coords = [coords1, coords2][i];
