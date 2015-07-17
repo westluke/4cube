@@ -554,6 +554,16 @@ function addPoint(value1, value2){
     // console.log(NEW_LINES);
 
 
-    stored += "<p>" + coords1 + " --> " + coords2 + "</p>";
+    stored += "<div><button>Remove</button><p>" + coords1 + " --> " + coords2 + "</p></div>";
     $("#stored_points").html(stored);
+    // console.log($("stored_points").html());
+
+    $("#stored_points div button").click(function() {
+        // console.log($(this).index());
+        // var first =
+        // console.log("whatt?");
+        $(this).parent().remove();
+        stored = $("#stored_points").html();
+        console.log($("#stored_points").html());
+    });
 }
