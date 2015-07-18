@@ -559,15 +559,17 @@ function addPoint(value1, value2){
     // console.log($("stored_points").html());
 
     $("#stored_points div button").click(function() {
+        console.log("what?");
         console.log($(this).parent().index());
         var ind = $(this).parent().index();
-        console.log
+        // console.log
         NEW_LINES = NEW_LINES.slice(0, ind).concat(NEW_LINES.slice(ind + 1));
-        console.log(NEW_LINES);
+        // console.log(NEW_LINES);
         // var first =
         // console.log("whatt?");
         $(this).parent().remove();
         stored = $("#stored_points").html();
         console.log($("#stored_points").html());
     });
+
 }
