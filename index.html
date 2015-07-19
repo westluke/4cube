@@ -41,6 +41,15 @@
             <p>This page requires javascript to function.</p>
             <p>If you want to view the site, you'll need to enable javascript and then refresh the page. (You may need to refresh twice.)</p>
             <style>
+                html, body {
+                    height: 100%;
+                    margin: none;
+                    padding: none;
+                    min-width: 0px;
+                    min-height: 0px;
+                    overflow: hidden;
+                }
+
                 noscript p:nth-child(1) {
                     color: #933600;
                     font-family: 'Open Sans', sans-serif;
@@ -61,13 +70,9 @@
                     margin-left: calc(10%);
                 }
 
-                #header {
-                    display: none;
-                }
+                #header {display: none;}
 
-                #main {
-                    display: none;
-                }
+                #main {display: none;}
             </style>
         </noscript>
 
