@@ -277,6 +277,7 @@ function init(){
 	controls.minDistance = 1.5;
 	controls.maxDistance = 6;
     controls.noZoom = false;
+    controls.noPan = true;
 
     // var ax = new THREE.AxisHelper(5);
     // scene.add(ax);
