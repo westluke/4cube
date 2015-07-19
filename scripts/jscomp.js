@@ -227,6 +227,8 @@ function center(curves, exs){
 var loopFlag = false;   //animate only runs when this is true, initialRender only when false
 var scene, camera;
 var animate, initialRender, rotateFigure, newRotation, reset, newExs, addPoint, baseResize, changeOptions;
+// In this version of the site, each settings div is contained in settings from the start, and selectively activated.
+// That means their former embedded scripts need to be stored somewhere else (here)
 var settingsFuncs = {
     about: function(){},
     animation: function(){
@@ -347,12 +349,11 @@ function init(){
     rotateFigure = function(theta, f){
         // for the manual control. rotates by theta given rotation function f
         transEx(curves, geos, exs, sh, f(theta));
-        // console.log(theta);
+        console.log(theta);
         center(curves, exs);
         renderer.render(scene, camera);
         center(curves, exs);
-        // loopFlag = false;
-        // initialRender();
+        renderer.render(scene, camera);
     }
 
     animate = function(){
@@ -532,22 +533,6 @@ $(window).load(function(){
         $("#" + name).css({display: "block"});
         settingsFuncs[name]();
     });
-
-    //     settings.css({opacity: 0});     // Fade out the current settings div
-    //
-    //     settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function(){
-    //         doneflag = true;
-    //         //Wait for that transition to finish
-    //         //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
-    //         if ((unfinished.indexOf(name) + 1)){
-    //             name = "soon";
-    //         }
-    //         settings.load("modules/" + name + ".html", function(){
-    //             settings.css({opacity: 1});
-    //             settings.unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
-    //         });
-    //     });
-    // });
 
     $("#settings .js_managed").css({display: "none"});
     $("#settings #manual").css({display: "block"});
