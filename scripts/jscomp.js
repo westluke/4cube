@@ -529,15 +529,20 @@ $(window).load(function(){
         $(this).nextAll().css({top: "3px", backgroundColor: "#FF4900"});                        // Enable it on this item
         current = $(this);
 
-        $("#settings").children().css({display: "none"});
-        $("#" + name).css({display: "block"});
-        settingsFuncs[name]();
+        $("#settings").css({opacity: 0});
+        settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function(){
+            $("#settings").children().css({display: "none"});
+            $("#" + name).css({display: "block"});
+            settingsFuncs[name]();
+            settings.css({opacity: 1});
+            settings.unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
+        });
     });
 
     $("#settings .js_managed").css({display: "none"});
     $("#settings #manual").css({display: "block"});
-    $("#menu li:nth-child(6) div").css({top: "3px", backgroundColor: "#FF4900"});
-    current = $("#menu li:nth-child(6) p");
+    $("#menu li:nth-child(4) div").css({top: "3px", backgroundColor: "#FF4900"});
+    current = $("#menu li:nth-child(4) p");
 });
 
 
