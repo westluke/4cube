@@ -305,6 +305,7 @@ function init(){
         center(curves, exs);
         renderer.render(scene, camera);
         center(curves, exs);
+        renderer.render(scene, camera);
         // loopFlag = false;
         // initialRender();
     }
