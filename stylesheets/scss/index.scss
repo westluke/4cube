@@ -330,9 +330,10 @@ html, body{
 
 // ABOUT
 #about {
-    h2 {
+    h1 {
         color: $txtcolor;
         margin-top: 30px;
+        font-size: 25px;
     }
 
     p {

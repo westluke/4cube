@@ -312,9 +312,10 @@ html, body {
 #animation p {
   font-size: 16px; }
 
-#about h2 {
+#about h1 {
   color: #FF4900;
-  margin-top: 30px; }
+  margin-top: 30px;
+  font-size: 25px; }
 #about p {
   color: #933600;
   font-size: 16px;
