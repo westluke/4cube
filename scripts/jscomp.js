@@ -434,75 +434,75 @@ function init(){
 
 
 // IF I EMBED THIS IN THE HTML, GOOGLE CAN ACTUALLY READ IT.
-// $(window).load(function(){
-//     init();
-//     initialRender();
-//
-//     var unfinished = [];
-//     var framer = $("#framer");
-//     var settings = $("#settings");
-//     var main = $("#main");
-//     var container = $("#container");
-//
-//     // Only animate if the mouse is in the canvas. Keeps everything running smoothly
-//     framer.mouseenter(function (){
-//         loopFlag = true;
-//         animate();
-//     });
-//     framer.mouseleave(function () {
-//             loopFlag = false;
-//     });
-//
-//     // I don't want to have to redefine the entirety of this function in full.html
-//     baseResize = function() {
-//         // be careful to make everything scale in the right order
-//         // console.log("resize");
-//         var mwidth = main.width();
-//         var mheight = main.height();
-//         // usually the height is fairly low, so the framer should scale off of that.
-//         // Other times, the width is the limiting factor, with settings in the way.
-//         var size = (mwidth*0.5 < mheight) ? mwidth*0.5 : mheight;
-//         framer.width(size);
-//         framer.height(size);
-//         settings.width(mwidth - framer.width() - 60);
-//
-//         var cwidth = container.width(), cheight = container.height();
-//         renderer.setSize( cwidth, cheight);
-//
-//         // console.log(mheight);
-//     }
-//     window.onresize = baseResize;
-//     window.onresize();
-//
-//     $("#menu li p").click(function(){
-//         var doneflag = false;
-//         var name = this.innerHTML.toLowerCase().split(" ")[0];  //Get the name of the file to load based on the button clicked
-//         if (current){ current.nextAll().css({top: "10px", backgroundColor: "transparent"}); }   //Disable the visual guide on the last item clicked
-//         $(this).nextAll().css({top: "3px", backgroundColor: "#FF4900"});                        // Enable it on this item
-//         current = $(this);
-//
-//         settings.css({opacity: 0});     // Fade out the current settings div
-//
-//         // console.log("transitionbegin");
-//         settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function(){
-//             // console.log("transitionend");
-//             doneflag = true;
-//             //Wait for that transition to finish
-//             //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
-//             if ((unfinished.indexOf(name) + 1)){
-//                 name = "soon";
-//             }
-//             settings.load("modules/" + name + ".html", function(){
-//                 settings.css({opacity: 1});
-//                 settings.unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
-//             });
-//         });
-//     });
-//
-//     // settings.load("modules/manual.html");
-//     $("#menu li:nth-child(6) div").css({top: "3px", backgroundColor: "#FF4900"});
-//     current = $("#menu li:nth-child(6) p");
-// });
+$(window).load(function(){
+    init();
+    initialRender();
+
+    var unfinished = [];
+    var framer = $("#framer");
+    var settings = $("#settings");
+    var main = $("#main");
+    var container = $("#container");
+
+    // Only animate if the mouse is in the canvas. Keeps everything running smoothly
+    framer.mouseenter(function (){
+        loopFlag = true;
+        animate();
+    });
+    framer.mouseleave(function () {
+            loopFlag = false;
+    });
+
+    // I don't want to have to redefine the entirety of this function in full.html
+    baseResize = function() {
+        // be careful to make everything scale in the right order
+        // console.log("resize");
+        var mwidth = main.width();
+        var mheight = main.height();
+        // usually the height is fairly low, so the framer should scale off of that.
+        // Other times, the width is the limiting factor, with settings in the way.
+        var size = (mwidth*0.5 < mheight) ? mwidth*0.5 : mheight;
+        framer.width(size);
+        framer.height(size);
+        settings.width(mwidth - framer.width() - 60);
+
+        var cwidth = container.width(), cheight = container.height();
+        renderer.setSize( cwidth, cheight);
+
+        // console.log(mheight);
+    }
+    window.onresize = baseResize;
+    window.onresize();
+
+    $("#menu li p").click(function(){
+        var doneflag = false;
+        var name = this.innerHTML.toLowerCase().split(" ")[0];  //Get the name of the file to load based on the button clicked
+        if (current){ current.nextAll().css({top: "10px", backgroundColor: "transparent"}); }   //Disable the visual guide on the last item clicked
+        $(this).nextAll().css({top: "3px", backgroundColor: "#FF4900"});                        // Enable it on this item
+        current = $(this);
+
+        settings.css({opacity: 0});     // Fade out the current settings div
+
+        // console.log("transitionbegin");
+        settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function(){
+            // console.log("transitionend");
+            doneflag = true;
+            //Wait for that transition to finish
+            //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
+            if ((unfinished.indexOf(name) + 1)){
+                name = "soon";
+            }
+            settings.load("modules/" + name + ".html", function(){
+                settings.css({opacity: 1});
+                settings.unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
+            });
+        });
+    });
+
+    // settings.load("modules/manual.html");
+    $("#menu li:nth-child(6) div").css({top: "3px", backgroundColor: "#FF4900"});
+    current = $("#menu li:nth-child(6) p");
+});
 
 
 
