@@ -37,6 +37,40 @@
 
     <body>
 
+        <noscript>
+            <p>This page requires javascript to function.</p>
+            <p>If you want to view the site, you'll need to enable javascript and then refresh the page.</p>
+            <style>
+                noscript p:nth-child(1) {
+                    color: #933600;
+                    font-family: 'Open Sans', sans-serif;
+                    font-weight: 700;
+                    font-size: 45px;
+                    margin-top: 100px;
+                    width: 90%;
+                    margin-left: calc(10%);
+                }
+
+                noscript p:nth-child(2) {
+                    color: #FF4900;
+                    font-family: 'Open Sans', sans-serif;
+                    font-weight: 600;
+                    font-size: 25px;
+                    margin-top: 10px;
+                    width: 90%;
+                    margin-left: calc(10%);
+                }
+
+                #header {
+                    display: none;
+                }
+
+                #main {
+                    display: none;
+                }
+            </style>
+        </noscript>
+
         <div id = "header">
             <h1 id = "title">4Shadow</h1>
 
