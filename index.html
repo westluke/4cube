@@ -14,13 +14,6 @@
       </script>
 
         <link rel="canonical" href="http://4shadow.io"/>
-
-        <!-- // <script>
-        //     if (!(window.location.href.indexOf("4shadow") + 1)){
-        //         window.location.href = 'http://4shadow.io';
-        //     }
-        // </script> -->
-
         <meta name="description" content="4 Dimensional Hypercube Interactive">
         <meta name="author" content="Luke West">
         <meta name="robots" content="index, nofollow">
@@ -36,6 +29,8 @@
     </head>
 
     <body>
+        <!-- BETTER SEO OPTION: ALL CONTENT LOADED AT START, THEN HIDDEN BY JAVASCRIPT, THEN SELECTIVELY SHOWN. -->
+        <!-- HANDLE EMBEDDED JS WITH OBJECT OF FUNCTIONS -->
 
         <noscript>
             <p>This page requires javascript to function.</p>
@@ -71,7 +66,6 @@
                 }
 
                 #header {display: none;}
-
                 #main {display: none;}
             </style>
         </noscript>
@@ -100,7 +94,7 @@
             </div>
 
                 <div id = "settings">
-                    <div id = "about">
+                    <div id = "about" class = "js_managed">
                         <h1>Tesseracts and Projections</h1>
 
                         <p> &nbsp;&nbsp;&nbsp;&nbsp;Hello visitor! This site allows you to interact with the projection of a 4d hypercube onto 3d space. These 4cubes are also called tesseracts.
@@ -112,6 +106,145 @@
                         <h1>Made by Luke West</h1>
 
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;I'm a junior in high school, and I love coding. If my site isn't feeling well, please raise an issue on my github repo: <a href="https://github.com/westluke/4cube">https://github.com/westluke/4cube</a></p>
+                    </div>
+
+                    <div id = "animation" class = "js_managed">
+                        <div>
+                            <p>XY</p>
+                            <input class = "bar-io" id = "rval1" type = "text" oninput = "if ((value%1===0) && value){range1.value = value;}else{range1.value = 0;} updateAni(value, 1);"/>
+                            <input class="bar" id = "range1" type="range" default = "0" max = "100" min = "0"
+                            step = "1" oninput="rval1.value=value; updateAni(value, 1)"/>
+                        </div>
+
+                        <div>
+                            <p>YZ</p>
+                            <input class = "bar-io" id = "rval2" type = "text" oninput = "if ((value%1===0) && value){range2.value = value;}else{range2.value = 0;} updateAni(value, 2);"/>
+                            <input class="bar" id = "range2" type="range" value="0" max = "100" min = "-0"
+                            step = "1" oninput="rval2.value=value; updateAni(value, 2);"/>
+                        </div>
+
+                        <div>
+                            <p>ZX</p>
+                            <input class = "bar-io" id = "rval3" type = "text" oninput = "if ((value%1===0) && value){range3.value = value;}else{range3.value = 0;} updateAni(value, 3);"/>
+                            <input class="bar" id = "range3" type="range" value="0" max = "100" min = "-0"
+                            step = "1" oninput="rval3.value=value; updateAni(value, 3);"/>
+                        </div>
+
+                        <div>
+                            <p>XW</p>
+                            <input class = "bar-io" id = "rval4" type = "text" oninput = "if ((value%1===0) && value){range4.value = value;}else{range4.value = 0;} updateAni(value, 4);"/>
+                            <input class="bar" id = "range4" type="range" value="0" max = "100" min = "-0"
+                            step = "1" oninput="rval4.value=value; updateAni(value, 4);"/>
+                        </div>
+
+                        <div>
+                            <p>WY</p>
+                            <input class = "bar-io" id = "rval5" type = "text" oninput = "if ((value%1===0) && value){range5.value = value;}else{range5.value = 0;} updateAni(value, 5);"/>
+                            <input class="bar" id = "range5" type="range" value="0" max = "100" min = "-0"
+                            step = "1" oninput="rval5.value=value; updateAni(value, 5);"/>
+                        </div>
+
+                        <div>
+                            <p>WZ</p>
+                            <input class = "bar-io" id = "rval6" type = "text" oninput = "if ((value%1===0) && value){range6.value = value;}else{range6.value = 0;} updateAni(value, 6);"/>
+                            <input class="bar" id = "range6" type="range" value="0" max = "100" min = "-0"
+                            step = "1" oninput="rval6.value=value; updateAni(value, 6);"/>
+                        </div>
+
+                        <p id = "tip">Choose speeds of rotation on each plane. (Note: at higher speeds, the animation may become slightly inaccurate.) Also, if you have epilepsy, don't type values above 100.</p>
+                    </div>
+
+                    <div id = "edges" class = "js_managed">
+                        <div id = "edge_input">
+                            <div id = "point_input">
+                                <p>Point</p>
+                                <input class = "edge-bar-io" id = "edge_rval1" type = "text" value = "" oninput = ""/>
+                            </div>
+
+                            <div id = "point_input">
+                                <p>Point</p>
+                                <input class = "edge-bar-io" id = "edge_rval2" type = "text" value = "" oninput = ""/>
+                            </div>
+
+                            <button onclick = "addPoint(edge_rval1.value, edge_rval2.value);">Add Edge</button>
+                            <button onclick = "newExs(NEW_LINES);">Plot All</button>
+                            <!-- <button onclick = "NEW_LINES = []; $('#stored_points').html('');">Clear</button> -->
+                            <p id = "tip">Enter comma or space separated values, eg. "1, 0, 0, 2". You must add two points with 4 coordinates each to define an edge. </p>
+                        </div>
+
+                        <div id = "stored_points">
+                        </div>
+                    </div>
+
+                    <div id = "full" class = "js_managed">
+                        <button onclick = "
+                            window.onresize = baseResize;
+
+                            $('#header').css({opacity: 1, display: 'block'});
+                            $('#framer').css({top: 130, left: 80});
+                            window.onresize();
+                            $('#menu li:nth-child(4) p ').click();
+                            renderer.render(scene, camera);
+                        ">Return</button>
+                    </div>
+
+                    <div id = "manual" class = "js_managed">
+                        <div>
+                            <p>XY</p>
+                            <input class = "man-bar-io" id = "man_rval1" type = "text" value = "0.00" oninput = "man_range1.value = value"/>
+                            <input class="bar" id = "man_range1" type="range" default = "0" max = "6.28" min = "-6.28" step = "0.01" oninput = "man_rval1.value = value;"/>
+                            <button onclick = "usrRotate(man_rval1.value, 1); man_rval1.value = 0; man_range1.value = 0">Apply</button>
+                        </div>
+
+                        <div>
+                            <p>YZ</p>
+                            <input class = "man-bar-io" id = "man_rval2" type = "text" value = "0.00" oninput = "man_range2.value = value"/>
+                            <input class="bar" id = "man_range2" type="range" default = "0" max = "6.28" min = "-6.28" step = "0.01" oninput = "man_rval2.value = value;"/>
+                            <button onclick = "usrRotate(man_rval2.value, 2); man_rval2.value = 0; man_range2.value = 0">Apply</button>
+                        </div>
+                        <div>
+                            <p>ZX</p>
+                            <input class = "man-bar-io" id = "man_rval3" type = "text" value = "0.00" oninput = "man_range3.value = value"/>
+                            <input class="bar" id = "man_range3" type="range" default = "0" max = "6.28" min = "-6.28" step = "0.01" oninput = "man_rval3.value = value;"/>
+                            <button onclick = "usrRotate(man_rval3.value, 3); man_rval3.value = 0; man_range3.value = 0">Apply</button>
+                        </div>
+                        <div>
+                            <p>XW</p>
+                            <input class = "man-bar-io" id = "man_rval4" type = "text" value = "0.00" oninput = "man_range4.value = value"/>
+                            <input class="bar" id = "man_range4" type="range" default = "0" max = "6.28" min = "-6.28" step = "0.01" oninput = "man_rval4.value = value;"/>
+                            <button onclick = "usrRotate(man_rval4.value, 4); man_rval4.value = 0; man_range4.value = 0">Apply</button>
+                        </div>
+                        <div>
+                            <p>WY</p>
+                            <input class = "man-bar-io" id = "man_rval5" type = "text" value = "0.00" oninput = "man_range5.value = value"/>
+                            <input class="bar" id = "man_range5" type="range" default = "0" max = "6.28" min = "-6.28" step = "0.01" oninput = "man_rval5.value = value;"/>
+                            <button onclick = "usrRotate(man_rval5.value, 5); man_rval5.value = 0; man_range5.value = 0">Apply</button>
+                        </div>
+                        <div>
+                            <p>WZ</p>
+                            <input class = "man-bar-io" id = "man_rval6" type = "text" value = "0.00" oninput = "man_range6.value = value"/>
+                            <input class="bar" id = "man_range6" type="range" default = "0" max = "6.28" min = "-6.28" step = "0.01" oninput = "man_rval6.value = value;"/>
+                            <button onclick = "usrRotate(man_rval6.value, 6); man_rval6.value = 0; man_range6.value = 0">Apply</button>
+                        </div>
+
+                        <p id = "tip">Move the sliders to design rotations. Hit apply when you're ready to apply a rotation to the figure.</p>
+                    </div>
+
+                    <div id = "options" class = "js_managed">
+                        <label for="color">Color</label>
+                        <input class = "option_text" id = "color" type = "text" value = "0xff4900"/>
+
+                        <label for="vertices">Vertices</label>
+                        <input class = "option_text" id = "vertices" type = "text" value = "8"/>
+
+                    <label for="width">Width</label>
+                        <input class = "option_text" id = "width" type = "text" value = "0.04"/>
+
+                            <input id="yes" type="checkbox" name="wireframe">
+                            <label for="yes">Wireframe</label>
+                        <button onclick = "changeOptions(color.value, yes.checked, width.value, vertices.value)">Apply</button>
+
+                        <p id = "tip">For personalized fanciness. Note: color should be in hexadecimal form, vertices must be greater than 2, and width must be positive.</p>
                     </div>
 
                 </div>

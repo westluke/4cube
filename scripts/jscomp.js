@@ -227,6 +227,52 @@ function center(curves, exs){
 var loopFlag = false;   //animate only runs when this is true, initialRender only when false
 var scene, camera;
 var animate, initialRender, rotateFigure, newRotation, reset, newExs, addPoint, baseResize, changeOptions;
+var settingsFuncs = {
+    about: function(){},
+    animation: function(){
+        for (var i = 1; i < 7; i++){
+            $("#animation div:nth-child(" + i + ") .bar").val(ani_rotations[i - 1]);
+            $("#animation div:nth-child(" + i + ") .bar-io").val(ani_rotations[i - 1]);
+        }
+    },
+    edges: function(){
+        $("#stored_points").html(stored);
+        $("#stored_points div button").click(function() {
+            var ind = $(this).parent().index();
+            NEW_LINES = NEW_LINES.slice(0, ind).concat(NEW_LINES.slice(ind + 1));
+            $(this).parent().remove();
+            stored = $("#stored_points").html();
+        });
+    },
+    full: function(){
+        console.log("fuck");
+        $("#header").css({opacity: 0, display: "none"});
+        $("#framer").css({top: 20, left: 20});
+        window.onresize = function(){
+            wheight = $(window).height();
+            wwidth = $(window).width();
+            var size = wheight + 125 > wwidth ? wwidth - 40 - 125: wheight - 40;
+            $("#framer").height(size);
+            $("#framer").width(size);
+            renderer.setSize( $("#container").width(), $("#container").height());
+        }
+        window.onresize();
+        renderer.render(scene, camera);
+    },
+    manual: function(){
+        $(".man-bar-io").blur(function(){
+            if (!(this.value)){
+                this.value = "0.00";
+            }
+        });
+    },
+    options: function(){
+        $("#color").val("0x" + options.color.toString(16));
+        $("#vertices").val(options.vertices);
+        $("#width").val(options.radius);
+        $("#yes").prop('checked', options.wireframe);
+    }
+}
 var nojump = false;         //prevents firefox from being an asshole and double triggering oninput
 var stored = "";    //points stored in div of points section
 var options;        //parameters to plot
@@ -482,25 +528,29 @@ $(window).load(function(){
         $(this).nextAll().css({top: "3px", backgroundColor: "#FF4900"});                        // Enable it on this item
         current = $(this);
 
-        settings.css({opacity: 0});     // Fade out the current settings div
-
-        // console.log("transitionbegin");
-        settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function(){
-            // console.log("transitionend");
-            doneflag = true;
-            //Wait for that transition to finish
-            //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
-            if ((unfinished.indexOf(name) + 1)){
-                name = "soon";
-            }
-            settings.load("modules/" + name + ".html", function(){
-                settings.css({opacity: 1});
-                settings.unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
-            });
-        });
+        $("#settings").children().css({display: "none"});
+        $("#" + name).css({display: "block"});
+        settingsFuncs[name]();
     });
 
-    // settings.load("modules/manual.html");
+    //     settings.css({opacity: 0});     // Fade out the current settings div
+    //
+    //     settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function(){
+    //         doneflag = true;
+    //         //Wait for that transition to finish
+    //         //now load the right module while its still transparent, restore opacity, and unbind this to prevent a loop
+    //         if ((unfinished.indexOf(name) + 1)){
+    //             name = "soon";
+    //         }
+    //         settings.load("modules/" + name + ".html", function(){
+    //             settings.css({opacity: 1});
+    //             settings.unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
+    //         });
+    //     });
+    // });
+
+    $("#settings .js_managed").css({display: "none"});
+    $("#settings #manual").css({display: "block"});
     $("#menu li:nth-child(6) div").css({top: "3px", backgroundColor: "#FF4900"});
     current = $("#menu li:nth-child(6) p");
 });

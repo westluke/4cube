@@ -295,11 +295,11 @@ html, body{
             .bar::-webkit-slider-thumb {background-color: $color; }
             .bar::-moz-range-thumb {background-color: $color; }
             button { color: $color}
-            .bar-io { color: $color; }
+            .man-bar-io { color: $color; }
         }
     }
 
-    .bar-io {
+    .man-bar-io {
         @include fuck_sliders;
         background-color: $bgcolor;
         // color: $txtcolor;
@@ -325,6 +325,31 @@ html, body{
 
     p {
         font-size: 16px;
+    }
+
+    @each $color, $num in $loop{
+        div:nth-child(#{$num}) {
+            .bar-io { color: $color; }
+        }
+    }
+
+    .bar-io {
+        @include fuck_sliders;
+        background-color: $bgcolor;
+        // color: $txtcolor;
+
+        border: 2px dashed;
+        float: right;
+        position: relative;
+
+        bottom: 10px;
+        text-align: right;
+        height: 30px;
+        width: 65px;
+        margin-left: 10px;
+        padding-right: 5px;
+        font-weight: 600;
+        font-size: 18px;
     }
 }
 
@@ -353,7 +378,7 @@ html, body{
 }
 
 // POINTS
-#points{
+#edges{
     height: 100%;
     width: 100%;
     #stored_points{

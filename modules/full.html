@@ -1,10 +1,6 @@
 <script>
     $("#header").css({opacity: 0, display: "none"});
-    // $("#settings").css({opacity: 0, display: "none"});
     $("#framer").css({top: 20, left: 20});
-    // // $("#framer").css({position: absolute;})
-    // // $("#framer").height($(window).height());
-    // // $("#framer").width($(window).height());
     window.onresize = function(){
         wheight = $(window).height();
         wwidth = $(window).width();
@@ -12,7 +8,6 @@
         $("#framer").height(size);
         $("#framer").width(size);
         renderer.setSize( $("#container").width(), $("#container").height());
-        // $("#settings").width(wwidth - size - 160);
     }
     window.onresize();
     renderer.render(scene, camera);

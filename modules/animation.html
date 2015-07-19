@@ -43,15 +43,12 @@
         step = "1" oninput="rval6.value=value; updateAni(value, 6);"/>
     </div>
 
-    <!-- <button type = "submit">Apply</button> -->
     <p id = "tip">Choose speeds of rotation on each plane. (Note: at higher speeds, the animation may become slightly inaccurate.) Also, if you have epilepsy, don't type values above 100.</p>
 </div>
 
 <script>
     // console.log("what the fuck?");
     for (var i = 1; i < 7; i++){
-        // console.log(ani_rotations);
-        // $("body").css({backgroundColor: "red"});
         $("#animation div:nth-child(" + i + ") .bar").val(ani_rotations[i - 1]);
         $("#animation div:nth-child(" + i + ") .bar-io").val(ani_rotations[i - 1]);
     }
