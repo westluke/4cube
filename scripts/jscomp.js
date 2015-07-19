@@ -495,9 +495,9 @@ $(window).load(function(){
         });
     });
 
-    settings.load("modules/manual.html");
-    $("#menu li:nth-child(4) div").css({top: "3px", backgroundColor: "#FF4900"});
-    current = $("#menu li:nth-child(4) p");
+    // settings.load("modules/manual.html");
+    // $("#menu li:nth-child(4) div").css({top: "3px", backgroundColor: "#FF4900"});
+    // current = $("#menu li:nth-child(4) p");
 });
 
 function usrRotate(value, ind){
