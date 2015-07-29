@@ -32,6 +32,8 @@
         <!-- BETTER SEO OPTION: ALL CONTENT LOADED AT START, THEN HIDDEN BY JAVASCRIPT, THEN SELECTIVELY SHOWN. -->
         <!-- HANDLE EMBEDDED JS WITH OBJECT OF FUNCTIONS -->
 
+        <!-- BETTER ADAPTATION, CSS / JS MEDIA QUERIES FOR MOBILE, WHIC SUCKS -->
+
         <noscript>
             <p>This page requires javascript to function.</p>
             <p>If you want to view the site, you'll need to enable javascript and then refresh the page. (You may need to refresh twice.)</p>
@@ -193,38 +195,38 @@
                             <p>XY</p>
                             <input class = "man-bar-io" id = "man_rval1" type = "text" value = "0.00" oninput = "man_range1.value = value"/>
                             <input class="bar" id = "man_range1" type="range" default = "0" max = "6.28" min = "-6.28" step = "0.01" oninput = "man_rval1.value = value;"/>
-                            <button onclick = "usrRotate(man_rval1.value, 1); man_rval1.value = 0; man_range1.value = 0">Apply</button>
+                            <button onclick = "usrRotate(man_rval1.value, 1);">Apply</button>
                         </div>
 
                         <div>
                             <p>YZ</p>
                             <input class = "man-bar-io" id = "man_rval2" type = "text" value = "0.00" oninput = "man_range2.value = value"/>
                             <input class="bar" id = "man_range2" type="range" default = "0" max = "6.28" min = "-6.28" step = "0.01" oninput = "man_rval2.value = value;"/>
-                            <button onclick = "usrRotate(man_rval2.value, 2); man_rval2.value = 0; man_range2.value = 0">Apply</button>
+                            <button onclick = "usrRotate(man_rval2.value, 2);">Apply</button>
                         </div>
                         <div>
                             <p>ZX</p>
                             <input class = "man-bar-io" id = "man_rval3" type = "text" value = "0.00" oninput = "man_range3.value = value"/>
                             <input class="bar" id = "man_range3" type="range" default = "0" max = "6.28" min = "-6.28" step = "0.01" oninput = "man_rval3.value = value;"/>
-                            <button onclick = "usrRotate(man_rval3.value, 3); man_rval3.value = 0; man_range3.value = 0">Apply</button>
+                            <button onclick = "usrRotate(man_rval3.value, 3);">Apply</button>
                         </div>
                         <div>
                             <p>XW</p>
                             <input class = "man-bar-io" id = "man_rval4" type = "text" value = "0.00" oninput = "man_range4.value = value"/>
                             <input class="bar" id = "man_range4" type="range" default = "0" max = "6.28" min = "-6.28" step = "0.01" oninput = "man_rval4.value = value;"/>
-                            <button onclick = "usrRotate(man_rval4.value, 4); man_rval4.value = 0; man_range4.value = 0">Apply</button>
+                            <button onclick = "usrRotate(man_rval4.value, 4);">Apply</button>
                         </div>
                         <div>
                             <p>WY</p>
                             <input class = "man-bar-io" id = "man_rval5" type = "text" value = "0.00" oninput = "man_range5.value = value"/>
                             <input class="bar" id = "man_range5" type="range" default = "0" max = "6.28" min = "-6.28" step = "0.01" oninput = "man_rval5.value = value;"/>
-                            <button onclick = "usrRotate(man_rval5.value, 5); man_rval5.value = 0; man_range5.value = 0">Apply</button>
+                            <button onclick = "usrRotate(man_rval5.value, 5);">Apply</button>
                         </div>
                         <div>
                             <p>WZ</p>
                             <input class = "man-bar-io" id = "man_rval6" type = "text" value = "0.00" oninput = "man_range6.value = value"/>
                             <input class="bar" id = "man_range6" type="range" default = "0" max = "6.28" min = "-6.28" step = "0.01" oninput = "man_rval6.value = value;"/>
-                            <button onclick = "usrRotate(man_rval6.value, 6); man_rval6.value = 0; man_range6.value = 0">Apply</button>
+                            <button onclick = "usrRotate(man_rval6.value, 6);">Apply</button>
                         </div>
 
                         <p id = "tip">Move the sliders to design rotations. Hit apply when you're ready to apply a rotation to the 4d figure.</p>
