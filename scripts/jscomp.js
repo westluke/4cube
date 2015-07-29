@@ -184,9 +184,9 @@ function center(curves, exs){
     // // Averages the extremes of the coordinates of the mesh to find the center, then corrects the mesh's position /
     //     // To place the center at the origin.
 
-    var extr_x = [0, 0],
-        extr_y = [0, 0],
-        extr_z = [0, 0];
+    var extr_x = [9999, -9999],
+        extr_y = [9999, -9999],
+        extr_z = [9999, -9999];
 
     var extremes = [extr_x, extr_y, extr_z];
     var vec = new THREE.Vector4();
@@ -204,7 +204,7 @@ function center(curves, exs){
                     extremes[n][0] = 0 + coords[n];
                 }
                 if (coords[n] > extremes[n][1]){
-                    extremes[n][1] = 0 +coords[n];
+                    extremes[n][1] = 0 + coords[n];
                 }
             }
         }
@@ -216,11 +216,16 @@ function center(curves, exs){
         exs[x].position.z -= (extr_z[0] + extr_z[1])/2;
     }
 
+    // exs[x].position.x -= extr_x[0] + (extr_x[0] + extr_x[1])/2;
+    // exs[x].position.y -= extr_y[0] + (extr_y[0] + extr_y[1])/2;
+    // exs[x].position.z -= extr_z[0] + (extr_z[0] + extr_z[1])/2;
+
     pos = null;
     vec = null;
     coords = null;
     extremes = null;
     extr_y = null, extr_x = null, extr_z = null;
+    console.log(1);
 }
 
 
@@ -262,11 +267,8 @@ var settingsFuncs = {
         renderer.render(scene, camera);
     },
     manual: function(){
-        $(".man-bar-io").blur(function(){
-            if (!(this.value)){
-                this.value = "0.00";
-            }
-        });
+        // $(".man-bar-io").get().value = "0.00";
+        // console.log("fuck");
     },
     options: function(){
         $("#color").val("0x" + options.color.toString(16));
@@ -344,7 +346,7 @@ function init(){
     sh = ret_list[2];
 
     controls.addEventListener( 'change', render);
-    center(curves, exs);
+    // center(curves, exs);
 
     rotateFigure = function(theta, f){
         // for the manual control. rotates by theta given rotation function f
@@ -352,8 +354,8 @@ function init(){
         console.log(theta);
         center(curves, exs);
         renderer.render(scene, camera);
-        center(curves, exs);
-        renderer.render(scene, camera);
+        // center(curves, exs);
+        // renderer.render(scene, camera);
     }
 
     animate = function(){
@@ -372,6 +374,7 @@ function init(){
         // I need this function to keep everything changing (but not really) until animate comes into play
         if (!loopFlag){
             setTimeout(function(){
+                center(curves, exs);
                 transEx(curves, geos, exs, sh, dumb1);
                 transEx(curves, geos, exs, sh, dumb2);
                 renderer.render(scene, camera);
@@ -402,9 +405,10 @@ function init(){
             clonedlines.push([newlines[ind][0].clone(), newlines[ind][1].clone()]);
         }
 
+        // for initialRender
         loopFlag= false;
-        setTimeout(function(){},500)
 
+        // get rid of existing objects
         for (var x = 0; x < curves.length; x++){
             scene.remove(exs[x]);
             curves[x] = null;
@@ -417,15 +421,14 @@ function init(){
         geos = null;
         curves = [1, 2, 3];
 
+        // replot with new lines
         var ret = plot(clonedlines.slice(0), scene, options);
         curves = ret[0].slice(0);
         geos = ret[1].slice(0);
         sh = ret[2];
         exs = ret[3].slice(0);
 
-        renderer.render(scene, camera);
-        center(curves, exs);
-        renderer.render(scene, camera);
+        // new lines, need new render
         initialRender()
     }
 
@@ -453,7 +456,6 @@ function init(){
             options.wireframe = wireframe;
             options.radius = width * 1;
             options.vertices = vertices * 1;
-            // console.log(options);
 
             if ((options.radius > 0) && (options.vertices > 2)){
 
@@ -461,7 +463,6 @@ function init(){
                     newExs(NEW_LINES);
                     return
                 }
-
                 newExs(getLines(POINTS, genConns(POINTS)));
             }
         }
@@ -475,14 +476,8 @@ function init(){
 
 
 
-
-
-
-
-
-
-// IF I EMBED THIS IN THE HTML, GOOGLE CAN ACTUALLY READ IT.
 $(window).load(function(){
+    console.log("window");
     init();
     initialRender();
 
@@ -504,7 +499,6 @@ $(window).load(function(){
     // I don't want to have to redefine the entirety of this function in full.html
     baseResize = function() {
         // be careful to make everything scale in the right order
-        // console.log("resize");
         var mwidth = main.width();
         var mheight = main.height();
         // usually the height is fairly low, so the framer should scale off of that.
@@ -516,26 +510,23 @@ $(window).load(function(){
 
         var cwidth = container.width(), cheight = container.height();
         renderer.setSize( cwidth, cheight);
-
-        // console.log(mheight);
     }
     window.onresize = baseResize;
     window.onresize();
 
     $("#menu li p").click(function(){
-        var doneflag = false;
         var name = this.innerHTML.toLowerCase().split(" ")[0];  //Get the name of the file to load based on the button clicked
         if (current){ current.nextAll().css({top: "10px", backgroundColor: "transparent"}); }   //Disable the visual guide on the last item clicked
         $(this).nextAll().css({top: "3px", backgroundColor: "#FF4900"});                        // Enable it on this item
         current = $(this);
 
-        $("#settings").css({opacity: 0});
+        $("#settings").css({opacity: 0});       //Fade div while transition happens
         settings.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function(){
-            $("#settings").children().css({display: "none"});
+            $("#settings").children().css({display: "none"});   //make other divs disappear
             $("#" + name).css({display: "block"});
-            settingsFuncs[name]();
+            settingsFuncs[name]();          //Call this blocks appropriate intializer function
             settings.css({opacity: 1});
-            settings.unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
+            settings.unbind('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');     //prevent loop
         });
     });
 
@@ -561,28 +552,13 @@ $(window).load(function(){
 
 
 
-
+// Rotate the figure manually by the value
 function usrRotate(value, ind){
-    // console.log("usrRotate", value);
-    // console.log("executed");
-    // $(".bar").mouseup(function(){
-    //     console.log("mouseup", value);
-    //     // Reset the slider back to 0 (rotations aren't commutative)
-    //     $(".bar").val(0);
-    //     // $(".bar").prop("value", 0);
-    //     console.log("val", $(".bar").val(), $(".bar").prop("value"));
-    //     rotations[ind] = 0;
-    // });
-    // if (nojump){
-    //     nojump = false;
-    //     $(".bar").val(0);
-    //     return;
-    // }
+    // yes this is dumb. fuck you
     rotateFigure(value, rotfuncs[ind - 1]);
-    // rotations[ind] = value;
-    // center(curves[exs]);
 }
 
+// Update the animation values to change the rotation
 function updateAni(value, ind){
     // keep the value, not the matrix, so that I can keep the animations page consistent when they come back.
     ind--;
@@ -597,41 +573,34 @@ function updateAni(value, ind){
 function addPoint(value1, value2){
     // add a point to the internal variable and the div display
 
+    // split by whitespace or commas
     var coords1 = value1.replace(/ /g,',').split(",").filter(function(a){return a});
     var coords2 = value2.replace(/ /g, ',').split(",").filter(function(a){return a});
-    if ((coords1.length != 4) || (coords2.length != 4)){ return;}
+    if ((coords1.length != 4) || (coords2.length != 4)){ return;}   //need 4d points
 
     for (var i = 0; i < 2; i++){
         var coords = [coords1, coords2][i];
 
         for (ind in coords){
-            coords[ind]*=1;
+            coords[ind]*=1; //try to convert to num
             if (isNaN(coords[ind])){
                 return;
             }
         }
     }
 
+    // Add the line to the internal variable
     NEW_LINES.push([new THREE.Vector4(coords1[0], coords1[1], coords1[2], coords1[3]), new THREE.Vector4(coords2[0], coords2[1], coords2[2], coords2[3])]);
-    // console.log(NEW_LINES);
 
-
+    // update the displat of points
     stored += "<div><button>Remove</button><p>" + coords1 + " --> " + coords2 + "</p></div>";
     $("#stored_points").html(stored);
-    // console.log($("stored_points").html());
 
     $("#stored_points div button").click(function() {
-        console.log("what?");
-        console.log($(this).parent().index());
         var ind = $(this).parent().index();
-        // console.log
+        // Figure out which point this is, then remove it from both the internal variable and display
         NEW_LINES = NEW_LINES.slice(0, ind).concat(NEW_LINES.slice(ind + 1));
-        // console.log(NEW_LINES);
-        // var first =
-        // console.log("whatt?");
         $(this).parent().remove();
         stored = $("#stored_points").html();
-        console.log($("#stored_points").html());
     });
-
 }
