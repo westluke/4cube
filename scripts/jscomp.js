@@ -54,6 +54,8 @@ function testRotations(theta){
 }
 
 
+// Transforms extrusions by applying transformations to the points of the curves of the extrusions, making a new geometry with those points,
+// deleting the old extrusion geometry, and putting the new geometry in.
 function transEx(curves, geos, exs, shape, transform){
     // I might be able to speed this up by just initializing the extrusions to something other than a point, and then taking them back.
 
@@ -125,7 +127,7 @@ function genConns(points){
 
 
 function getLines(points, conns){
-    // Converts a collections of points and a matrix of connections into a set of THREE.js vectors
+    // Converts a collections of points and a matrix of connections into a set of THREE.js 4d vectors
 
     var p_a, p_b, ret_line = [];
 
@@ -142,8 +144,8 @@ function getLines(points, conns){
 }
 
 function plot(lines, scene, options){
-    // console.log(lines, scene, options);
     // given a bunch of lines and a scene, this function will add a bunch of extrusions from the lines to the scene.
+    // Generates splinecurves to make geometries that are coated in a material to form the extrusion.
 
     mat =  new THREE.MeshLambertMaterial({color: options["color"], wireframe: options["wireframe"]});
     var tubes = [];
@@ -155,6 +157,7 @@ function plot(lines, scene, options){
     var shape_pts = circleGeometry.vertices.slice(1, segments + 1);
     var shape = new THREE.Shape(shape_pts);
 
+    // This is where the splinecurve is used, but it is updated continuously in the for loop.
     var extrudeSettings = {
         steps			: 1,
         bevelEnabled	: false,
@@ -198,6 +201,7 @@ function center(curves, exs){
             vec.copy(curves[i].points[k]);
             pos.copy(exs[i].position);
 
+	    //To get the actual position of that point, you need to add together the position of the overall extrusion AND the position of the curve within that extrusion.
             coords = [pos.x + vec.x, pos.y + vec.y, pos.z + vec.z];
             for (var n = 0; n < 3; n++){
                 if (coords[n] < extremes[n][0]){
@@ -210,16 +214,14 @@ function center(curves, exs){
         }
     }
 
+    // Based on previous measurements, nudge the extrusions to the origin.
     for (var x = 0; x < exs.length; x++){
         exs[x].position.x -= (extr_x[0] + extr_x[1])/2;
         exs[x].position.y -= (extr_y[0] + extr_y[1])/2;
         exs[x].position.z -= (extr_z[0] + extr_z[1])/2;
     }
 
-    // exs[x].position.x -= extr_x[0] + (extr_x[0] + extr_x[1])/2;
-    // exs[x].position.y -= extr_y[0] + (extr_y[0] + extr_y[1])/2;
-    // exs[x].position.z -= extr_z[0] + (extr_z[0] + extr_z[1])/2;
-
+    // No one likes a memory leak.
     pos = null;
     vec = null;
     coords = null;
@@ -234,15 +236,18 @@ var scene, camera;
 var animate, initialRender, rotateFigure, newRotation, reset, newExs, addPoint, baseResize, changeOptions;
 // In this version of the site, each settings div is contained in settings from the start, and selectively activated.
 // That means their former embedded scripts need to be stored somewhere else (here)
+// Every time one of those divs becomes opaque, one of these functions needs to be called.
 var settingsFuncs = {
     about: function(){},
     animation: function(){
+	// Save previous rotations.
         for (var i = 1; i < 7; i++){
             $("#animation div:nth-child(" + i + ") .bar").val(ani_rotations[i - 1]);
             $("#animation div:nth-child(" + i + ") .bar-io").val(ani_rotations[i - 1]);
         }
     },
     edges: function(){
+	// Remember the points stored previously and put them back. Also, rebind the button to remove those points.
         $("#stored_points").html(stored);
         $("#stored_points div button").click(function() {
             var ind = $(this).parent().index();
@@ -252,6 +257,7 @@ var settingsFuncs = {
         });
     },
     full: function(){
+	// Resize all the shapes and margins so that the big frame will fit the screen nicely.
         console.log("fuck");
         $("#header").css({opacity: 0, display: "none"});
         $("#framer").css({top: 20, left: 20});
@@ -271,6 +277,7 @@ var settingsFuncs = {
         // console.log("fuck");
     },
     options: function(){
+	// Preserve settings
         $("#color").val("0x" + options.color.toString(16));
         $("#vertices").val(options.vertices);
         $("#width").val(options.radius);
@@ -398,8 +405,9 @@ function init(){
 
     newExs = function(newlines) {
         // NOTE: don't forget that when you do transex, youre actually applying the transformation
-        //  to the vectors within the splines, which are also within line.
+        //  to the vectors within the splines, which are also within lines.
         // nullifies the previous graphed objects and makes new ones based on newlines.
+	// activated when you hit "plot all"
         var clonedlines = [];
         for (var ind = 0; ind < newlines.length; ind++){
             clonedlines.push([newlines[ind][0].clone(), newlines[ind][1].clone()]);
@@ -450,6 +458,7 @@ function init(){
     }
 
     changeOptions = function(color, wireframe, width, vertices){
+	// Input new values to the options of the site.
         if (!isNaN(color) && !isNaN(width) && !isNaN(vertices) && color && width && vertices){
 
             options.color = parseInt(color);
@@ -593,7 +602,7 @@ function addPoint(value1, value2){
     NEW_LINES.push([new THREE.Vector4(coords1[0], coords1[1], coords1[2], coords1[3]), new THREE.Vector4(coords2[0], coords2[1], coords2[2], coords2[3])]);
 
     // update the displat of points
-    stored += "<div><button>Remove</button><p>" + coords1 + " --> " + coords2 + "</p></div>";
+    stored += "<div><button>Remove</button><p>" + coords1 + " ==> " + coords2 + "</p></div>";
     $("#stored_points").html(stored);
 
     $("#stored_points div button").click(function() {
