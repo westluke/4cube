@@ -46,6 +46,8 @@ html, body{
 }
 
 #header {
+	//From prefixer
+	filter: alpha(opacity=100);
     opacity: 1;
     display:block;
     -webkit-transition: opacity 0.1s, display 0.1s;
@@ -72,10 +74,16 @@ html, body{
     width: 0px;
     height: 0px;
     // width, height are defined in js based on main.width, main.height
-    background-image:   linear-gradient(to bottom right, $txtcolor, $txtcolor 11.1%, transparent 11.1%, transparent),
+   /* background-image:   linear-gradient(to bottom right, $txtcolor, $txtcolor 11.1%, transparent 11.1%, transparent),
                         linear-gradient(to top left, $txtcolor, $txtcolor 11.1%, transparent 11.1%, transparent);
     background-size: calc(0.826 * 100%) calc(0.826 * 100%);
-    background-position: top left, bottom right;
+    background-position: top left, bottom right;*/
+
+//From prefixer
+  background-image: -webkit-linear-gradient(top left, #FF4900, #FF4900 11.1%, transparent 11.1%, transparent), -webkit-linear-gradient(bottom right, #FF4900, #FF4900 11.1%, transparent 11.1%, transparent);
+  background-image: linear-gradient(to bottom right, #FF4900, #FF4900 11.1%, transparent 11.1%, transparent), linear-gradient(to top left, #FF4900, #FF4900 11.1%, transparent 11.1%, transparent);
+  background-size: 82.6% 82.6%;
+  background-position: top left, bottom right; 
 }
 
 #container {
@@ -157,9 +165,15 @@ html, body{
     height: 42px;
     width: 40px;
     position:relative;
-    background-image: linear-gradient(transparent, transparent 50%, #362F0B 33%, #362F0B 50%);
-    background-size: 12px 12px;
-    float: right;
+    //background-image: linear-gradient(transparent, transparent 50%, #362F0B 33%, #362F0B 50%);
+    //background-size: 12px 12px;
+    //float: right;
+    //background-image: -webkit-linear-gradient(transparent, transparent 50%, #362F0B 33%, #362F0B 50%);
+    //from prefixer
+  background-image: -webkit-linear-gradient(transparent, transparent 50%, #362F0B 33%, #362F0B 50%);
+  background-image: linear-gradient(transparent, transparent 50%, #362F0B 33%, #362F0B 50%);
+  background-size: 12px 12px;
+  float: right;loat: right;
 }
 
 
@@ -173,6 +187,8 @@ html, body{
     padding-top: 30px;
     // position: absolute;
     opacity: 1;
+    //from prefixer
+	filter: alpha(opacity=100);
     -webkit-transition: opacity 0.06s;
     -webkit-transition-timing-function: linear;
     -moz-transition: opacity 0.06s;
