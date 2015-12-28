@@ -362,6 +362,8 @@ function init(){
 	scene.add( light );
 
     line = getLines(POINTS, genConns(POINTS));
+    console.log(line);
+    console.log("just outputted line")
     var ret_list = plot(line, scene, options);
 
     // I have the fear of referencing
